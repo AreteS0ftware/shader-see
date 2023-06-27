@@ -18,6 +18,7 @@ public class Main extends Game {
 
 	private Stage stage;
 	private EventManager eventManager;
+	private Shaders shaders;
 
 	public Main() {
 		super();
@@ -32,9 +33,12 @@ public class Main extends Game {
 		Gdx.input.setInputProcessor(stage = new Stage(new ScreenViewport(), new SpriteBatch()));
 		stage.setDebugAll(true);
 
-		RootTable rootTable = new RootTable();
+		RootTable rootTable = new RootTable(this);
 		rootTable.populate();
 		stage.addActor(rootTable);
+
+		shaders = new Shaders(this);
+		shaders.loadDefaultShader();
 	}
 
 	@Override

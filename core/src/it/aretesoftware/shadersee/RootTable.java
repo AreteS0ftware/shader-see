@@ -4,14 +4,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.kotcrab.vis.ui.widget.Menu;
 import com.kotcrab.vis.ui.widget.MenuBar;
 import com.kotcrab.vis.ui.widget.VisLabel;
-import com.kotcrab.vis.ui.widget.VisScrollPane;
 import com.kotcrab.vis.ui.widget.VisSplitPane;
 import com.kotcrab.vis.ui.widget.VisTable;
 
+import it.aretesoftware.shadersee.shaderproperties.frag.FragmentProperties;
+import it.aretesoftware.shadersee.shaderproperties.vert.VertexProperties;
+
 public class RootTable extends VisTable {
 
-    public RootTable() {
+    private final Main main;
+
+    public RootTable(Main main) {
         super();
+        this.main = main;
     }
 
     public void populate() {
@@ -58,21 +63,13 @@ public class RootTable extends VisTable {
         table.add(splitPane).grow();
     }
 
-    private Table createLeftSideOfPane() {
-        Table contentTable = new Table();
-        contentTable.defaults().padLeft(20).padRight(10);
-        contentTable.add(new VisLabel("TEST1")).padTop(15).growX();
-        contentTable.row();
-        contentTable.add(new VisLabel("TEST2")).padTop(35).growX();
-
-        VisLabel titleLabel = new VisLabel("Shader Properties", "title");
-        VisScrollPane scrollPane = new VisScrollPane(contentTable);
-
-        Table table = new Table();
-        table.add(titleLabel).top();
-        table.row();
-        table.add(scrollPane).expand().fillX().top();
-        return table;
+    private VisSplitPane createLeftSideOfPane() {
+        VertexProperties vertexProperties = new VertexProperties(main);
+        FragmentProperties fragmentProperties = new FragmentProperties(main);
+        VisSplitPane splitPane = new VisSplitPane(vertexProperties, fragmentProperties, true);
+        splitPane.setMinSplitAmount(0.05f);
+        splitPane.setMaxSplitAmount(0.95f);
+        return splitPane;
     }
 
     private Table createRightSideOfPane() {
