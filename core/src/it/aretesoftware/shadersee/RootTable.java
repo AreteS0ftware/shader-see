@@ -7,8 +7,8 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisSplitPane;
 import com.kotcrab.vis.ui.widget.VisTable;
 
-import it.aretesoftware.shadersee.shaderproperties.frag.FragmentProperties;
-import it.aretesoftware.shadersee.shaderproperties.vert.VertexProperties;
+import it.aretesoftware.shadersee.shaderproperties.FragmentProperties;
+import it.aretesoftware.shadersee.shaderproperties.VertexProperties;
 
 public class RootTable extends VisTable {
 
