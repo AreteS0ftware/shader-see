@@ -58,4 +58,8 @@ public class Shaders {
         main.fire(new ShaderLoadEvent(shader, vert, frag));
     }
 
+    ShaderProgram getShader() {
+        return shader;
+    }
+
 }

@@ -13,12 +13,14 @@ import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventCallback;
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.EventManager;
+import it.aretesoftware.shadersee.preview.Preview;
 
 public class Main extends Game {
 
 	private Stage stage;
 	private EventManager eventManager;
 	private Shaders shaders;
+	private Preview preview;
 
 	public Main() {
 		super();
@@ -28,13 +30,12 @@ public class Main extends Game {
 	public void create () {
 		eventManager = new EventManager();
 
-		Skin skin;
-		VisUI.load(skin = new Skin(Gdx.files.internal("neutralizer/neutralizer-ui.json")));
+		VisUI.load(new Skin(Gdx.files.internal("neutralizer/neutralizer-ui.json")));
 		Gdx.input.setInputProcessor(stage = new Stage(new ScreenViewport(), new SpriteBatch()));
 		stage.setDebugAll(true);
 
 		RootTable rootTable = new RootTable(this);
-		rootTable.populate();
+		rootTable.populate(preview = new Preview());
 		stage.addActor(rootTable);
 
 		shaders = new Shaders(this);
@@ -46,6 +47,7 @@ public class Main extends Game {
 		ScreenUtils.clear(0, 0, 0, 1);
 
 		stage.act();
+		preview.draw(stage.getBatch(), shaders.getShader());
 		stage.getViewport().apply();
 		stage.draw();
 	}
@@ -58,10 +60,6 @@ public class Main extends Game {
 	@Override
 	public void resize (int width, int height) {
 		stage.getViewport().update(width, height, true);
-	}
-
-	public Stage getStage() {
-		return stage;
 	}
 
 	//

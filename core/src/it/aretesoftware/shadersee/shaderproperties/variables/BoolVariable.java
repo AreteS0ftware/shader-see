@@ -3,7 +3,6 @@ package it.aretesoftware.shadersee.shaderproperties.variables;
 
 import com.kotcrab.vis.ui.widget.VisCheckBox;
 import com.kotcrab.vis.ui.widget.VisLabel;
-import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 

@@ -7,6 +7,7 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisSplitPane;
 import com.kotcrab.vis.ui.widget.VisTable;
 
+import it.aretesoftware.shadersee.preview.Preview;
 import it.aretesoftware.shadersee.shaderproperties.FragmentProperties;
 import it.aretesoftware.shadersee.shaderproperties.VertexProperties;
 
@@ -19,7 +20,7 @@ public class RootTable extends VisTable {
         this.main = main;
     }
 
-    public void populate() {
+    public void populate(Preview preview) {
         setFillParent(true);
 
         clearChildren();
@@ -29,7 +30,7 @@ public class RootTable extends VisTable {
         addSeparator().colspan(2);
 
         row();
-        addSplitPane();
+        addSplitPane(preview);
     }
 
     //
@@ -53,11 +54,11 @@ public class RootTable extends VisTable {
         table.add(new VisLabel("Shader See", "title")).expandX().center();
     }
 
-    private void addSplitPane() {
+    private void addSplitPane(Preview preview) {
         Table table = new Table();
         add(table).colspan(2).grow();
 
-        VisSplitPane splitPane = new VisSplitPane(createLeftSideOfPane(), createRightSideOfPane(), false);
+        VisSplitPane splitPane = new VisSplitPane(createLeftSideOfPane(), createRightSideOfPane(preview), false);
         splitPane.setMinSplitAmount(0.40f);
         splitPane.setMaxSplitAmount(0.60f);
         table.add(splitPane).grow();
@@ -72,8 +73,8 @@ public class RootTable extends VisTable {
         return splitPane;
     }
 
-    private Table createRightSideOfPane() {
-        VisSplitPane splitPane = new VisSplitPane(new Table(), new Table(), true);
+    private Table createRightSideOfPane(Preview preview) {
+        VisSplitPane splitPane = new VisSplitPane(preview, new Table(), true);
         splitPane.setMinSplitAmount(0.40f);
         splitPane.setMaxSplitAmount(0.60f);
 

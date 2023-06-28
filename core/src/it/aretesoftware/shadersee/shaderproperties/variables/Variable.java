@@ -24,7 +24,7 @@ public abstract class Variable extends Table {
             case ShaderVariableType.VEC2:
                 //return new Vec2Variable(v_qualifier, v_type, name);
         }
-        return new Vec3Variable(v_qualifier, v_type, name);
+        return new BoolVariable(v_qualifier, v_type, name);
     }
 
     public ShaderVariableQualifier getQualifier() {
@@ -35,7 +35,7 @@ public abstract class Variable extends Table {
         return type;
     }
 
-    public String getName() {
+    public String getVariableName() {
         return name;
     }
 
