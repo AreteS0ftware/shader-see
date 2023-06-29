@@ -47,7 +47,7 @@ public class Main extends Game {
 		ScreenUtils.clear(0, 0, 0, 1);
 
 		stage.act();
-		preview.draw(stage.getBatch(), shaders.getShader());
+		preview.draw(stage.getBatch(), shaders);
 		stage.getViewport().apply();
 		stage.draw();
 	}

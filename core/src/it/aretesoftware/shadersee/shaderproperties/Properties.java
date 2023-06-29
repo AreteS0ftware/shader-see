@@ -89,7 +89,7 @@ public abstract class Properties extends Table {
             String qualifier = matcher.group(1);
             String type = matcher.group(2);
             String name = matcher.group(3);
-            Variable variable = Variable.create(qualifier, type, name);
+            Variable variable = Variable.create(getMain(), qualifier, type, name);
             map.add(variable.getQualifier(), variable);
         }
         return map;

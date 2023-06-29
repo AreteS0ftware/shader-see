@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 import it.aretesoftware.shadersee.Main;
+import it.aretesoftware.shadersee.Shaders;
 
 public class PreviewDraw {
 
@@ -31,11 +32,11 @@ public class PreviewDraw {
 
     //
 
-    public void draw(Batch batch, ShaderProgram shader) {
+    public void draw(Batch batch, Shaders shaders) {
         batch.begin();
         drawCheckers(batch);
         drawSolidColor(batch);
-        drawSprite(batch, shader);
+        drawSprite(batch, shaders);
         batch.end();
     }
 
@@ -76,10 +77,10 @@ public class PreviewDraw {
         batch.setColor(Color.WHITE);
     }
 
-    private void drawSprite(Batch batch, ShaderProgram shader) {
-        batch.setShader(shader);
+    private void drawSprite(Batch batch, Shaders shaders) {
+        shaders.applyShader(batch);
         batch.draw(badlogic, 0, 0);
-        batch.setShader(null);
+        shaders.unapplyShader(batch);
     }
 
 }
