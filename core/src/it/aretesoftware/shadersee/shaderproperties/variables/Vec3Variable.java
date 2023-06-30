@@ -9,8 +9,8 @@ import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 
 public class Vec3Variable extends Variable {
 
-    Vec3Variable(ShaderVariableQualifier qualifier, int type, String uniformName) {
-        super(qualifier, type, uniformName);
+    Vec3Variable(VariableBuilder builder) {
+        super(builder);
     }
 
 
@@ -26,6 +26,7 @@ public class Vec3Variable extends Variable {
 
     @Override
     protected void createNonFunctional(Main main) {
-
+        defaults().space(10);
+        add(new VisLabel("vec3 " + getVariableName()) + ";");
     }
 }

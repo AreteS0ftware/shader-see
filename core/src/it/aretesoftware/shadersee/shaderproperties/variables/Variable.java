@@ -12,10 +12,10 @@ public abstract class Variable extends Table {
     private final int type;
     private final String name;
 
-    protected Variable(ShaderVariableQualifier qualifier, int type, String name) {
-        this.qualifier = qualifier;
-        this.type = type;
-        this.name = name;
+    protected Variable(VariableBuilder builder) {
+        this.qualifier = builder.qualifier;
+        this.type = builder.type;
+        this.name = builder.name;
     }
 
     protected abstract void createFunctional(Main main);
@@ -40,39 +40,37 @@ public abstract class Variable extends Table {
     }
 
     public static Variable create(String qualifier, String type, String name) {
-        ShaderVariableQualifier v_qualifier = ShaderVariableQualifier.valueOf(qualifier);
-        int v_type = ShaderVariableType.valueOf(type);
-
+        VariableBuilder builder = new VariableBuilder(ShaderVariableQualifier.valueOf(qualifier), ShaderVariableType.valueOf(type), name);
         Variable variable;
-        switch (v_type) {
+        switch (builder.type) {
             case ShaderVariableType.BOOL:
-                 variable = new BoolVariable(v_qualifier, v_type, name);
+                 variable = new BoolVariable(builder);
                  break;
             case ShaderVariableType.INT:
-                 variable = new IntVariable(v_qualifier, v_type, name);
+                 variable = new IntVariable(builder);
                  break;
             case ShaderVariableType.FLOAT:
-                 variable = new FloatVariable(v_qualifier, v_type, name);
+                 variable = new FloatVariable(builder);
                  break;
             case ShaderVariableType.VEC2:
-                variable = new Vec2Variable(v_qualifier, v_type, name);
+                variable = new Vec2Variable(builder);
                 break;
             case ShaderVariableType.VEC3:
-                variable = new Vec3Variable(v_qualifier, v_type, name);
+                variable = new Vec3Variable(builder);
                 break;
             case ShaderVariableType.VEC4:
-                variable = new Vec4Variable(v_qualifier, v_type, name);
+                variable = new Vec4Variable(builder);
                 break;
             case ShaderVariableType.MAT4:
-                variable = new Mat4Variable(v_qualifier, v_type, name);
+                variable = new Mat4Variable(builder);
                 break;
             case ShaderVariableType.SAMPLER2D:
-                variable = new Sampler2DVariable(v_qualifier, v_type, name);
+                variable = new Sampler2DVariable(builder);
                 break;
             default:
                 variable = null;
+                break;
         }
-
         return variable;
     }
 

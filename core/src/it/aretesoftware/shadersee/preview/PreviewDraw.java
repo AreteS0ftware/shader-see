@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
-import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.Shaders;
 
 public class PreviewDraw {
@@ -78,9 +75,9 @@ public class PreviewDraw {
     }
 
     private void drawSprite(Batch batch, Shaders shaders) {
-        shaders.applyShader(batch);
+        shaders.bindShader(batch);
         batch.draw(badlogic, 0, 0);
-        shaders.unapplyShader(batch);
+        shaders.unbindShader(batch);
     }
 
 }

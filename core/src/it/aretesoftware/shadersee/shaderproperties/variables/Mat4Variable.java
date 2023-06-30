@@ -9,8 +9,8 @@ import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 
 public class Mat4Variable extends Variable {
 
-    Mat4Variable(ShaderVariableQualifier qualifier, int type, String uniformName) {
-        super(qualifier, type, uniformName);
+    Mat4Variable(VariableBuilder builder) {
+        super(builder);
     }
 
 
@@ -22,7 +22,7 @@ public class Mat4Variable extends Variable {
     @Override
     protected void createNonFunctional(Main main) {
         defaults().space(10);
-        add(new VisLabel("mat4 " + getVariableName()));
+        add(new VisLabel("mat4 " + getVariableName() + ";"));
     }
 
 }

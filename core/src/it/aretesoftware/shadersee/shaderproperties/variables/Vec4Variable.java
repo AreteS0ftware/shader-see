@@ -9,8 +9,8 @@ import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 
 public class Vec4Variable extends Variable {
 
-    Vec4Variable(ShaderVariableQualifier qualifier, int type, String uniformName) {
-        super(qualifier, type, uniformName);
+    Vec4Variable(VariableBuilder builder) {
+        super(builder);
     }
 
 
@@ -27,7 +27,7 @@ public class Vec4Variable extends Variable {
     @Override
     protected void createNonFunctional(Main main) {
         defaults().space(10);
-        add(new VisLabel("vec4 " + getVariableName()));
+        add(new VisLabel("vec4 " + getVariableName() + ";"));
     }
 
 }

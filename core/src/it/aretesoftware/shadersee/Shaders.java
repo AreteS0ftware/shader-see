@@ -16,15 +16,13 @@ import it.aretesoftware.shadersee.event.shader.ShaderLoadEvent;
 public class Shaders {
 
     private final Main main;
-    private final ObjectMap<String, Float> floatUniforms;
-    private final ObjectMap<String, Boolean> boolUniforms;
+    private final ShaderUniforms shaderUniforms;
     private ShaderProgram shader;
     private FileHandle vert, frag;
 
     Shaders(Main main) {
         this.main = main;
-        floatUniforms = new ObjectMap<>();
-        boolUniforms = new ObjectMap<>();
+        shaderUniforms = new ShaderUniforms(main);
         addListeners();
     }
 
@@ -40,20 +38,6 @@ public class Shaders {
             @Override
             protected void fire(LoadFragmentShaderEvent event) {
                 loadShader(vert, event.frag);
-            }
-        });
-
-        // Set Uniforms
-        main.addPreListener(new EventListener<SetFloatUniform>(SetFloatUniform.class, this) {
-            @Override
-            protected void fire(SetFloatUniform event) {
-                floatUniforms.put(event.uniformName, event.uniformValue);
-            }
-        });
-        main.addPreListener(new EventListener<SetBoolUniform>(SetBoolUniform.class, this) {
-            @Override
-            protected void fire(SetBoolUniform event) {
-                boolUniforms.put(event.uniformName, event.uniformValue);
             }
         });
     }
@@ -81,24 +65,12 @@ public class Shaders {
         main.fire(new ShaderLoadEvent(shader, vert, frag));
     }
 
-    public void applyShader(Batch batch) {
+    public void bindShader(Batch batch) {
         batch.setShader(shader);
-        if (floatUniforms.isEmpty()) {
-            return;
-        }
-        for (ObjectMap.Entry<String, Float> entry : floatUniforms.entries()) {
-            shader.setUniformf(entry.key, entry.value);
-        }
-
-        if (boolUniforms.isEmpty()) {
-            return;
-        }
-        for (ObjectMap.Entry<String, Boolean> entry : boolUniforms.entries()) {
-            shader.setUniformi(entry.key, entry.value ? 1 : 0);
-        }
+        shaderUniforms.setUniforms(shader);
     }
 
-    public void unapplyShader(Batch batch) {
+    public void unbindShader(Batch batch) {
         batch.setShader(null);
     }
 

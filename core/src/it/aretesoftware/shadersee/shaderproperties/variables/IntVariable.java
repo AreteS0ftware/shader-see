@@ -8,8 +8,8 @@ import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 
 public class IntVariable extends Variable {
 
-    IntVariable(ShaderVariableQualifier qualifier, int type, String name) {
-        super(qualifier, type, name);
+    IntVariable(VariableBuilder builder) {
+        super(builder);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class IntVariable extends Variable {
     @Override
     protected void createNonFunctional(Main main) {
         defaults().space(10);
-        add(new VisLabel("int " + getVariableName()));
+        add(new VisLabel("int " + getVariableName()) + ";");
     }
 
 }

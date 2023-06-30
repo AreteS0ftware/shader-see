@@ -13,8 +13,8 @@ import it.aretesoftware.shadersee.utils.ShaderVariableType;
 
 public class BoolVariable extends Variable {
 
-    protected BoolVariable(ShaderVariableQualifier qualifier, int type, String name) {
-        super(qualifier, type, name);
+    protected BoolVariable(VariableBuilder builder) {
+        super(builder);
     }
 
     @Override
@@ -28,14 +28,14 @@ public class BoolVariable extends Variable {
         });
 
         defaults().space(10);
-        add(new VisLabel(getVariableName() + ": ")).width(100);
+        add(new VisLabel(getVariableName())).growX();
         add(checkBox);
     }
 
     @Override
     protected void createNonFunctional(Main main) {
         defaults().space(10);
-        add(new VisLabel("bool " + getVariableName()));
+        add(new VisLabel("bool " + getVariableName()) + ";");
     }
 
 }
