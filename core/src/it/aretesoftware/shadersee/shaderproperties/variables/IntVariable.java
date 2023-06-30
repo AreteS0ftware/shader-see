@@ -13,14 +13,14 @@ public class IntVariable extends Variable {
     }
 
     @Override
-    protected void createFunctional(Main main) {
+    protected void createFunctional() {
         defaults().space(10);
         add(new VisLabel(getVariableName() + ": ")).width(100);
         add(new VisTextField());
     }
 
     @Override
-    protected void createNonFunctional(Main main) {
+    protected void createNonFunctional() {
         defaults().space(10);
         add(new VisLabel("int " + getVariableName()) + ";");
     }

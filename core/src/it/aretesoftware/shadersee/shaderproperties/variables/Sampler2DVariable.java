@@ -13,12 +13,12 @@ public class Sampler2DVariable extends Variable {
 
 
     @Override
-    protected void createFunctional(Main main) {
-        createNonFunctional(main);
+    protected void createFunctional() {
+        createNonFunctional();
     }
 
     @Override
-    protected void createNonFunctional(Main main) {
+    protected void createNonFunctional() {
         defaults().space(10);
         add(new VisLabel("sampler2D " + getVariableName() + ";"));
     }

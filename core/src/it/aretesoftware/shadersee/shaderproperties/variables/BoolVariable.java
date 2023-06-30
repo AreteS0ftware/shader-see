@@ -18,12 +18,12 @@ public class BoolVariable extends Variable {
     }
 
     @Override
-    protected void createFunctional(Main main) {
+    protected void createFunctional() {
         VisCheckBox checkBox = new VisCheckBox("");
         checkBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                main.fire(new SetBoolUniform(getVariableName(), checkBox.isChecked()));
+                getMain().fire(new SetBoolUniform(getVariableName(), checkBox.isChecked()));
             }
         });
 
@@ -33,7 +33,7 @@ public class BoolVariable extends Variable {
     }
 
     @Override
-    protected void createNonFunctional(Main main) {
+    protected void createNonFunctional() {
         defaults().space(10);
         add(new VisLabel("bool " + getVariableName()) + ";");
     }

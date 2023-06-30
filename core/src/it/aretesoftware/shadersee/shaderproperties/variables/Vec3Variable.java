@@ -15,7 +15,7 @@ public class Vec3Variable extends Variable {
 
 
     @Override
-    protected void createFunctional(Main main) {
+    protected void createFunctional() {
         defaults().space(5);
         add(new VisLabel(getVariableName() + ": ")).width(100);
         defaults().expandX().width(50).maxWidth(1000).fill();
@@ -25,7 +25,7 @@ public class Vec3Variable extends Variable {
     }
 
     @Override
-    protected void createNonFunctional(Main main) {
+    protected void createNonFunctional() {
         defaults().space(10);
         add(new VisLabel("vec3 " + getVariableName()) + ";");
     }

@@ -8,39 +8,41 @@ import it.aretesoftware.shadersee.utils.ShaderVariableType;
 
 public abstract class Variable extends Table {
 
+    private final Main main;
     private final ShaderVariableQualifier qualifier;
     private final int type;
     private final String name;
 
     protected Variable(VariableBuilder builder) {
+        this.main = builder.main;
         this.qualifier = builder.qualifier;
         this.type = builder.type;
         this.name = builder.name;
     }
 
-    protected abstract void createFunctional(Main main);
+    protected abstract void createFunctional();
 
-    protected abstract void createNonFunctional(Main main);
+    protected abstract void createNonFunctional();
 
     public static Variable createVertexVariable(Main main, String qualifier, String type, String name) {
-        Variable variable = create(qualifier, type, name);
-        variable.createNonFunctional(main);
+        Variable variable = create(main, qualifier, type, name);
+        variable.createNonFunctional();
         return variable;
     }
 
     public static Variable createFragmentVariable(Main main, String qualifier, String type, String name) {
-        Variable variable = create(qualifier, type, name);
+        Variable variable = create(main, qualifier, type, name);
         if (variable.getVariableQualifier() == ShaderVariableQualifier.uniform) {
-            variable.createFunctional(main);
+            variable.createFunctional();
         }
         else {
-            variable.createNonFunctional(main);
+            variable.createNonFunctional();
         }
         return variable;
     }
 
-    public static Variable create(String qualifier, String type, String name) {
-        VariableBuilder builder = new VariableBuilder(ShaderVariableQualifier.valueOf(qualifier), ShaderVariableType.valueOf(type), name);
+    public static Variable create(Main main, String qualifier, String type, String name) {
+        VariableBuilder builder = new VariableBuilder(main, ShaderVariableQualifier.valueOf(qualifier), ShaderVariableType.valueOf(type), name);
         Variable variable;
         switch (builder.type) {
             case ShaderVariableType.BOOL:
@@ -72,6 +74,10 @@ public abstract class Variable extends Table {
                 break;
         }
         return variable;
+    }
+
+    public Main getMain() {
+        return main;
     }
 
     public ShaderVariableQualifier getVariableQualifier() {

@@ -43,6 +43,7 @@ public abstract class Properties extends Table {
             contentTable.row();
             contentTable.add(table);
         }
+        contentTable.padBottom(15);
 
         VisLabel titleLabel = new VisLabel(getTitle(), "title");
         VisScrollPane scrollPane = new VisScrollPane(contentTable);
