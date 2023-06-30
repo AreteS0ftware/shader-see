@@ -1,28 +1,27 @@
 package it.aretesoftware.shadersee.shaderproperties.variables;
 
+
 import com.kotcrab.vis.ui.widget.VisLabel;
-import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 
-public class IntVariable extends Variable {
+public class Sampler2DVariable extends Variable {
 
-    IntVariable(ShaderVariableQualifier qualifier, int type, String name) {
-        super(qualifier, type, name);
+    Sampler2DVariable(ShaderVariableQualifier qualifier, int type, String uniformName) {
+        super(qualifier, type, uniformName);
     }
+
 
     @Override
     protected void createFunctional(Main main) {
-        defaults().space(10);
-        add(new VisLabel(getVariableName() + ": ")).width(100);
-        add(new VisTextField());
+        createNonFunctional(main);
     }
 
     @Override
     protected void createNonFunctional(Main main) {
         defaults().space(10);
-        add(new VisLabel("int " + getVariableName()));
+        add(new VisLabel("sampler2D " + getVariableName()));
     }
 
 }

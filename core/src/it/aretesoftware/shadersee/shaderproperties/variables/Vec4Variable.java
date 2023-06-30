@@ -7,9 +7,9 @@ import com.kotcrab.vis.ui.widget.VisTextField;
 import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 
-public class Vec3Variable extends Variable {
+public class Vec4Variable extends Variable {
 
-    Vec3Variable(ShaderVariableQualifier qualifier, int type, String uniformName) {
+    Vec4Variable(ShaderVariableQualifier qualifier, int type, String uniformName) {
         super(qualifier, type, uniformName);
     }
 
@@ -26,6 +26,8 @@ public class Vec3Variable extends Variable {
 
     @Override
     protected void createNonFunctional(Main main) {
-
+        defaults().space(10);
+        add(new VisLabel("vec4 " + getVariableName()));
     }
+
 }

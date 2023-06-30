@@ -62,7 +62,7 @@ public class Shaders {
 
     void loadDefaultShader() {
         FileHandle vert = Gdx.files.internal("shaders/default.vert");
-        FileHandle frag = Gdx.files.internal("shaders/grayscale_uni.frag");
+        FileHandle frag = Gdx.files.internal("shaders/grayscale.frag");
         loadShader(vert, frag);
     }
 

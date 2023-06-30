@@ -89,8 +89,8 @@ public abstract class Properties extends Table {
             String qualifier = matcher.group(1);
             String type = matcher.group(2);
             String name = matcher.group(3);
-            Variable variable = Variable.create(getMain(), qualifier, type, name);
-            map.add(variable.getQualifier(), variable);
+            Variable variable = isVertex() ? Variable.createVertexVariable(getMain(), qualifier, type, name) : Variable.createFragmentVariable(getMain(), qualifier, type, name);
+            map.add(variable.getVariableQualifier(), variable);
         }
         return map;
     }
@@ -98,6 +98,8 @@ public abstract class Properties extends Table {
     protected abstract FileLocation createFileLocation();
 
     protected abstract String getTitle();
+
+    protected abstract boolean isVertex();
 
     protected Main getMain() {
         return main;

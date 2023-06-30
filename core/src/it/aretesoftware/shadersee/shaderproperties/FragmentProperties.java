@@ -34,4 +34,9 @@ public class FragmentProperties extends Properties {
     protected String getTitle() {
         return "Frag Properties";
     }
+
+    @Override
+    protected boolean isVertex() {
+        return false;
+    }
 }

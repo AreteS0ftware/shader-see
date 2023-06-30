@@ -28,4 +28,9 @@ public class VertexProperties extends Properties {
     protected String getTitle() {
         return "Vert Properties";
     }
+
+    @Override
+    protected boolean isVertex() {
+        return true;
+    }
 }
