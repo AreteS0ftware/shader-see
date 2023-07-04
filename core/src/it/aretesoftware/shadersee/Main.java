@@ -17,8 +17,9 @@ import it.aretesoftware.shadersee.preview.Preview;
 
 public class Main extends Game {
 
-	private Stage stage;
 	private EventManager eventManager;
+	private Assets assets;
+	private Stage stage;
 	private Shaders shaders;
 	private Preview preview;
 
@@ -29,8 +30,8 @@ public class Main extends Game {
 	@Override
 	public void create () {
 		eventManager = new EventManager();
+		assets = new Assets();
 
-		VisUI.load(new Skin(Gdx.files.internal("neutralizer/neutralizer-ui.json")));
 		Gdx.input.setInputProcessor(stage = new Stage(new ScreenViewport(), new SpriteBatch()));
 		stage.setDebugAll(true);
 
@@ -47,7 +48,7 @@ public class Main extends Game {
 		ScreenUtils.clear(0, 0, 0, 1);
 
 		stage.act();
-		preview.draw(stage.getBatch(), shaders);
+		preview.draw(stage.getBatch(), this);
 		stage.getViewport().apply();
 		stage.draw();
 	}
@@ -82,6 +83,16 @@ public class Main extends Game {
 
 	public void removeListenersOfBind(Object bind) {
 		eventManager.removeListenersOfBind(bind, true);
+	}
+
+	//
+
+	public Assets getAssets() {
+		return assets;
+	}
+
+	public Shaders getShaders() {
+		return shaders;
 	}
 
 }

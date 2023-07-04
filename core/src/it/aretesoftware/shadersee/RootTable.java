@@ -8,6 +8,7 @@ import com.kotcrab.vis.ui.widget.VisSplitPane;
 import com.kotcrab.vis.ui.widget.VisTable;
 
 import it.aretesoftware.shadersee.preview.Preview;
+import it.aretesoftware.shadersee.previewproperties.PreviewProperties;
 import it.aretesoftware.shadersee.shaderproperties.FragmentProperties;
 import it.aretesoftware.shadersee.shaderproperties.VertexProperties;
 
@@ -74,7 +75,8 @@ public class RootTable extends VisTable {
     }
 
     private Table createRightSideOfPane(Preview preview) {
-        VisSplitPane splitPane = new VisSplitPane(preview, new Table(), true);
+        PreviewProperties previewProperties = new PreviewProperties(main);
+        VisSplitPane splitPane = new VisSplitPane(preview, previewProperties, true);
         splitPane.setMinSplitAmount(0.40f);
         splitPane.setMaxSplitAmount(0.60f);
 

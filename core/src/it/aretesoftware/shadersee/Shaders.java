@@ -2,15 +2,13 @@ package it.aretesoftware.shadersee;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.utils.ObjectMap;
 
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.LoadFragmentShaderEvent;
 import it.aretesoftware.shadersee.event.shader.LoadVertexShaderEvent;
-import it.aretesoftware.shadersee.event.shader.SetBoolUniform;
-import it.aretesoftware.shadersee.event.shader.SetFloatUniform;
 import it.aretesoftware.shadersee.event.shader.ShaderLoadEvent;
 
 public class Shaders {
@@ -19,10 +17,12 @@ public class Shaders {
     private final ShaderUniforms shaderUniforms;
     private ShaderProgram shader;
     private FileHandle vert, frag;
+    private Texture u_texture;
 
     Shaders(Main main) {
         this.main = main;
         shaderUniforms = new ShaderUniforms(main);
+        u_texture = main.getAssets().getBadlogicTexture();
         addListeners();
     }
 
@@ -72,6 +72,10 @@ public class Shaders {
 
     public void unbindShader(Batch batch) {
         batch.setShader(null);
+    }
+
+    public Texture getUTexture() {
+        return u_texture;
     }
 
 }

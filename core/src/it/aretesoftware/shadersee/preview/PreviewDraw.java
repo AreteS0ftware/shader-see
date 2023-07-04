@@ -1,50 +1,39 @@
 package it.aretesoftware.shadersee.preview;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
+import it.aretesoftware.shadersee.Assets;
+import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.Shaders;
 
 public class PreviewDraw {
 
-    private final Texture checkeredBackground;
-    private final Texture whitePixel;
-    private final Texture badlogic;
+    PreviewDraw() {
 
-    public PreviewDraw() {
-        checkeredBackground = new Texture(Gdx.files.internal("checkered_background.png"));
-        checkeredBackground.setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
-
-        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.WHITE);
-        pixmap.fill();
-        whitePixel = new Texture(pixmap);
-        pixmap.dispose();
-
-        badlogic = new Texture("badlogic.jpg");
     }
 
     //
 
-    public void draw(Batch batch, Shaders shaders) {
+    public void draw(Batch batch, Main main) {
+        Assets assets = main.getAssets();
+        Shaders shaders = main.getShaders();
         batch.begin();
-        drawCheckers(batch);
-        drawSolidColor(batch);
+        drawCheckers(batch, assets);
+        drawSolidColor(batch, assets);
         drawSprite(batch, shaders);
         batch.end();
     }
 
-    private void drawCheckers(Batch batch) {
+    private void drawCheckers(Batch batch, Assets assets) {
         float width = 5000;
         float height = 5000;
         float x = -2500;
         float y = -2500;
         float scale = 1;
         batch.setColor(Color.WHITE);
-        batch.draw(checkeredBackground,
+        batch.draw(assets.getCheckeredBackgroundTexture(),
                 x, y,
                 width / 2f, height / 2f,
                 width, height,
@@ -55,15 +44,15 @@ public class PreviewDraw {
                 false, false);
     }
 
-    private void drawSolidColor(Batch batch) {
+    private void drawSolidColor(Batch batch, Assets assets) {
         float width = 5000;
         float height = 5000;
         float x = 0;
         float y = 0;
         float scale = 1;
         batch.setColor(Color.CLEAR);
-        batch.draw(whitePixel,
-                x, y,
+        batch.draw(assets.getWhitePixelTexture(),
+                x - width / 2f, y - height / 2f,
                 width / 2f, height / 2f,
                 width, height,
                 1f, 1f,
@@ -75,8 +64,9 @@ public class PreviewDraw {
     }
 
     private void drawSprite(Batch batch, Shaders shaders) {
+        Texture u_texture = shaders.getUTexture();
         shaders.bindShader(batch);
-        batch.draw(badlogic, 0, 0);
+        batch.draw(u_texture, -u_texture.getWidth() / 2f, -u_texture.getHeight() / 2f);
         shaders.unbindShader(batch);
     }
 
