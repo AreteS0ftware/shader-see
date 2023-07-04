@@ -37,7 +37,7 @@ public abstract class Properties extends Table {
         contentTable.defaults().padLeft(20).padRight(10);
         contentTable.add(fileLocation).padTop(15).growX();
         contentTable.row();
-        contentTable.defaults().padTop(35).growX();
+        contentTable.defaults().padTop(45).growX();
         for (Table table : tables) {
             contentTable.row();
             contentTable.add(table);
@@ -71,7 +71,7 @@ public abstract class Properties extends Table {
             Table table = new Table();
             table.add(new VisLabel(title));
             table.row();
-            table.defaults().growX().padTop(15);
+            table.defaults().growX().padTop(25);
             for (Variable variable : variables) {
                 table.add(variable);
                 table.row();

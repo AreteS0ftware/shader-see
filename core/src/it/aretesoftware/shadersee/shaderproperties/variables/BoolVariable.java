@@ -24,7 +24,7 @@ public class BoolVariable extends Variable {
         });
 
         defaults().space(10);
-        add(new VisLabel(getVariableName())).growX();
+        add(new VisLabel(getVariableName()));
         add(checkBox);
     }
 

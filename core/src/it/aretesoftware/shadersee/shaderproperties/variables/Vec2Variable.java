@@ -1,11 +1,11 @@
 package it.aretesoftware.shadersee.shaderproperties.variables;
 
 
+import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
+import com.kotcrab.vis.ui.widget.VisCheckBox;
 import com.kotcrab.vis.ui.widget.VisLabel;
+import com.kotcrab.vis.ui.widget.VisRadioButton;
 import com.kotcrab.vis.ui.widget.VisTextField;
-
-import it.aretesoftware.shadersee.Main;
-import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 
 public class Vec2Variable extends Variable {
 
@@ -21,6 +21,21 @@ public class Vec2Variable extends Variable {
         defaults().expandX().width(50).maxWidth(1000).fill();
         add(new VisTextField());
         add(new VisTextField());
+        row();
+        defaults().reset();
+
+        ButtonGroup<VisRadioButton> buttonGroup = new ButtonGroup<>();
+        VisRadioButton resolutionRadioButton = new VisRadioButton("Resolution");
+        VisRadioButton pointerRadioButton = new VisRadioButton("Pointer");
+        VisRadioButton noneRadioButton = new VisRadioButton("None");
+        buttonGroup.add(resolutionRadioButton);
+        buttonGroup.add(pointerRadioButton);
+        buttonGroup.add(noneRadioButton);
+        noneRadioButton.setChecked(true);
+
+        add(resolutionRadioButton);
+        add(pointerRadioButton);
+        add(noneRadioButton);
     }
 
     @Override
