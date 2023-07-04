@@ -18,12 +18,11 @@ public abstract class Properties extends Table {
 
     private final Main main;
     private final FileLocation fileLocation;
-    private final ObjectMap<ShaderVariableQualifier, Array<Variable>> qualifierToVariables;
 
-    Properties(Main main) {
+    Properties(Main main, String shaderSource) {
         this.main = main;
         this.fileLocation = createFileLocation();
-        qualifierToVariables = new ObjectMap<>();
+        rebuild(shaderSource);
     }
 
     //

@@ -13,13 +13,14 @@ import it.aretesoftware.shadersee.event.shader.ShaderLoadEvent;
 public class FragmentProperties extends Properties {
 
     public FragmentProperties(Main main) {
-        super(main);
+        super(main, main.getShaders().getShader().getFragmentShaderSource());
     }
 
     //
 
     protected FileLocation createFileLocation() {
         FileLocation fileLocation = new FileLocation("Fragment: ");
+        fileLocation.setFilePath(getMain().getShaders().getFragmentShaderFilePath());
         getMain().addListener(new EventListener<ShaderLoadEvent>(ShaderLoadEvent.class, this) {
             @Override
             protected void fire(ShaderLoadEvent event) {

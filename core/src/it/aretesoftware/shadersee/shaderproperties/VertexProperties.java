@@ -7,13 +7,14 @@ import it.aretesoftware.shadersee.event.shader.ShaderLoadEvent;
 public class VertexProperties extends Properties {
 
     public VertexProperties(Main main) {
-        super(main);
+        super(main, main.getShaders().getShader().getVertexShaderSource());
     }
 
     //
 
     protected FileLocation createFileLocation() {
         FileLocation fileLocation = new FileLocation("Vertex: ");
+        fileLocation.setFilePath(getMain().getShaders().getVertexShaderFilePath());
         getMain().addListener(new EventListener<ShaderLoadEvent>(ShaderLoadEvent.class, this) {
             @Override
             protected void fire(ShaderLoadEvent event) {

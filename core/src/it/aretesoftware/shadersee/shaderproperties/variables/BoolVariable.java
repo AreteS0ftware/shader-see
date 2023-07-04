@@ -4,12 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.widget.VisCheckBox;
 import com.kotcrab.vis.ui.widget.VisLabel;
-import com.kotcrab.vis.ui.widget.VisTextField;
 
-import it.aretesoftware.shadersee.Main;
-import it.aretesoftware.shadersee.event.shader.SetBoolUniform;
-import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
-import it.aretesoftware.shadersee.utils.ShaderVariableType;
+import it.aretesoftware.shadersee.event.shader.SetBoolUniformEvent;
 
 public class BoolVariable extends Variable {
 
@@ -23,7 +19,7 @@ public class BoolVariable extends Variable {
         checkBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                getMain().fire(new SetBoolUniform(getVariableName(), checkBox.isChecked()));
+                getMain().fire(new SetBoolUniformEvent(getVariableName(), checkBox.isChecked()));
             }
         });
 

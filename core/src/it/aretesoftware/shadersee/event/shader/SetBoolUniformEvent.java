@@ -2,12 +2,12 @@ package it.aretesoftware.shadersee.event.shader;
 
 import it.aretesoftware.shadersee.event.Event;
 
-public class SetFloatUniform extends Event {
+public class SetBoolUniformEvent extends Event {
 
     public final String uniformName;
-    public final float uniformValue;
+    public final boolean uniformValue;
 
-    public SetFloatUniform(String uniformName, float uniformValue) {
+    public SetBoolUniformEvent(String uniformName, boolean uniformValue) {
         this.uniformName = uniformName;
         this.uniformValue = uniformValue;
     }

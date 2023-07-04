@@ -12,7 +12,7 @@ import com.kotcrab.vis.ui.VisUI;
 public class Assets {
 
     private final Skin skin;
-    private final Texture whitePixelTexture, checkeredBackgroundTexture, badlogicTexture;
+    private final Texture whitePixelTexture, checkeredBackgroundTexture;
     private final BitmapFont size100Font;
 
     Assets() {
@@ -26,8 +26,6 @@ public class Assets {
 
         checkeredBackgroundTexture = new Texture(Gdx.files.internal("checkered_background.png"));
         checkeredBackgroundTexture.setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
-
-        badlogicTexture = new Texture("badlogic.jpg");
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Roboto-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -48,10 +46,6 @@ public class Assets {
 
     public Texture getWhitePixelTexture() {
         return whitePixelTexture;
-    }
-
-    public Texture getBadlogicTexture() {
-        return badlogicTexture;
     }
 
     public BitmapFont getSize100Font() {

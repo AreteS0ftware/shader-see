@@ -3,10 +3,9 @@ package it.aretesoftware.shadersee;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.ObjectMap;
 
-import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventListener;
-import it.aretesoftware.shadersee.event.shader.SetBoolUniform;
-import it.aretesoftware.shadersee.event.shader.SetFloatUniform;
+import it.aretesoftware.shadersee.event.shader.SetBoolUniformEvent;
+import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
 import it.aretesoftware.shadersee.event.shader.ShaderLoadEvent;
 
 public class ShaderUniforms {
@@ -29,15 +28,15 @@ public class ShaderUniforms {
             }
         });
         // Set Uniforms
-        main.addPreListener(new EventListener<SetFloatUniform>(SetFloatUniform.class, this) {
+        main.addPreListener(new EventListener<SetFloatUniformEvent>(SetFloatUniformEvent.class, this) {
             @Override
-            protected void fire(SetFloatUniform event) {
+            protected void fire(SetFloatUniformEvent event) {
                 put(event.uniformName, event.uniformValue);
             }
         });
-        main.addPreListener(new EventListener<SetBoolUniform>(SetBoolUniform.class, this) {
+        main.addPreListener(new EventListener<SetBoolUniformEvent>(SetBoolUniformEvent.class, this) {
             @Override
-            protected void fire(SetBoolUniform event) {
+            protected void fire(SetBoolUniformEvent event) {
                 put(event.uniformName, event.uniformValue);
             }
         });

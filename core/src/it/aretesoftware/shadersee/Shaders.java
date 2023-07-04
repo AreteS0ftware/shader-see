@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.LoadFragmentShaderEvent;
 import it.aretesoftware.shadersee.event.shader.LoadVertexShaderEvent;
+import it.aretesoftware.shadersee.event.shader.SetUTextureEvent;
 import it.aretesoftware.shadersee.event.shader.ShaderLoadEvent;
 
 public class Shaders {
@@ -17,12 +19,15 @@ public class Shaders {
     private final ShaderUniforms shaderUniforms;
     private ShaderProgram shader;
     private FileHandle vert, frag;
+
     private Texture u_texture;
+    private FileHandle uTextureFileHandle;
 
     Shaders(Main main) {
         this.main = main;
+        uTextureFileHandle = Gdx.files.internal("badlogic.jpg");
+        u_texture = new Texture(uTextureFileHandle);
         shaderUniforms = new ShaderUniforms(main);
-        u_texture = main.getAssets().getBadlogicTexture();
         addListeners();
     }
 
@@ -38,6 +43,15 @@ public class Shaders {
             @Override
             protected void fire(LoadFragmentShaderEvent event) {
                 loadShader(vert, event.frag);
+            }
+        });
+        // SetUTextureEvent
+        main.addPreListener(new EventListener<SetUTextureEvent>(SetUTextureEvent.class, this) {
+            @Override
+            protected void fire(SetUTextureEvent event) {
+                u_texture.dispose();
+                u_texture = event.u_texture;
+                uTextureFileHandle = event.fileHandle;
             }
         });
     }
@@ -76,6 +90,22 @@ public class Shaders {
 
     public Texture getUTexture() {
         return u_texture;
+    }
+
+    public String getUTextureFilePath() {
+        return uTextureFileHandle.file().getAbsolutePath();
+    }
+
+    public ShaderProgram getShader() {
+        return shader;
+    }
+
+    public String getVertexShaderFilePath() {
+        return vert.file().getAbsolutePath();
+    }
+
+    public String getFragmentShaderFilePath() {
+        return frag.file().getAbsolutePath();
     }
 
 }
