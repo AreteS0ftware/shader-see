@@ -13,7 +13,7 @@ public class VertexProperties extends Properties {
     //
 
     protected FileLocation createFileLocation() {
-        FileLocation fileLocation = new FileLocation("Vertex: ");
+        VertexFileLocation fileLocation = new VertexFileLocation(getMain());
         fileLocation.setFilePath(getMain().getShaders().getVertexShaderFilePath());
         getMain().addListener(new EventListener<ShaderLoadEvent>(ShaderLoadEvent.class, this) {
             @Override

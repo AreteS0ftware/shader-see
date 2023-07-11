@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.utils.ObjectMap;
 
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.LoadFragmentShaderEvent;
@@ -60,7 +61,7 @@ public class Shaders {
 
     void loadDefaultShader() {
         FileHandle vert = Gdx.files.internal("shaders/default.vert");
-        FileHandle frag = Gdx.files.internal("shaders/crt.frag");
+        FileHandle frag = Gdx.files.internal("shaders/grayscale.frag");
         loadShader(vert, frag);
     }
 

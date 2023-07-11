@@ -19,7 +19,7 @@ public class FragmentProperties extends Properties {
     //
 
     protected FileLocation createFileLocation() {
-        FileLocation fileLocation = new FileLocation("Fragment: ");
+        FragmentFileLocation fileLocation = new FragmentFileLocation(getMain());
         fileLocation.setFilePath(getMain().getShaders().getFragmentShaderFilePath());
         getMain().addListener(new EventListener<ShaderLoadEvent>(ShaderLoadEvent.class, this) {
             @Override
