@@ -1,19 +1,13 @@
 package it.aretesoftware.shadersee.shaderproperties;
 
-import com.kotcrab.vis.ui.widget.VisLabel;
-import com.kotcrab.vis.ui.widget.VisScrollPane;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import it.aretesoftware.shadersee.Main;
-import it.aretesoftware.shadersee.event.EventListener;
-import it.aretesoftware.shadersee.event.shader.ShaderLoadEvent;
+import it.aretesoftware.shadersee.shaderproperties.variables.Variable;
 
 public class FragmentProperties extends Properties {
 
     public FragmentProperties(Main main) {
-        super(main, main.getShaders().getShader().getFragmentShaderSource());
+        super(main);
     }
 
     //
@@ -21,14 +15,12 @@ public class FragmentProperties extends Properties {
     protected FileLocation createFileLocation() {
         FragmentFileLocation fileLocation = new FragmentFileLocation(getMain());
         fileLocation.setFilePath(getMain().getShaders().getFragmentShaderFilePath());
-        getMain().addListener(new EventListener<ShaderLoadEvent>(ShaderLoadEvent.class, this) {
-            @Override
-            protected void fire(ShaderLoadEvent event) {
-                fileLocation.setFilePath(event.frag.path());
-                rebuild(event.shader.getFragmentShaderSource());
-            }
-        });
         return fileLocation;
+    }
+
+    @Override
+    protected String getInitialShaderSource() {
+        return getMain().getShaders().getShader().getFragmentShaderSource();
     }
 
     @Override
@@ -37,7 +29,8 @@ public class FragmentProperties extends Properties {
     }
 
     @Override
-    protected boolean isVertex() {
-        return false;
+    protected Variable createVariable(String qualifier, String type, String name) {
+        return Variable.createFragmentVariable(getMain(), qualifier, type, name);
     }
+
 }

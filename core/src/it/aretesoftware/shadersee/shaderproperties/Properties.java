@@ -13,16 +13,17 @@ import it.aretesoftware.couscous.ArrayObjectMap;
 import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.shaderproperties.variables.Variable;
 import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
+import it.aretesoftware.shadersee.utils.ShaderVariableType;
 
 public abstract class Properties extends Table {
 
     private final Main main;
     private final FileLocation fileLocation;
 
-    Properties(Main main, String shaderSource) {
+    Properties(Main main) {
         this.main = main;
         this.fileLocation = createFileLocation();
-        rebuild(shaderSource);
+        rebuild(getInitialShaderSource());
     }
 
     //
@@ -89,7 +90,7 @@ public abstract class Properties extends Table {
             String qualifier = matcher.group(1);
             String type = matcher.group(2);
             String name = matcher.group(3);
-            Variable variable = isVertex() ? Variable.createVertexVariable(getMain(), qualifier, type, name) : Variable.createFragmentVariable(getMain(), qualifier, type, name);
+            Variable variable = createVariable(qualifier, type, name);
             map.add(variable.getVariableQualifier(), variable);
         }
         return map;
@@ -97,12 +98,18 @@ public abstract class Properties extends Table {
 
     protected abstract FileLocation createFileLocation();
 
+    protected abstract String getInitialShaderSource();
+
     protected abstract String getTitle();
 
-    protected abstract boolean isVertex();
+    protected abstract Variable createVariable(String qualifier, String type, String name);
 
     protected Main getMain() {
         return main;
+    }
+
+    FileLocation getFileLocation() {
+        return fileLocation;
     }
 
 }
