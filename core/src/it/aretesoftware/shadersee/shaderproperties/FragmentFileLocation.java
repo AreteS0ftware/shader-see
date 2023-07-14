@@ -8,7 +8,7 @@ import it.aretesoftware.shadersee.event.shader.LoadFragmentShaderEvent;
 
 public class FragmentFileLocation extends FileLocation {
 
-    public FragmentFileLocation(Main main) {
+    FragmentFileLocation(Main main) {
         super(main);
     }
 

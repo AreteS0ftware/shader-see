@@ -43,6 +43,7 @@ public class FloatVariable extends Variable {
                 else {
                     elapsedTime = 0;
                     uniformTextField.setDisabled(false);
+                    uniformTextField.setText("0.0");
                 }
             }
         });
@@ -58,6 +59,8 @@ public class FloatVariable extends Variable {
         defaults().space(10);
         add(new VisLabel("float " + getVariableName()) + ";");
     }
+
+    //
 
     @Override
     public void act(float delta) {

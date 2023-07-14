@@ -6,7 +6,7 @@ import it.aretesoftware.shadersee.shaderproperties.variables.Variable;
 
 public class FragmentProperties extends Properties {
 
-    public FragmentProperties(Main main) {
+    FragmentProperties(Main main) {
         super(main);
     }
 

@@ -5,7 +5,7 @@ import it.aretesoftware.shadersee.shaderproperties.variables.Variable;
 
 public class VertexProperties extends Properties {
 
-    public VertexProperties(Main main) {
+    VertexProperties(Main main) {
         super(main);
     }
 

@@ -11,7 +11,8 @@ varying vec2 v_texCoords;
 uniform sampler2D u_texture;
 uniform mat4 u_projTrans;
 
-uniform bool horizontal;
+uniform bool crossfade;
+uniform bool vertical;
 uniform vec2 resolution;
 uniform vec2 curvature;
 uniform float time;
@@ -42,7 +43,7 @@ void main()
 	col *= 2.8;
 
 	float scans;
-	if (horizontal) {
+	if (vertical) {
 		scans = clamp(0.35 + 0.35 * sin(3.5 * time + uv.x * resolution.x * 1.5), 0.0, 1.0);
 	}
 	else {
@@ -59,11 +60,12 @@ void main()
 		col *= 0.0;
 	
 	col *= 1.0 - 0.65 * vec3(clamp((mod(v_texCoords.x, 2.0) -1.0) * 2.0, 0.0, 1.0));
-	
-    //float comp = smoothstep(0.1, 0.9, sin(time));
-	
-	// Remove the next line to stop cross-fade between original and postprocess
-	//col = mix(col, oricol, comp);
+
+	 // Remove the next line to stop cross-fade between original and postprocess
+	if (crossfade) {
+        float comp = smoothstep(0.1, 0.9, sin(time));
+        col = mix(col, oricol, comp);
+	}
 	
     gl_FragColor = vec4(col, 1.0);
 }

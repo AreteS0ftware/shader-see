@@ -8,7 +8,7 @@ import it.aretesoftware.shadersee.event.shader.LoadVertexShaderEvent;
 
 public class VertexFileLocation extends FileLocation {
 
-    public VertexFileLocation(Main main) {
+    VertexFileLocation(Main main) {
         super(main);
     }
 

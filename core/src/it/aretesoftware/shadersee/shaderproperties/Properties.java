@@ -13,7 +13,6 @@ import it.aretesoftware.couscous.ArrayObjectMap;
 import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.shaderproperties.variables.Variable;
 import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
-import it.aretesoftware.shadersee.utils.ShaderVariableType;
 
 public abstract class Properties extends Table {
 
@@ -47,6 +46,7 @@ public abstract class Properties extends Table {
 
         VisLabel titleLabel = new VisLabel(getTitle(), "title");
         VisScrollPane scrollPane = new VisScrollPane(contentTable);
+        clear();
         add(titleLabel).top();
         row();
         add(scrollPane).expand().fillX().top();

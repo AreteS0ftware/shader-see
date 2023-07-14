@@ -1,21 +1,26 @@
 package it.aretesoftware.shadersee;
 
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 
+import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.SetBoolUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
+import it.aretesoftware.shadersee.event.shader.SetVec2UniformEvent;
 import it.aretesoftware.shadersee.event.shader.ShaderLoadEvent;
 
 public class ShaderUniforms {
 
     private final ObjectMap<String, Boolean> boolUniformsMap;
     private final ObjectMap<String, Float> floatUniformsMap;
+    private final ObjectMap<String, Vector2> vec2UniformsMap;
 
     ShaderUniforms(Main main) {
         boolUniformsMap = new ObjectMap<>();
         floatUniformsMap = new ObjectMap<>();
+        vec2UniformsMap = new ObjectMap<>();
         addListeners(main);
     }
 
@@ -38,6 +43,12 @@ public class ShaderUniforms {
             @Override
             protected void fire(SetBoolUniformEvent event) {
                 put(event.uniformName, event.uniformValue);
+            }
+        });
+        main.addPreListener(new EventListener<SetVec2UniformEvent>(SetVec2UniformEvent.class, this) {
+            @Override
+            protected void fire(SetVec2UniformEvent event) {
+                vec2UniformsMap.put(event.uniformName, event.uniformValue);
             }
         });
     }
@@ -66,6 +77,11 @@ public class ShaderUniforms {
         if (!boolUniformsMap.isEmpty()) {
             for (ObjectMap.Entry<String, Boolean> entry : boolUniformsMap.entries()) {
                 shader.setUniformi(entry.key, entry.value ? 1 : 0);
+            }
+        }
+        if (!vec2UniformsMap.isEmpty()) {
+            for (ObjectMap.Entry<String, Vector2> entry : vec2UniformsMap.entries()) {
+                shader.setUniformf(entry.key, entry.value);
             }
         }
     }

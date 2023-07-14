@@ -95,4 +95,8 @@ public class Main extends Game {
 		return shaders;
 	}
 
+	public Preview getPreview() {
+		return preview;
+	}
+
 }
