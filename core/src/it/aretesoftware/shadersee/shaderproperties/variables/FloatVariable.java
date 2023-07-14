@@ -21,7 +21,7 @@ public class FloatVariable extends Variable {
     }
 
     @Override
-    protected void createFunctional() {
+    protected void populate() {
         uniformTextField = new VisTextField("0.0");
         uniformTextField.setTextFieldFilter(new DecimalsOnlyFilter());
         uniformTextField.setTextFieldListener(new VisTextField.TextFieldListener() {
@@ -52,12 +52,6 @@ public class FloatVariable extends Variable {
         add(new VisLabel(getVariableName()));
         add(uniformTextField).width(100).maxWidth(1000).growX();
         add(elapsedTimeCheckbox);
-    }
-
-    @Override
-    protected void createNonFunctional() {
-        defaults().space(10);
-        add(new VisLabel("float " + getVariableName()) + ";");
     }
 
     //

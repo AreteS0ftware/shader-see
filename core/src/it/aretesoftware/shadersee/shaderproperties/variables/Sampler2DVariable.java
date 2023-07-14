@@ -4,6 +4,7 @@ package it.aretesoftware.shadersee.shaderproperties.variables;
 import com.kotcrab.vis.ui.widget.VisLabel;
 
 import it.aretesoftware.shadersee.Main;
+import it.aretesoftware.shadersee.utils.ShaderVariableType;
 
 public class Sampler2DVariable extends Variable {
 
@@ -13,14 +14,9 @@ public class Sampler2DVariable extends Variable {
 
 
     @Override
-    protected void createFunctional() {
-        createNonFunctional();
-    }
-
-    @Override
-    protected void createNonFunctional() {
+    protected void populate() {
         defaults().space(10);
-        add(new VisLabel("sampler2D " + getVariableName() + ";"));
+        add(new VisLabel(ShaderVariableType.toString(getVariableType()) + " " + getVariableName() + ";"));
     }
 
 }

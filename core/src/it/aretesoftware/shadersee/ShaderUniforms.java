@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 
-import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.SetBoolUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
@@ -29,44 +28,38 @@ public class ShaderUniforms {
         main.addPreListener(new EventListener<ShaderLoadEvent>(ShaderLoadEvent.class, this) {
             @Override
             protected void fire(ShaderLoadEvent event) {
-                clearUniforms();
+                floatUniformsMap.clear();
+                boolUniformsMap.clear();
+                vec2UniformsMap.clear();
             }
         });
         // Set Uniforms
         main.addPreListener(new EventListener<SetFloatUniformEvent>(SetFloatUniformEvent.class, this) {
             @Override
             protected void fire(SetFloatUniformEvent event) {
-                put(event.uniformName, event.uniformValue);
+                floatUniformsMap.put(event.uniformName, event.uniformValue);
             }
         });
         main.addPreListener(new EventListener<SetBoolUniformEvent>(SetBoolUniformEvent.class, this) {
             @Override
             protected void fire(SetBoolUniformEvent event) {
-                put(event.uniformName, event.uniformValue);
+                boolUniformsMap.put(event.uniformName, event.uniformValue);
             }
         });
         main.addPreListener(new EventListener<SetVec2UniformEvent>(SetVec2UniformEvent.class, this) {
             @Override
             protected void fire(SetVec2UniformEvent event) {
-                vec2UniformsMap.put(event.uniformName, event.uniformValue);
+                Vector2 vec2 = vec2UniformsMap.get(event.uniformName);
+                if (vec2 == null) {
+                    vec2 = new Vector2();
+                    vec2UniformsMap.put(event.uniformName, vec2);
+                }
+                vec2.set(event.uniformVec2X, event.uniformVec2Y);
             }
         });
     }
 
     //
-
-    private void put(String uniformName, boolean uniformValue) {
-        boolUniformsMap.put(uniformName, uniformValue);
-    }
-
-    private void put(String uniformName, float uniformValue) {
-        floatUniformsMap.put(uniformName, uniformValue);
-    }
-
-    private void clearUniforms() {
-        boolUniformsMap.clear();
-        floatUniformsMap.clear();
-    }
 
     void setUniforms(ShaderProgram shader) {
         if (!floatUniformsMap.isEmpty()) {

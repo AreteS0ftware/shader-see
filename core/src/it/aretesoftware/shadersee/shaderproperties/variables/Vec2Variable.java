@@ -12,6 +12,7 @@ import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.couscous.Strings;
 import it.aretesoftware.shadersee.event.shader.SetVec2UniformEvent;
+import it.aretesoftware.shadersee.preview.Preview;
 import it.aretesoftware.shadersee.utils.DecimalsOnlyFilter;
 
 public class Vec2Variable extends Variable {
@@ -27,7 +28,7 @@ public class Vec2Variable extends Variable {
 
 
     @Override
-    protected void createFunctional() {
+    protected void populate() {
         xTextField = createVec2TextField();
         yTextField = createVec2TextField();
 
@@ -52,43 +53,30 @@ public class Vec2Variable extends Variable {
         add(pointerRadioButton);
     }
 
-    @Override
-    protected void createNonFunctional() {
-        defaults().space(10);
-        add(new VisLabel("vec2 " + getVariableName() + ";"));
-    }
-
     //
 
     @Override
     public void act(float delta) {
         super.act(delta);
-
-        if (pointerRadioButton == null) {
-            return;
-        }
-
+        Preview preview = getMain().getPreview();
         if (pointerRadioButton.isChecked()) {
-            vec2.set(Gdx.input.getX(), Gdx.input.getY());
-            getMain().getPreview().screenToLocalCoordinates(vec2);
-            xTextField.setText(String.valueOf(vec2.x));
-            yTextField.setText(String.valueOf(vec2.y));
+            preview.screenToLocalCoordinates(vec2.set(Gdx.input.getX(), Gdx.input.getY()));
+            updateVec2TextFields();
             getMain().fire(new SetVec2UniformEvent(getVariableName(), vec2));
         }
-
-        if (resolutionRadioButton == null) {
-            return;
-        }
-
         if (resolutionRadioButton.isChecked()) {
-            vec2.set(getMain().getPreview().getWidth(), getMain().getPreview().getHeight());
-            xTextField.setText(String.valueOf(vec2.x));
-            yTextField.setText(String.valueOf(vec2.y));
+            vec2.set(preview.getWidth(), preview.getHeight());
+            updateVec2TextFields();
             getMain().fire(new SetVec2UniformEvent(getVariableName(), vec2));
         }
     }
 
     //
+
+    private void updateVec2TextFields() {
+        xTextField.setText(String.valueOf(vec2.x));
+        yTextField.setText(String.valueOf(vec2.y));
+    }
 
     private VisTextField createVec2TextField() {
         VisTextField textField = new VisTextField("0.0");
@@ -126,9 +114,9 @@ public class Vec2Variable extends Variable {
                 xTextField.setDisabled(true);
                 yTextField.setDisabled(true);
             }
-            xTextField.setText("0.0");
-            yTextField.setText("0.0");
-            getMain().fire(new SetVec2UniformEvent(getVariableName(), vec2.setZero()));
+            vec2.setZero();
+            updateVec2TextFields();
+            getMain().fire(new SetVec2UniformEvent(getVariableName(), vec2));
         }
     }
 }

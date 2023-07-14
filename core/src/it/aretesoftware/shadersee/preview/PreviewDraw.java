@@ -1,6 +1,7 @@
 package it.aretesoftware.shadersee.preview;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
@@ -10,8 +11,10 @@ import it.aretesoftware.shadersee.Shaders;
 
 public class PreviewDraw {
 
-    PreviewDraw() {
+    private final Preview preview;
 
+    PreviewDraw(Preview preview) {
+        this.preview = preview;
     }
 
     //
@@ -31,7 +34,7 @@ public class PreviewDraw {
         float height = 5000;
         float x = -2500;
         float y = -2500;
-        float scale = 1;
+        float scale = ((OrthographicCamera)preview.getViewport().getCamera()).zoom * 2;
         batch.setColor(Color.WHITE);
         batch.draw(assets.getCheckeredBackgroundTexture(),
                 x, y,
@@ -49,7 +52,7 @@ public class PreviewDraw {
         float height = 5000;
         float x = 0;
         float y = 0;
-        float scale = 1;
+        float scale = 1f;
         batch.setColor(Color.CLEAR);
         batch.draw(assets.getWhitePixelTexture(),
                 x - width / 2f, y - height / 2f,

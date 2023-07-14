@@ -20,59 +20,54 @@ public abstract class Variable extends Table {
         this.name = builder.name;
     }
 
-    protected abstract void createFunctional();
-
-    protected abstract void createNonFunctional();
+    protected abstract void populate();
 
     public static Variable createVertexVariable(Main main, String qualifier, String type, String name) {
-        Variable variable = create(main, qualifier, type, name);
-        variable.createNonFunctional();
-        return variable;
+        return create(main, true, qualifier, type, name);
     }
 
     public static Variable createFragmentVariable(Main main, String qualifier, String type, String name) {
-        Variable variable = create(main, qualifier, type, name);
-        if (variable.getVariableQualifier() == ShaderVariableQualifier.uniform) {
-            variable.createFunctional();
-        }
-        else {
-            variable.createNonFunctional();
-        }
-        return variable;
+        return create(main, false, qualifier, type, name);
     }
 
-    public static Variable create(Main main, String qualifier, String type, String name) {
-        VariableBuilder builder = new VariableBuilder(main, ShaderVariableQualifier.valueOf(qualifier), ShaderVariableType.valueOf(type), name);
+    public static Variable create(Main main, boolean vertex, String qualifier, String type, String name) {
+        VariableBuilder builder = new VariableBuilder(main, ShaderVariableQualifier.valueOf(qualifier), ShaderVariableType.toInt(type), name);
         Variable variable;
-        switch (builder.type) {
-            case ShaderVariableType.BOOL:
-                 variable = new BoolVariable(builder);
-                 break;
-            case ShaderVariableType.INT:
-                 variable = new IntVariable(builder);
-                 break;
-            case ShaderVariableType.FLOAT:
-                 variable = new FloatVariable(builder);
-                 break;
-            case ShaderVariableType.VEC2:
-                variable = new Vec2Variable(builder);
-                break;
-            case ShaderVariableType.VEC3:
-                variable = new Vec3Variable(builder);
-                break;
-            case ShaderVariableType.VEC4:
-                variable = new Vec4Variable(builder);
-                break;
-            case ShaderVariableType.MAT4:
-                variable = new Mat4Variable(builder);
-                break;
-            case ShaderVariableType.SAMPLER2D:
-                variable = new Sampler2DVariable(builder);
-                break;
-            default:
-                variable = null;
-                break;
+        if (vertex || ShaderVariableQualifier.valueOf(qualifier) != ShaderVariableQualifier.uniform) {
+            variable = new DummyVariable(builder);
         }
+        else {
+            switch (builder.type) {
+                case ShaderVariableType.BOOL:
+                    variable = new BoolVariable(builder);
+                    break;
+                case ShaderVariableType.INT:
+                    variable = new IntVariable(builder);
+                    break;
+                case ShaderVariableType.FLOAT:
+                    variable = new FloatVariable(builder);
+                    break;
+                case ShaderVariableType.VEC2:
+                    variable = new Vec2Variable(builder);
+                    break;
+                case ShaderVariableType.VEC3:
+                    variable = new Vec3Variable(builder);
+                    break;
+                case ShaderVariableType.VEC4:
+                    variable = new Vec4Variable(builder);
+                    break;
+                case ShaderVariableType.MAT4:
+                    variable = new Mat4Variable(builder);
+                    break;
+                case ShaderVariableType.SAMPLER2D:
+                    variable = new Sampler2DVariable(builder);
+                    break;
+                default:
+                    variable = null;
+                    break;
+            }
+        }
+        variable.populate();
         return variable;
     }
 

@@ -4,9 +4,6 @@ package it.aretesoftware.shadersee.shaderproperties.variables;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
-import it.aretesoftware.shadersee.Main;
-import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
-
 public class Vec3Variable extends Variable {
 
     Vec3Variable(VariableBuilder builder) {
@@ -15,7 +12,7 @@ public class Vec3Variable extends Variable {
 
 
     @Override
-    protected void createFunctional() {
+    protected void populate() {
         defaults().space(5);
         add(new VisLabel(getVariableName() + ": ")).width(100);
         defaults().expandX().width(50).maxWidth(1000).fill();
@@ -24,9 +21,4 @@ public class Vec3Variable extends Variable {
         add(new VisTextField());
     }
 
-    @Override
-    protected void createNonFunctional() {
-        defaults().space(10);
-        add(new VisLabel("vec3 " + getVariableName()) + ";");
-    }
 }

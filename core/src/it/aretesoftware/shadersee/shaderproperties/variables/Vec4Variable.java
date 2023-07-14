@@ -15,19 +15,13 @@ public class Vec4Variable extends Variable {
 
 
     @Override
-    protected void createFunctional() {
+    protected void populate() {
         defaults().space(5);
         add(new VisLabel(getVariableName() + ": ")).width(100);
         defaults().expandX().width(50).maxWidth(1000).fill();
         add(new VisTextField());
         add(new VisTextField());
         add(new VisTextField());
-    }
-
-    @Override
-    protected void createNonFunctional() {
-        defaults().space(10);
-        add(new VisLabel("vec4 " + getVariableName() + ";"));
     }
 
 }

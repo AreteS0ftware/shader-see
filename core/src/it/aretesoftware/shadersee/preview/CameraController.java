@@ -30,13 +30,14 @@ public class CameraController extends InputListener {
 
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        Stage stage = event.getStage();
+        Actor listenerActor = event.getListenerActor();
+        stage.setScrollFocus(listenerActor);
+
         if (button != Input.Buttons.MIDDLE) {
             return false;
         }
 
-        Stage stage = event.getStage();
-        Actor listenerActor = event.getListenerActor();
-        stage.setScrollFocus(listenerActor);
         position.set(x, y);
         return true;
     }

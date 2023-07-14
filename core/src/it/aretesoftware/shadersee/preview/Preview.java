@@ -22,7 +22,7 @@ public class Preview extends WidgetGroup {
     public Preview() {
         this.temp = new Vector2();
         this.viewport = new ScreenViewport();
-        previewDraw = new PreviewDraw();
+        previewDraw = new PreviewDraw(this);
         addListener(new CameraController(this));
     }
 

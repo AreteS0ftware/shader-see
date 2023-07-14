@@ -46,8 +46,12 @@ public class ShaderVariableType {
         types.put("void", VOID);
     }
 
-    public static int valueOf(String name) {
+    public static int toInt(String name) {
         return types.get(name, -1);
+    }
+
+    public static String toString(int value) {
+        return types.findKey(value, true);
     }
 
 }

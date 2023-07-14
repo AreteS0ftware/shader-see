@@ -1,19 +1,14 @@
 package it.aretesoftware.shadersee.shaderproperties.variables;
 
-
 import com.kotcrab.vis.ui.widget.VisLabel;
-import com.kotcrab.vis.ui.widget.VisTextField;
 
-import it.aretesoftware.shadersee.Main;
-import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 import it.aretesoftware.shadersee.utils.ShaderVariableType;
 
-public class Mat4Variable extends Variable {
+public class DummyVariable extends Variable {
 
-    Mat4Variable(VariableBuilder builder) {
+    protected DummyVariable(VariableBuilder builder) {
         super(builder);
     }
-
 
     @Override
     protected void populate() {
