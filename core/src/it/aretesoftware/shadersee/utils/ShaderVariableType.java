@@ -8,27 +8,31 @@ public class ShaderVariableType {
 
     public static final int BOOL = 0;
     public static final int INT = 1;
-    public static final int FLOAT = 2;
-    public static final int BVEC2 = 3;
-    public static final int BVEC3 = 4;
-    public static final int BVEC4 = 5;
-    public static final int IVEC2 = 6;
-    public static final int IVEC3 = 7;
-    public static final int IVEC4 = 8;
-    public static final int VEC2 = 9;
-    public static final int VEC3 = 10;
-    public static final int VEC4 = 11;
-    public static final int MAT2 = 12;
-    public static final int MAT3 = 13;
-    public static final int MAT4 = 14;
-    public static final int SAMPLER2D = 15;
-    public static final int SAMPLERCUBE = 16;
-    public static final int VOID = 17;
+    public static final int UINT = 2;
+    public static final int FLOAT = 3;
+    public static final int DOUBLE = 4;
+    public static final int BVEC2 = 5;
+    public static final int BVEC3 = 6;
+    public static final int BVEC4 = 7;
+    public static final int IVEC2 = 8;
+    public static final int IVEC3 = 9;
+    public static final int IVEC4 = 10;
+    public static final int VEC2 = 11;
+    public static final int VEC3 = 12;
+    public static final int VEC4 = 13;
+    public static final int MAT2 = 14;
+    public static final int MAT3 = 15;
+    public static final int MAT4 = 16;
+    public static final int SAMPLER2D = 17;
+    public static final int SAMPLERCUBE = 18;
+    public static final int VOID = 19;
 
     static {
         types.put("bool", BOOL);
         types.put("int", INT);
+        types.put("uint", UINT);
         types.put("float", FLOAT);
+        types.put("double", DOUBLE);
         types.put("bvec2", BVEC2);
         types.put("bvec3", BVEC3);
         types.put("bvec4", BVEC4);

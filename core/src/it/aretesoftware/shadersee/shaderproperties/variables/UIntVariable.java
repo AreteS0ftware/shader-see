@@ -4,23 +4,20 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.couscous.Strings;
-import it.aretesoftware.shadersee.Main;
-import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIntUniformEvent;
-import it.aretesoftware.shadersee.utils.DecimalsOnlyFilter;
-import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
+import it.aretesoftware.shadersee.utils.SignedDigitsOnlyFilter;
 import it.aretesoftware.shadersee.utils.UnsignedDigitsOnlyFilter;
 
-public class IntVariable extends Variable {
+public class UIntVariable extends Variable {
 
-    IntVariable(VariableBuilder builder) {
+    UIntVariable(VariableBuilder builder) {
         super(builder);
     }
 
     @Override
     protected void populate() {
         VisTextField uniformTextField = new VisTextField("0");
-        uniformTextField.setTextFieldFilter(new UnsignedDigitsOnlyFilter());
+        uniformTextField.setTextFieldFilter(new SignedDigitsOnlyFilter());
         uniformTextField.setTextFieldListener(new VisTextField.TextFieldListener() {
             @Override
             public void keyTyped(VisTextField textField, char c) {

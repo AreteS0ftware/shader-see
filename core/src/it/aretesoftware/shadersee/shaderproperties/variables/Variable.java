@@ -44,8 +44,23 @@ public abstract class Variable extends Table {
                 case ShaderVariableType.INT:
                     variable = new IntVariable(builder);
                     break;
+                case ShaderVariableType.UINT:
+                    variable = new UIntVariable(builder);
+                    break;
                 case ShaderVariableType.FLOAT:
                     variable = new FloatVariable(builder);
+                    break;
+                case ShaderVariableType.DOUBLE:
+                    variable = new DoubleVariable(builder);
+                    break;
+                case ShaderVariableType.BVEC2:
+                    variable = new BVec2Variable(builder);
+                    break;
+                case ShaderVariableType.BVEC3:
+                    variable = new BVec3Variable(builder);
+                    break;
+                case ShaderVariableType.BVEC4:
+                    variable = new BVec4Variable(builder);
                     break;
                 case ShaderVariableType.VEC2:
                     variable = new Vec2Variable(builder);

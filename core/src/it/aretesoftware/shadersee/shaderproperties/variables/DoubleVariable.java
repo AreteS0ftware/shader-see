@@ -7,16 +7,17 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.couscous.Strings;
+import it.aretesoftware.shadersee.event.shader.SetDoubleUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
 import it.aretesoftware.shadersee.utils.DecimalsOnlyFilter;
 
-public class FloatVariable extends Variable {
+public class DoubleVariable extends Variable {
 
     private VisTextField uniformTextField;
     private VisCheckBox elapsedTimeCheckbox;
     private float elapsedTime;
 
-    protected FloatVariable(VariableBuilder builder) {
+    protected DoubleVariable(VariableBuilder builder) {
         super(builder);
     }
 
@@ -28,8 +29,8 @@ public class FloatVariable extends Variable {
             @Override
             public void keyTyped(VisTextField textField, char c) {
                 if (c != '\n' || Strings.isNullOrEmpty(textField.getText())) return;
-                float value = Float.parseFloat(textField.getText());
-                getMain().fire(new SetFloatUniformEvent(getVariableName(), value));
+                double value = Double.parseDouble(textField.getText());
+                getMain().fire(new SetDoubleUniformEvent(getVariableName(), value));
             }
         });
 

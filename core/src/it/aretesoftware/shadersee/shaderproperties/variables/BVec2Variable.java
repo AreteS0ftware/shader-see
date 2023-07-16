@@ -15,13 +15,14 @@ import it.aretesoftware.shadersee.event.shader.SetVec2UniformEvent;
 import it.aretesoftware.shadersee.preview.Preview;
 import it.aretesoftware.shadersee.utils.DecimalsOnlyFilter;
 
-public class Vec2Variable extends Variable {
+public class BVec2Variable extends Variable {
 
     private final Vector2 vec2 = new Vector2();
     private VisTextField xTextField, yTextField;
+    private ButtonGroup<VisRadioButton> radioButtonGroup;
     private VisRadioButton customRadioButton, resolutionRadioButton, pointerRadioButton;
 
-    Vec2Variable(VariableBuilder builder) {
+    BVec2Variable(VariableBuilder builder) {
         super(builder);
     }
 
@@ -39,7 +40,7 @@ public class Vec2Variable extends Variable {
         row();
         defaults().reset();
 
-        ButtonGroup<VisRadioButton> radioButtonGroup = new ButtonGroup<>();
+        radioButtonGroup = new ButtonGroup<>();
         customRadioButton = createVec2RadioButton("Custom", true);
         resolutionRadioButton = createVec2RadioButton("Resolution", false);
         pointerRadioButton = createVec2RadioButton("Pointer", false);
