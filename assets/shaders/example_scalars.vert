@@ -7,11 +7,9 @@ attribute vec4 a_color;
 varying vec4 v_color;
 varying vec2 v_texCoords;
 
-uniform bool booleanUniform;
 uniform int uintUniform;     //uint doesn't work
 uniform int intUniform;
 uniform float floatUniform;
-uniform float doubleUniform; //double doesn't work
 
 void main() {
     int number = uintUniform;

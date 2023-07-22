@@ -11,7 +11,9 @@ import com.kotcrab.vis.ui.widget.VisRadioButton;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.couscous.Strings;
+import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.SetVec2UniformEvent;
+import it.aretesoftware.shadersee.event.shader.SetVec2UniformOptionEvent;
 import it.aretesoftware.shadersee.preview.Preview;
 import it.aretesoftware.shadersee.utils.DecimalsOnlyFilter;
 
@@ -20,16 +22,28 @@ public class Vec2Variable extends Variable {
     private final Vector2 vec2 = new Vector2();
     private VisTextField xTextField, yTextField;
     private VisRadioButton customRadioButton, resolutionRadioButton, pointerRadioButton;
+    private ButtonGroup<VisRadioButton> radioButtonGroup;
 
     Vec2Variable(VariableBuilder builder) {
         super(builder);
     }
 
-
     @Override
     protected void populate() {
         xTextField = createVec2TextField();
         yTextField = createVec2TextField();
+
+        getMain().addListener(new EventListener<SetVec2UniformEvent>(SetVec2UniformEvent.class, this) {
+            @Override
+            protected void fire(SetVec2UniformEvent event) {
+                xTextField.setText(String.valueOf(event.uniformVec2X));
+                yTextField.setText(String.valueOf(event.uniformVec2Y));
+            }
+            @Override
+            protected boolean shouldFire(SetVec2UniformEvent event) {
+                return event.uniformName.equals(getVariableName());
+            }
+        });
 
         defaults().space(10);
         add(new VisLabel(getVariableName()));
@@ -39,13 +53,36 @@ public class Vec2Variable extends Variable {
         row();
         defaults().reset();
 
-        ButtonGroup<VisRadioButton> radioButtonGroup = new ButtonGroup<>();
+        radioButtonGroup = new ButtonGroup<>();
         customRadioButton = createVec2RadioButton("Custom", true);
         resolutionRadioButton = createVec2RadioButton("Resolution", false);
         pointerRadioButton = createVec2RadioButton("Pointer", false);
         radioButtonGroup.add(customRadioButton);
         radioButtonGroup.add(resolutionRadioButton);
         radioButtonGroup.add(pointerRadioButton);
+
+        getMain().addListener(new EventListener<SetVec2UniformOptionEvent>(SetVec2UniformOptionEvent.class, this) {
+            @Override
+            protected void fire(SetVec2UniformOptionEvent event) {
+                VisRadioButton radioButton = null;
+                switch (event.option) {
+                    case Custom:
+                        radioButton = customRadioButton;
+                        break;
+                    case Resolution:
+                        radioButton = resolutionRadioButton;
+                        break;
+                    case Pointer:
+                        radioButton = pointerRadioButton;
+                        break;
+                }
+                radioButton.setChecked(true);
+            }
+            @Override
+            protected boolean shouldFire(SetVec2UniformOptionEvent event) {
+                return event.uniformName.equals(getVariableName());
+            }
+        });
 
         add(customRadioButton);
         add(resolutionRadioButton);
@@ -60,22 +97,15 @@ public class Vec2Variable extends Variable {
         Preview preview = getMain().getPreview();
         if (pointerRadioButton.isChecked()) {
             preview.screenToLocalCoordinates(vec2.set(Gdx.input.getX(), Gdx.input.getY()));
-            updateVec2TextFields();
             getMain().fire(new SetVec2UniformEvent(getVariableName(), vec2));
         }
         if (resolutionRadioButton.isChecked()) {
             vec2.set(preview.getWidth(), preview.getHeight());
-            updateVec2TextFields();
             getMain().fire(new SetVec2UniformEvent(getVariableName(), vec2));
         }
     }
 
     //
-
-    private void updateVec2TextFields() {
-        xTextField.setText(String.valueOf(vec2.x));
-        yTextField.setText(String.valueOf(vec2.y));
-    }
 
     private VisTextField createVec2TextField() {
         VisTextField textField = new VisTextField("0.0");
@@ -105,7 +135,15 @@ public class Vec2Variable extends Variable {
     private class Vec2RadioButtonListener extends ChangeListener {
         @Override
         public void changed(ChangeEvent event, Actor actor) {
-            if (customRadioButton.isChecked()) {
+            VisRadioButton checked = radioButtonGroup.getChecked();
+            if (checked == null) {
+                return;
+            }
+
+            Vec2Options option = checked == customRadioButton ? Vec2Options.Custom
+                    : checked == resolutionRadioButton ? Vec2Options.Resolution
+                    : checked == pointerRadioButton ? Vec2Options.Pointer : null;
+            if (option == Vec2Options.Custom) {
                 xTextField.setDisabled(false);
                 yTextField.setDisabled(false);
             }
@@ -113,9 +151,14 @@ public class Vec2Variable extends Variable {
                 xTextField.setDisabled(true);
                 yTextField.setDisabled(true);
             }
-            vec2.setZero();
-            updateVec2TextFields();
-            getMain().fire(new SetVec2UniformEvent(getVariableName(), vec2));
+            getMain().fire(new SetVec2UniformEvent(getVariableName(), vec2.setZero()));
+            getMain().fire(new SetVec2UniformOptionEvent(getVariableName(), option));
         }
+    }
+
+    public enum Vec2Options {
+        Custom,
+        Resolution,
+        Pointer
     }
 }

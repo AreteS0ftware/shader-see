@@ -12,9 +12,6 @@ uniform sampler2D u_texture;
 uniform mat4 u_projTrans;
 
 uniform bool booleanUniform;
-uniform int uintUniform;     //uint doesn't work
-uniform int intUniform;
-uniform float floatUniform;
 uniform float doubleUniform; //double doesn't work
 
 void main()

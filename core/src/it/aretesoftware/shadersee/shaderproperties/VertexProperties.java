@@ -1,7 +1,6 @@
 package it.aretesoftware.shadersee.shaderproperties;
 
 import it.aretesoftware.shadersee.Main;
-import it.aretesoftware.shadersee.shaderproperties.variables.Variable;
 
 public class VertexProperties extends Properties {
 
@@ -25,11 +24,6 @@ public class VertexProperties extends Properties {
     @Override
     protected String getTitle() {
         return "Vert Properties";
-    }
-
-    @Override
-    protected Variable createVariable(String qualifier, String type, String name) {
-        return Variable.createVertexVariable(getMain(), qualifier, type, name);
     }
 
 }

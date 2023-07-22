@@ -7,7 +7,11 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.couscous.Strings;
+import it.aretesoftware.shadersee.event.Event;
+import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
+import it.aretesoftware.shadersee.event.shader.SetFloatUniformTimeEvent;
+import it.aretesoftware.shadersee.event.shader.SetIntUniformEvent;
 import it.aretesoftware.shadersee.utils.DecimalsOnlyFilter;
 
 public class FloatVariable extends Variable {
@@ -32,20 +36,35 @@ public class FloatVariable extends Variable {
                 getMain().fire(new SetFloatUniformEvent(getVariableName(), value));
             }
         });
-
         elapsedTimeCheckbox = new VisCheckBox("Time");
         elapsedTimeCheckbox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (elapsedTimeCheckbox.isChecked()) {
-                    uniformTextField.setDisabled(true);
-                }
-                else {
-                    elapsedTime = 0;
-                    uniformTextField.setDisabled(false);
-                    uniformTextField.setText("0.0");
-                }
+                elapsedTime = 0;
+                uniformTextField.setDisabled(elapsedTimeCheckbox.isChecked());
                 getMain().fire(new SetFloatUniformEvent(getVariableName(), 0));
+                getMain().fire(new SetFloatUniformTimeEvent(getVariableName(), elapsedTimeCheckbox.isChecked()));
+            }
+        });
+
+        getMain().addListener(new EventListener<SetFloatUniformEvent>(SetFloatUniformEvent.class, this) {
+            @Override
+            protected void fire(SetFloatUniformEvent event) {
+                uniformTextField.setText(String.valueOf(event.uniformValue));
+            }
+            @Override
+            protected boolean shouldFire(SetFloatUniformEvent event) {
+                return event.uniformName.equals(getVariableName());
+            }
+        });
+        getMain().addListener(new EventListener<SetFloatUniformTimeEvent>(SetFloatUniformTimeEvent.class, this) {
+            @Override
+            protected void fire(SetFloatUniformTimeEvent event) {
+                elapsedTimeCheckbox.setChecked(event.timeEnabled);
+            }
+            @Override
+            protected boolean shouldFire(SetFloatUniformTimeEvent event) {
+                return event.uniformName.equals(getVariableName());
             }
         });
 
@@ -63,7 +82,6 @@ public class FloatVariable extends Variable {
 
         if (elapsedTimeCheckbox.isChecked()) {
             elapsedTime += delta;
-            uniformTextField.setText(String.valueOf(elapsedTime));
             getMain().fire(new SetFloatUniformEvent(getVariableName(), elapsedTime));
         }
     }

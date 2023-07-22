@@ -1,12 +1,13 @@
 package it.aretesoftware.shadersee.shaderproperties.variables;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Disposable;
 
 import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 import it.aretesoftware.shadersee.utils.ShaderVariableType;
 
-public abstract class Variable extends Table {
+public abstract class Variable extends Table implements Disposable {
 
     private final Main main;
     private final ShaderVariableQualifier qualifier;
@@ -22,18 +23,10 @@ public abstract class Variable extends Table {
 
     protected abstract void populate();
 
-    public static Variable createVertexVariable(Main main, String qualifier, String type, String name) {
-        return create(main, true, qualifier, type, name);
-    }
-
-    public static Variable createFragmentVariable(Main main, String qualifier, String type, String name) {
-        return create(main, false, qualifier, type, name);
-    }
-
-    public static Variable create(Main main, boolean vertex, String qualifier, String type, String name) {
+    public static Variable create(Main main, String qualifier, String type, String name) {
         VariableBuilder builder = new VariableBuilder(main, ShaderVariableQualifier.valueOf(qualifier), ShaderVariableType.toInt(type), name);
         Variable variable;
-        if (vertex || ShaderVariableQualifier.valueOf(qualifier) != ShaderVariableQualifier.uniform) {
+        if (ShaderVariableQualifier.valueOf(qualifier) != ShaderVariableQualifier.uniform) {
             variable = new DummyVariable(builder);
         }
         else {
@@ -42,16 +35,12 @@ public abstract class Variable extends Table {
                     variable = new BoolVariable(builder);
                     break;
                 case ShaderVariableType.INT:
+                case ShaderVariableType.UINT:
                     variable = new IntVariable(builder);
                     break;
-                case ShaderVariableType.UINT:
-                    variable = new UIntVariable(builder);
-                    break;
                 case ShaderVariableType.FLOAT:
-                    variable = new FloatVariable(builder);
-                    break;
                 case ShaderVariableType.DOUBLE:
-                    variable = new DoubleVariable(builder);
+                    variable = new FloatVariable(builder);
                     break;
                 case ShaderVariableType.BVEC2:
                     variable = new BVec2Variable(builder);
@@ -100,6 +89,11 @@ public abstract class Variable extends Table {
 
     public String getVariableName() {
         return name;
+    }
+
+    @Override
+    public void dispose () {
+        main.removeListenersOfBind(this);
     }
 
 }

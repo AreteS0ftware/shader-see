@@ -4,11 +4,8 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.couscous.Strings;
-import it.aretesoftware.shadersee.Main;
-import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
+import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.SetIntUniformEvent;
-import it.aretesoftware.shadersee.utils.DecimalsOnlyFilter;
-import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 import it.aretesoftware.shadersee.utils.UnsignedDigitsOnlyFilter;
 
 public class IntVariable extends Variable {
@@ -27,6 +24,17 @@ public class IntVariable extends Variable {
                 if (c != '\n' || Strings.isNullOrEmpty(textField.getText())) return;
                 int value = Integer.parseInt(textField.getText());
                 getMain().fire(new SetIntUniformEvent(getVariableName(), value));
+            }
+        });
+
+        getMain().addListener(new EventListener<SetIntUniformEvent>(SetIntUniformEvent.class, this) {
+            @Override
+            protected void fire(SetIntUniformEvent event) {
+                uniformTextField.setText(String.valueOf(event.uniformValue));
+            }
+            @Override
+            protected boolean shouldFire(SetIntUniformEvent event) {
+                return event.uniformName.equals(getVariableName());
             }
         });
 

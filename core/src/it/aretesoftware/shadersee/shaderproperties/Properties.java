@@ -90,7 +90,7 @@ public abstract class Properties extends Table {
             String qualifier = matcher.group(1);
             String type = matcher.group(2);
             String name = matcher.group(3);
-            Variable variable = createVariable(qualifier, type, name);
+            Variable variable = Variable.create(getMain(), qualifier, type, name);
             map.add(variable.getVariableQualifier(), variable);
         }
         return map;
@@ -101,8 +101,6 @@ public abstract class Properties extends Table {
     protected abstract String getInitialShaderSource();
 
     protected abstract String getTitle();
-
-    protected abstract Variable createVariable(String qualifier, String type, String name);
 
     protected Main getMain() {
         return main;
