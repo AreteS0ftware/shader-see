@@ -41,23 +41,7 @@ public class RootTable extends VisTable {
 
     //
 
-    private void addBottomBar() {
-        HorizontalGroup group = new HorizontalGroup();
-        group.space(20).padRight(30).right();
-        group.addActor(new VisLabel("v0.1.0"));
-        group.addActor(new VisLabel("ARETESOFTWARE.IT"));
-        group.addActor(new VisLabel("© Arete"));
-
-        MenuBar menuBar = new MenuBar();
-        menuBar.getTable().add(group).growX();
-        add(menuBar.getTable()).growX();
-    }
-
     private void addFileMenu() {
-        Table table = new Table();
-        table.defaults().padRight(2.0f);
-        add(table).padTop(2.0f).growX();
-
         MenuBar menuBar = new MenuBar();
         Menu file = new Menu("File");
         Menu edit = new Menu("Edit");
@@ -68,7 +52,11 @@ public class RootTable extends VisTable {
         menuBar.addMenu(project);
         menuBar.addMenu(help);
 
-        table.add(menuBar.getTable());
+        Table table = new Table();
+        table.defaults().padRight(2.0f);
+        add(table).padTop(2.0f).growX();
+
+        table.add(menuBar.getTable()).left();
         table.add(new VisLabel("Shader See", "title")).expandX().center();
     }
 
@@ -99,6 +87,18 @@ public class RootTable extends VisTable {
         table.add(splitPane).grow().top();
 
         return table;
+    }
+
+    private void addBottomBar() {
+        HorizontalGroup group = new HorizontalGroup();
+        group.space(20).padRight(30).right();
+        group.addActor(new VisLabel("v0.1.0"));
+        group.addActor(new VisLabel("ARETESOFTWARE.IT"));
+        group.addActor(new VisLabel("© Arete"));
+
+        MenuBar menuBar = new MenuBar();
+        menuBar.getTable().add(group).growX();
+        add(menuBar.getTable()).growX();
     }
 
 }

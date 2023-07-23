@@ -16,7 +16,7 @@ public class Assets {
     private final BitmapFont size100Font;
 
     Assets() {
-        VisUI.load(skin = new Skin(Gdx.files.internal("neutralizer/neutralizer-ui.json")));
+        VisUI.load(skin = new Skin(Gdx.files.internal("skins/neutralizer/neutralizer-ui.json")));
 
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
@@ -24,7 +24,7 @@ public class Assets {
         whitePixelTexture = new Texture(pixmap);
         pixmap.dispose();
 
-        checkeredBackgroundTexture = new Texture(Gdx.files.internal("checkered_background.png"));
+        checkeredBackgroundTexture = new Texture(Gdx.files.internal("textures/checkered_background.png"));
         checkeredBackgroundTexture.setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Roboto-Regular.ttf"));

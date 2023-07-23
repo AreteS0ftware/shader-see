@@ -26,7 +26,7 @@ public class Shaders {
 
     Shaders(Main main) {
         this.main = main;
-        uTextureFileHandle = Gdx.files.internal("badlogic.jpg");
+        uTextureFileHandle = Gdx.files.internal("textures/badlogic.jpg");
         u_texture = new Texture(uTextureFileHandle);
         shaderUniforms = new ShaderUniforms(main);
         addListeners();
