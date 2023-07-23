@@ -99,4 +99,8 @@ public class Main extends Game {
 		return preview;
 	}
 
+	public Stage getStage() {
+		return stage;
+	}
+
 }

@@ -54,11 +54,11 @@ public abstract class EventListener<TEvent extends Event> {
         return shouldFireCallback((TEvent) event);
     }
 
-    Class<TEvent> getClazz() {
+    protected Class<TEvent> getClazz() {
         return clazz;
     }
 
-    Object getBind() {
+    protected Object getBind() {
         return bind;
     }
 

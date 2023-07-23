@@ -11,7 +11,7 @@ import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetFloatUniformTimeEvent;
-import it.aretesoftware.shadersee.event.shader.SetIntUniformEvent;
+import it.aretesoftware.shadersee.event.shader.SetUniformEvent;
 import it.aretesoftware.shadersee.utils.DecimalsOnlyFilter;
 
 public class FloatVariable extends Variable {
@@ -47,28 +47,20 @@ public class FloatVariable extends Variable {
             }
         });
 
-        getMain().addListener(new EventListener<SetFloatUniformEvent>(SetFloatUniformEvent.class, this) {
+        getMain().addListener(new VariableEventListener<SetFloatUniformEvent>(SetFloatUniformEvent.class, this) {
             @Override
             protected void fire(SetFloatUniformEvent event) {
                 uniformTextField.setText(String.valueOf(event.uniformValue));
             }
-            @Override
-            protected boolean shouldFire(SetFloatUniformEvent event) {
-                return event.uniformName.equals(getVariableName());
-            }
         });
-        getMain().addListener(new EventListener<SetFloatUniformTimeEvent>(SetFloatUniformTimeEvent.class, this) {
+        getMain().addListener(new VariableEventListener<SetFloatUniformTimeEvent>(SetFloatUniformTimeEvent.class, this) {
             @Override
             protected void fire(SetFloatUniformTimeEvent event) {
                 elapsedTimeCheckbox.setChecked(event.timeEnabled);
             }
-            @Override
-            protected boolean shouldFire(SetFloatUniformTimeEvent event) {
-                return event.uniformName.equals(getVariableName());
-            }
         });
 
-        defaults().space(10);
+        defaults().space(7);
         add(new VisLabel(getVariableName()));
         add(uniformTextField).width(100).maxWidth(1000).growX();
         add(elapsedTimeCheckbox);
@@ -79,7 +71,6 @@ public class FloatVariable extends Variable {
     @Override
     public void act(float delta) {
         super.act(delta);
-
         if (elapsedTimeCheckbox.isChecked()) {
             elapsedTime += delta;
             getMain().fire(new SetFloatUniformEvent(getVariableName(), elapsedTime));

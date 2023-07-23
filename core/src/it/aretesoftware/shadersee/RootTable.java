@@ -61,8 +61,8 @@ public class RootTable extends VisTable {
         add(table).colspan(2).grow();
 
         VisSplitPane splitPane = new VisSplitPane(createLeftSideOfPane(), createRightSideOfPane(preview), false);
-        splitPane.setMinSplitAmount(0.40f);
-        splitPane.setMaxSplitAmount(0.60f);
+        splitPane.setMinSplitAmount(0.45f);
+        splitPane.setMaxSplitAmount(0.55f);
         table.add(splitPane).grow();
     }
 

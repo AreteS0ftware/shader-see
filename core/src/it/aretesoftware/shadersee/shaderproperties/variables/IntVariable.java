@@ -27,14 +27,10 @@ public class IntVariable extends Variable {
             }
         });
 
-        getMain().addListener(new EventListener<SetIntUniformEvent>(SetIntUniformEvent.class, this) {
+        getMain().addListener(new VariableEventListener<SetIntUniformEvent>(SetIntUniformEvent.class, this) {
             @Override
             protected void fire(SetIntUniformEvent event) {
                 uniformTextField.setText(String.valueOf(event.uniformValue));
-            }
-            @Override
-            protected boolean shouldFire(SetIntUniformEvent event) {
-                return event.uniformName.equals(getVariableName());
             }
         });
 

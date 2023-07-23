@@ -19,7 +19,6 @@ public class BVec2Variable extends Variable {
 
     private final Vector2 vec2 = new Vector2();
     private VisTextField xTextField, yTextField;
-    private ButtonGroup<VisRadioButton> radioButtonGroup;
     private VisRadioButton customRadioButton, resolutionRadioButton, pointerRadioButton;
 
     BVec2Variable(VariableBuilder builder) {
@@ -40,7 +39,7 @@ public class BVec2Variable extends Variable {
         row();
         defaults().reset();
 
-        radioButtonGroup = new ButtonGroup<>();
+        ButtonGroup<VisRadioButton> radioButtonGroup = new ButtonGroup<>();
         customRadioButton = createVec2RadioButton("Custom", true);
         resolutionRadioButton = createVec2RadioButton("Resolution", false);
         pointerRadioButton = createVec2RadioButton("Pointer", false);

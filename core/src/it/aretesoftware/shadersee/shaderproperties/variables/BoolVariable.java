@@ -7,7 +7,6 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.SetBoolUniformEvent;
-import it.aretesoftware.shadersee.event.shader.SetVec2UniformEvent;
 
 public class BoolVariable extends Variable {
 
@@ -25,14 +24,10 @@ public class BoolVariable extends Variable {
             }
         });
 
-        getMain().addListener(new EventListener<SetBoolUniformEvent>(SetBoolUniformEvent.class, this) {
+        getMain().addListener(new VariableEventListener<SetBoolUniformEvent>(SetBoolUniformEvent.class, this) {
             @Override
             protected void fire(SetBoolUniformEvent event) {
                 checkBox.setChecked(event.uniformValue);
-            }
-            @Override
-            protected boolean shouldFire(SetBoolUniformEvent event) {
-                return event.uniformName.equals(getVariableName());
             }
         });
 

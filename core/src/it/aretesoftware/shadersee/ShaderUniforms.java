@@ -1,15 +1,20 @@
 package it.aretesoftware.shadersee;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 
+import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.SetBVec4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetBoolUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetDoubleUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIntUniformEvent;
+import it.aretesoftware.shadersee.event.shader.SetSampler2DUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetVec2UniformEvent;
 import it.aretesoftware.shadersee.event.shader.ShaderLoadEvent;
 
@@ -21,6 +26,7 @@ public class ShaderUniforms {
     private final ObjectMap<String, Double> doubleUniformsMap;
     private final ObjectMap<String, Vector2> vec2UniformsMap;
     private final ObjectMap<String, boolean[]> bvec4UniformsMap;
+    private final ObjectMap<String, Texture> sampler2DUniformsMap;
 
     ShaderUniforms(Main main) {
         boolUniformsMap = new ObjectMap<>();
@@ -29,6 +35,7 @@ public class ShaderUniforms {
         doubleUniformsMap = new ObjectMap<>();
         vec2UniformsMap = new ObjectMap<>();
         bvec4UniformsMap = new ObjectMap<>();
+        sampler2DUniformsMap = new ObjectMap<>();
         addListeners(main);
     }
 
@@ -84,6 +91,19 @@ public class ShaderUniforms {
                 bvec4UniformsMap.put(event.uniformName, event.uniformValue);
             }
         });
+        main.addPreListener(new EventListener<SetSampler2DUniformEvent>(SetSampler2DUniformEvent.class, this) {
+            @Override
+            protected void fire(SetSampler2DUniformEvent event) {
+                String uniformName = event.uniformName;
+                Texture uniformValue = event.uniformValue;
+                if (uniformValue == null) {
+                    sampler2DUniformsMap.remove(uniformName);
+                }
+                else {
+                    sampler2DUniformsMap.put(uniformName, event.uniformValue);
+                }
+            }
+        });
     }
 
     //
@@ -118,6 +138,14 @@ public class ShaderUniforms {
             for (ObjectMap.Entry<String, boolean[]> entry : bvec4UniformsMap.entries()) {
                 boolean[] values = entry.value;
                 shader.setUniformi(entry.key, values[0] ? 1 : 0, values[1] ? 1 : 0, values[2] ? 1 : 0, values[3] ? 1 : 0);
+            }
+        }
+        if (!sampler2DUniformsMap.isEmpty()) {
+            for (ObjectMap.Entry<String, Texture> entry : sampler2DUniformsMap.entries()) {
+                Texture texture = entry.value;
+                texture.bind(texture.getTextureObjectHandle());
+                shader.setUniformi(entry.key, texture.getTextureObjectHandle());
+                Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
             }
         }
     }

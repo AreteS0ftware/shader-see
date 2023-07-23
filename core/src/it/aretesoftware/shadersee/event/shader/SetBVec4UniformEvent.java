@@ -1,10 +1,6 @@
 package it.aretesoftware.shadersee.event.shader;
 
-import it.aretesoftware.shadersee.event.Event;
-
-public class SetBVec4UniformEvent extends Event {
-
-    public final String uniformName;
+public class SetBVec4UniformEvent extends SetUniformEvent {
     public final boolean[] uniformValue;
 
     public SetBVec4UniformEvent(String uniformName, boolean value1, boolean value2, boolean value3, boolean value4) {
@@ -12,7 +8,7 @@ public class SetBVec4UniformEvent extends Event {
     }
 
     public SetBVec4UniformEvent(String uniformName, boolean[] uniformValue) {
-        this.uniformName = uniformName;
+        super(uniformName);
         this.uniformValue = uniformValue;
     }
 

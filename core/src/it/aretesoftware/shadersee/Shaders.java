@@ -60,8 +60,8 @@ public class Shaders {
     //
 
     void loadDefaultShader() {
-        FileHandle vert = Gdx.files.internal("shaders/example_scalars.vert");
-        FileHandle frag = Gdx.files.internal("shaders/example_scalars.frag");
+        FileHandle vert = Gdx.files.internal("shaders/default.vert");
+        FileHandle frag = Gdx.files.internal("shaders/example_samples.frag");
         loadShader(vert, frag);
     }
 

@@ -33,15 +33,11 @@ public class Vec2Variable extends Variable {
         xTextField = createVec2TextField();
         yTextField = createVec2TextField();
 
-        getMain().addListener(new EventListener<SetVec2UniformEvent>(SetVec2UniformEvent.class, this) {
+        getMain().addListener(new VariableEventListener<SetVec2UniformEvent>(SetVec2UniformEvent.class, this) {
             @Override
             protected void fire(SetVec2UniformEvent event) {
                 xTextField.setText(String.valueOf(event.uniformVec2X));
                 yTextField.setText(String.valueOf(event.uniformVec2Y));
-            }
-            @Override
-            protected boolean shouldFire(SetVec2UniformEvent event) {
-                return event.uniformName.equals(getVariableName());
             }
         });
 
@@ -61,7 +57,7 @@ public class Vec2Variable extends Variable {
         radioButtonGroup.add(resolutionRadioButton);
         radioButtonGroup.add(pointerRadioButton);
 
-        getMain().addListener(new EventListener<SetVec2UniformOptionEvent>(SetVec2UniformOptionEvent.class, this) {
+        getMain().addListener(new VariableEventListener<SetVec2UniformOptionEvent>(SetVec2UniformOptionEvent.class, this) {
             @Override
             protected void fire(SetVec2UniformOptionEvent event) {
                 VisRadioButton radioButton = null;
@@ -77,10 +73,6 @@ public class Vec2Variable extends Variable {
                         break;
                 }
                 radioButton.setChecked(true);
-            }
-            @Override
-            protected boolean shouldFire(SetVec2UniformOptionEvent event) {
-                return event.uniformName.equals(getVariableName());
             }
         });
 
