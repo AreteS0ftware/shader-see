@@ -4,10 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.kotcrab.vis.ui.VisUI;
 
 import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventCallback;
@@ -21,6 +19,7 @@ public class Main extends Game {
 	private Assets assets;
 	private Stage stage;
 	private Shaders shaders;
+	private Data data;
 	private Preview preview;
 
 	public Main() {
@@ -32,8 +31,11 @@ public class Main extends Game {
 		eventManager = new EventManager();
 		assets = new Assets();
 
-		Gdx.input.setInputProcessor(stage = new Stage(new ScreenViewport(), new SpriteBatch()));
-		stage.setDebugAll(true);
+		stage = new Stage(new ScreenViewport(), new SpriteBatch());
+		//stage.setDebugAll(true);
+		Gdx.input.setInputProcessor(stage);
+
+		data = new Data(this);
 
 		shaders = new Shaders(this);
 		shaders.loadDefaultShader();
@@ -97,6 +99,10 @@ public class Main extends Game {
 
 	public Preview getPreview() {
 		return preview;
+	}
+
+	public Data getData() {
+		return data;
 	}
 
 	public Stage getStage() {

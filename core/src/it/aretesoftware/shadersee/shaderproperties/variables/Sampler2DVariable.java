@@ -57,7 +57,9 @@ public class Sampler2DVariable extends Variable {
         }
         Table table = new Table();
         table.defaults().growX().space(7);
-        table.add(clearTextureTextButton);
+        if (!isUTexture()) {
+            table.add(clearTextureTextButton);
+        }
         table.add(viewTextureTextButton);
         add(table).growX().colspan(3);
     }
@@ -95,7 +97,7 @@ public class Sampler2DVariable extends Variable {
     }
 
     private VisTextField createTextureFilePathTextField() {
-        VisTextField textureFilePathTextField = new VisTextField();
+        VisTextField textureFilePathTextField = new VisTextField("No texture selected!");
         textureFilePathTextField.setDisabled(true);
         if (isUTexture()) {
             textureFilePathTextField.setText(getMain().getShaders().getUTextureFilePath());
@@ -103,7 +105,7 @@ public class Sampler2DVariable extends Variable {
                 @Override
                 protected void fire(SetUTextureEvent event) {
                     FileHandle fileHandle = event.fileHandle;
-                    String absoluteFilePath = fileHandle != null ? fileHandle.file().getAbsolutePath() : "";
+                    String absoluteFilePath = fileHandle != null ? fileHandle.file().getAbsolutePath() : "No texture selected!";
                     textureFilePathTextField.setText(absoluteFilePath);
                 }
             });
@@ -113,7 +115,7 @@ public class Sampler2DVariable extends Variable {
                 @Override
                 protected void fire(SetSampler2DUniformEvent event) {
                     FileHandle fileHandle = event.fileHandle;
-                    String absoluteFilePath = fileHandle != null ? fileHandle.file().getAbsolutePath() : "";
+                    String absoluteFilePath = fileHandle != null ? fileHandle.file().getAbsolutePath() : "No texture selected!";
                     textureFilePathTextField.setText(absoluteFilePath);
                 }
             });

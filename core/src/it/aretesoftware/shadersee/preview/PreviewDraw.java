@@ -4,8 +4,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.PolygonBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 import it.aretesoftware.shadersee.Assets;
+import it.aretesoftware.shadersee.Data;
 import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.Shaders;
 
@@ -20,11 +23,12 @@ public class PreviewDraw {
     //
 
     public void draw(Batch batch, Main main) {
+        Data data = main.getData();
         Assets assets = main.getAssets();
         Shaders shaders = main.getShaders();
         batch.begin();
         drawCheckers(batch, assets);
-        drawSolidColor(batch, assets);
+        drawSolidColor(batch, assets, data);
         drawSprite(batch, shaders);
         batch.end();
     }
@@ -47,15 +51,15 @@ public class PreviewDraw {
                 false, false);
     }
 
-    private void drawSolidColor(Batch batch, Assets assets) {
+    private void drawSolidColor(Batch batch, Assets assets, Data data) {
         float width = 5000;
         float height = 5000;
-        float x = 0;
-        float y = 0;
+        float x = -2500;
+        float y = -2500;
         float scale = 1f;
-        batch.setColor(Color.CLEAR);
+        batch.setColor(data.getBackgroundColor());
         batch.draw(assets.getWhitePixelTexture(),
-                x - width / 2f, y - height / 2f,
+                x, y,
                 width / 2f, height / 2f,
                 width, height,
                 1f, 1f,

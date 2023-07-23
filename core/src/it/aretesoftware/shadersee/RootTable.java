@@ -1,5 +1,6 @@
 package it.aretesoftware.shadersee;
 
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.kotcrab.vis.ui.widget.Menu;
 import com.kotcrab.vis.ui.widget.MenuBar;
@@ -33,9 +34,24 @@ public class RootTable extends VisTable {
 
         row();
         addSplitPane(preview);
+
+        row();
+        addBottomBar();
     }
 
     //
+
+    private void addBottomBar() {
+        HorizontalGroup group = new HorizontalGroup();
+        group.space(20).padRight(30).right();
+        group.addActor(new VisLabel("v0.1.0"));
+        group.addActor(new VisLabel("ARETESOFTWARE.IT"));
+        group.addActor(new VisLabel("© Arete"));
+
+        MenuBar menuBar = new MenuBar();
+        menuBar.getTable().add(group).growX();
+        add(menuBar.getTable()).growX();
+    }
 
     private void addFileMenu() {
         Table table = new Table();

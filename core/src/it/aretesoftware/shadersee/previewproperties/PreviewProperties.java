@@ -11,7 +11,7 @@ public class PreviewProperties extends Table {
     public PreviewProperties(Main main) {
         Table contentTable = new Table();
         contentTable.defaults().padLeft(20).padRight(10);
-        contentTable.add(new UTexture(main)).padTop(15).growX();
+        contentTable.add(new BackgroundColor(main)).padTop(15).growX();
 
         VisLabel previewPropertiesLabel = new VisLabel("Preview Properties", "title");
         VisScrollPane scrollPane = new VisScrollPane(contentTable);
