@@ -61,6 +61,7 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         api "com.kotcrab.vis:vis-ui:1.4.11"
         implementation 'com.github.AreteS0ftware:couscous:0.1.0'
+        implementation "com.github.crykn.guacamole:gdx:0.3.3"
 
         implementation "org.lwjgl:lwjgl-nfd:3.3.1"
         implementation "org.lwjgl:lwjgl-nfd:3.3.1:natives-windows"

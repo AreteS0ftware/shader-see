@@ -8,6 +8,7 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisSplitPane;
 import com.kotcrab.vis.ui.widget.VisTable;
 
+import it.aretesoftware.shadersee.menu.TopMenuBar;
 import it.aretesoftware.shadersee.preview.Preview;
 import it.aretesoftware.shadersee.previewproperties.PreviewProperties;
 import it.aretesoftware.shadersee.shaderproperties.FragmentProperties;
@@ -42,15 +43,7 @@ public class RootTable extends VisTable {
     //
 
     private void addFileMenu() {
-        MenuBar menuBar = new MenuBar();
-        Menu file = new Menu("File");
-        Menu edit = new Menu("Edit");
-        Menu project = new Menu("Project");
-        Menu help = new Menu("Help");
-        menuBar.addMenu(file);
-        menuBar.addMenu(edit);
-        menuBar.addMenu(project);
-        menuBar.addMenu(help);
+        TopMenuBar menuBar = new TopMenuBar(main);
 
         Table table = new Table();
         table.defaults().padRight(2.0f);

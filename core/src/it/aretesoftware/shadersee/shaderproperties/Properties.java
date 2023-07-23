@@ -9,6 +9,7 @@ import com.kotcrab.vis.ui.widget.VisScrollPane;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.damios.guacamole.tuple.Pair;
 import it.aretesoftware.couscous.ArrayObjectMap;
 import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.shaderproperties.variables.Variable;
@@ -18,19 +19,26 @@ public abstract class Properties extends Table {
 
     private final Main main;
     private final FileLocation fileLocation;
+    private ArrayObjectMap<ShaderVariableQualifier, Variable> variables;
+    private Array<Pair<ShaderVariableQualifier, Table>> tables;
+    private boolean showUniforms, showAttributes, showVarying;
 
     Properties(Main main) {
         this.main = main;
         this.fileLocation = createFileLocation();
-        rebuild(getInitialShaderSource());
+        showUniforms = showAttributes = showVarying = true;
+        populate(getInitialShaderSource());
     }
 
     //
 
-    protected void rebuild(String shaderSource) {
-        ArrayObjectMap<ShaderVariableQualifier, Variable> map = createVariables(shaderSource);
-        Array<Table> tables = createTables(map);
+    protected void populate(String shaderSource) {
+        variables = createVariables(shaderSource);
+        tables = createTables(variables);
+        rebuild();
+    }
 
+    protected void rebuild() {
         Table contentTable = new Table();
         contentTable.clear();
         contentTable.defaults().reset();
@@ -38,7 +46,20 @@ public abstract class Properties extends Table {
         contentTable.add(fileLocation).padTop(15).growX();
         contentTable.row();
         contentTable.defaults().padTop(45).growX();
-        for (Table table : tables) {
+        for (Pair<ShaderVariableQualifier, Table> pair : tables) {
+            ShaderVariableQualifier qualifier = pair.x;
+            Table table = pair.y;
+            switch (qualifier) {
+                case uniform:
+                    if (!showUniforms) continue;
+                    break;
+                case attribute:
+                    if (!showAttributes) continue;
+                    break;
+                case varying:
+                    if (!showVarying) continue;
+                    break;
+            }
             contentTable.row();
             contentTable.add(table);
         }
@@ -52,8 +73,8 @@ public abstract class Properties extends Table {
         add(scrollPane).expand().fillX().top();
     }
 
-    private Array<Table> createTables(ArrayObjectMap<ShaderVariableQualifier, Variable> map) {
-        Array<Table> tables = new Array<>(3);
+    private Array<Pair<ShaderVariableQualifier, Table>> createTables(ArrayObjectMap<ShaderVariableQualifier, Variable> map) {
+        Array<Pair<ShaderVariableQualifier, Table>> tables = new Array<>(3);
         for (ObjectMap.Entry<ShaderVariableQualifier, Array<Variable>> entry : map.entries()) {
             ShaderVariableQualifier qualifier = entry.key;
             Array<Variable> variables = entry.value;
@@ -77,7 +98,7 @@ public abstract class Properties extends Table {
                 table.add(variable);
                 table.row();
             }
-            tables.add(table);
+            tables.add(new Pair<>(qualifier, table));
         }
         return tables;
     }
@@ -106,8 +127,20 @@ public abstract class Properties extends Table {
         return main;
     }
 
-    FileLocation getFileLocation() {
+    protected FileLocation getFileLocation() {
         return fileLocation;
+    }
+
+    void setShowUniforms(boolean showUniforms) {
+        this.showUniforms = showUniforms;
+    }
+
+    void setShowAttributes(boolean showAttributes) {
+        this.showAttributes = showAttributes;
+    }
+
+    void setShowVarying(boolean showVarying) {
+        this.showVarying = showVarying;
     }
 
 }
