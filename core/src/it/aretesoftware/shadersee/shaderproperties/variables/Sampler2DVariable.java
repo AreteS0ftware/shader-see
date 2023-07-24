@@ -74,9 +74,10 @@ public class Sampler2DVariable extends Variable {
                     getMain().getStage().addActor(dialog.fadeIn());
                 }
                 else {
+                    texture.dispose();
+                    getMain().fire(new SetSampler2DUniformEvent(getVariableName(), texture, null));
                     texture = null;
                     textureFileHandle = null;
-                    getMain().fire(new SetSampler2DUniformEvent(getVariableName(), null, null));
                     rebuild();
                 }
             }

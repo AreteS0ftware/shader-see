@@ -96,12 +96,8 @@ public class ShaderUniforms {
             protected void fire(SetSampler2DUniformEvent event) {
                 String uniformName = event.uniformName;
                 Texture uniformValue = event.uniformValue;
-                if (uniformValue == null) {
-                    sampler2DUniformsMap.remove(uniformName);
-                }
-                else {
-                    sampler2DUniformsMap.put(uniformName, event.uniformValue);
-                }
+                sampler2DUniformsMap.put(uniformName, uniformValue);
+                //TODO: disposed textures stay in the map until replaced
             }
         });
     }
