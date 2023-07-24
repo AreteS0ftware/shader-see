@@ -8,10 +8,8 @@ import it.aretesoftware.shadersee.Main;
 public class TopMenuBar extends MenuBar {
 
     public TopMenuBar(Main main) {
-        Menu file = new Menu("File");
-        Menu edit = new Menu("Edit");
-        addMenu(file);
-        addMenu(edit);
+        addMenu(new FileMenu(main));
+        addMenu(new Menu("Edit"));
         addMenu(new ViewMenu(main));
         addMenu(new HelpMenu(main));
     }

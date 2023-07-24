@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 
-import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.SetBVec4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetBoolUniformEvent;
@@ -16,7 +15,7 @@ import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIntUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetSampler2DUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetVec2UniformEvent;
-import it.aretesoftware.shadersee.event.shader.ShaderLoadEvent;
+import it.aretesoftware.shadersee.event.shader.ShaderProgramUpdateEvent;
 
 public class ShaderUniforms {
 
@@ -41,12 +40,16 @@ public class ShaderUniforms {
 
     private void addListeners(Main main) {
         // Shader Load
-        main.addPreListener(new EventListener<ShaderLoadEvent>(ShaderLoadEvent.class, this) {
+        main.addPreListener(new EventListener<ShaderProgramUpdateEvent>(ShaderProgramUpdateEvent.class, this) {
             @Override
-            protected void fire(ShaderLoadEvent event) {
-                floatUniformsMap.clear();
+            protected void fire(ShaderProgramUpdateEvent event) {
                 boolUniformsMap.clear();
+                intUniformsMap.clear();
+                floatUniformsMap.clear();
+                doubleUniformsMap.clear();
                 vec2UniformsMap.clear();
+                bvec4UniformsMap.clear();
+                sampler2DUniformsMap.clear();
             }
         });
         // Set Uniforms

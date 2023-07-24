@@ -4,15 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.utils.ObjectMap;
 
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.LoadFragmentShaderEvent;
 import it.aretesoftware.shadersee.event.shader.LoadVertexShaderEvent;
 import it.aretesoftware.shadersee.event.shader.SetUTextureEvent;
-import it.aretesoftware.shadersee.event.shader.ShaderLoadEvent;
+import it.aretesoftware.shadersee.event.shader.ShaderProgramUpdateEvent;
 
 public class Shaders {
 
@@ -77,7 +75,7 @@ public class Shaders {
         shader = newShader;
         this.vert = vert;
         this.frag = frag;
-        main.fire(new ShaderLoadEvent(shader, vert, frag));
+        main.fire(new ShaderProgramUpdateEvent(shader, vert, frag));
     }
 
     public void bindShader(Batch batch) {

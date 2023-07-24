@@ -3,9 +3,8 @@ package it.aretesoftware.shadersee.shaderproperties;
 import com.kotcrab.vis.ui.widget.VisSplitPane;
 
 import it.aretesoftware.shadersee.Main;
-import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventListener;
-import it.aretesoftware.shadersee.event.shader.ShaderLoadEvent;
+import it.aretesoftware.shadersee.event.shader.ShaderProgramUpdateEvent;
 import it.aretesoftware.shadersee.event.shaderproperties.HideAttributesEvent;
 import it.aretesoftware.shadersee.event.shaderproperties.HideUniformsEvent;
 import it.aretesoftware.shadersee.event.shaderproperties.HideVaryingEvent;
@@ -35,9 +34,9 @@ public class ShaderProperties extends VisSplitPane {
 
     private void addListeners() {
         // ShaderLoadEvent
-        main.addListener(new EventListener<ShaderLoadEvent>(ShaderLoadEvent.class, this) {
+        main.addListener(new EventListener<ShaderProgramUpdateEvent>(ShaderProgramUpdateEvent.class, this) {
             @Override
-            protected void fire(ShaderLoadEvent event) {
+            protected void fire(ShaderProgramUpdateEvent event) {
                 vertexProperties.getFileLocation().setFilePath(event.vert.path());
                 fragmentProperties.getFileLocation().setFilePath(event.frag.path());
                 vertexProperties.populate(event.shader.getVertexShaderSource());

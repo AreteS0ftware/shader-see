@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.preview.BackgroundColorChangeEvent;
-import it.aretesoftware.shadersee.event.shader.ShaderLoadEvent;
+import it.aretesoftware.shadersee.event.shader.ShaderProgramUpdateEvent;
 
 public class Data {
 
@@ -19,9 +19,9 @@ public class Data {
     }
 
     private void addListeners() {
-        main.addPreListener(new EventListener<ShaderLoadEvent>(ShaderLoadEvent.class, this) {
+        main.addPreListener(new EventListener<ShaderProgramUpdateEvent>(ShaderProgramUpdateEvent.class, this) {
             @Override
-            protected void fire(ShaderLoadEvent event) {
+            protected void fire(ShaderProgramUpdateEvent event) {
                 String vert = event.vert.name();
                 String frag = event.frag.name();
                 Gdx.graphics.setTitle("Shader See - " + vert + " & " + frag);
