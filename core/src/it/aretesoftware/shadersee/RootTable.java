@@ -87,7 +87,7 @@ public class RootTable extends VisTable {
         group.space(20).padRight(30).right();
         group.addActor(new VisLabel("v0.1.0"));
         group.addActor(new VisLabel("ARETESOFTWARE.IT"));
-        group.addActor(new VisLabel("© Arete"));
+        group.addActor(new VisLabel("© 2023 Arete"));
 
         MenuBar menuBar = new MenuBar();
         menuBar.getTable().add(group).growX();

@@ -10,10 +10,9 @@ public class TopMenuBar extends MenuBar {
     public TopMenuBar(Main main) {
         Menu file = new Menu("File");
         Menu edit = new Menu("Edit");
-        Menu help = new Menu("Help");
         addMenu(file);
         addMenu(edit);
         addMenu(new ViewMenu(main));
-        addMenu(help);
+        addMenu(new HelpMenu(main));
     }
 }
