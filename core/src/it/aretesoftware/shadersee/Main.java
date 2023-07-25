@@ -41,7 +41,7 @@ public class Main extends Game {
 		shaders.loadDefaultShader();
 
 		RootTable rootTable = new RootTable(this);
-		rootTable.populate(preview = new Preview());
+		rootTable.populate(preview = new Preview(this));
 		stage.addActor(rootTable);
 	}
 

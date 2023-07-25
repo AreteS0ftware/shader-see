@@ -19,11 +19,11 @@ public class Preview extends WidgetGroup {
     private int viewportOriginalX, viewportOriginalY;
     private final PreviewDraw previewDraw;
 
-    public Preview() {
+    public Preview(Main main) {
         this.temp = new Vector2();
         this.viewport = new ScreenViewport();
         previewDraw = new PreviewDraw(this);
-        addListener(new CameraController(this));
+        addListener(new CameraController(main, this));
     }
 
     @Override

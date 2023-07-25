@@ -70,8 +70,9 @@ public class RootTable extends VisTable {
     private Table createRightSideOfPane(Preview preview) {
         PreviewProperties previewProperties = new PreviewProperties(main);
         VisSplitPane splitPane = new VisSplitPane(preview, previewProperties, true);
-        splitPane.setMinSplitAmount(0.40f);
-        splitPane.setMaxSplitAmount(0.60f);
+        splitPane.setMinSplitAmount(0.6f);
+        splitPane.setMaxSplitAmount(0.695f);
+        splitPane.setSplitAmount(0.695f);
 
         VisLabel previewLabel = new VisLabel("Preview", "title");
         Table table = new Table();
