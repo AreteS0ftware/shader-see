@@ -12,6 +12,7 @@ import it.aretesoftware.shadersee.event.EventCallback;
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.EventManager;
 import it.aretesoftware.shadersee.preview.Preview;
+import it.aretesoftware.shadersee.preview.previewfordialog.PreviewForDialog;
 
 public class Main extends Game {
 
@@ -21,6 +22,7 @@ public class Main extends Game {
 	private Shaders shaders;
 	private Data data;
 	private Preview preview;
+	private PreviewForDialog previewForDialog;
 
 	public Main() {
 		super();
@@ -43,6 +45,8 @@ public class Main extends Game {
 		RootTable rootTable = new RootTable(this);
 		rootTable.populate(preview = new Preview(this));
 		stage.addActor(rootTable);
+
+		previewForDialog = new PreviewForDialog(this);
 	}
 
 	@Override
@@ -53,6 +57,10 @@ public class Main extends Game {
 		preview.draw(stage.getBatch(), this);
 		stage.getViewport().apply();
 		stage.draw();
+
+		if (previewForDialog.getStage() != null) {
+			previewForDialog.draw(stage.getBatch(), this);
+		}
 	}
 	
 	@Override
@@ -99,6 +107,10 @@ public class Main extends Game {
 
 	public Preview getPreview() {
 		return preview;
+	}
+
+	public PreviewForDialog getPreviewForDialog() {
+		return previewForDialog;
 	}
 
 	public Data getData() {

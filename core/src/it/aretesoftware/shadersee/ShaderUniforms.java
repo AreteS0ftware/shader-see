@@ -1,18 +1,22 @@
 package it.aretesoftware.shadersee;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 
+import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.SetBVec4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetBoolUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetDoubleUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIntUniformEvent;
+import it.aretesoftware.shadersee.event.shader.SetMat4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetSampler2DUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetVec2UniformEvent;
 import it.aretesoftware.shadersee.event.shader.ShaderProgramUpdateEvent;
@@ -26,6 +30,7 @@ public class ShaderUniforms {
     private final ObjectMap<String, Vector2> vec2UniformsMap;
     private final ObjectMap<String, boolean[]> bvec4UniformsMap;
     private final ObjectMap<String, Texture> sampler2DUniformsMap;
+    private final ObjectMap<String, Matrix4> mat4UniformsMap;
 
     ShaderUniforms(Main main) {
         boolUniformsMap = new ObjectMap<>();
@@ -35,6 +40,7 @@ public class ShaderUniforms {
         vec2UniformsMap = new ObjectMap<>();
         bvec4UniformsMap = new ObjectMap<>();
         sampler2DUniformsMap = new ObjectMap<>();
+        mat4UniformsMap = new ObjectMap<>();
         addListeners(main);
     }
 
@@ -103,6 +109,12 @@ public class ShaderUniforms {
                 //TODO: disposed textures stay in the map until replaced
             }
         });
+        main.addPreListener(new EventListener<SetMat4UniformEvent>(SetMat4UniformEvent.class, this) {
+            @Override
+            protected void fire(SetMat4UniformEvent event) {
+                mat4UniformsMap.put(event.uniformName, event.uniformValue);
+            }
+        });
     }
 
     //
@@ -145,6 +157,11 @@ public class ShaderUniforms {
                 texture.bind(texture.getTextureObjectHandle());
                 shader.setUniformi(entry.key, texture.getTextureObjectHandle());
                 Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
+            }
+        }
+        if (!mat4UniformsMap.isEmpty()) {
+            for (ObjectMap.Entry<String, Matrix4> entry : mat4UniformsMap.entries()) {
+                shader.setUniformMatrix(entry.key, entry.value);
             }
         }
     }

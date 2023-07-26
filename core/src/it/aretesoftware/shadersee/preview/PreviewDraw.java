@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import it.aretesoftware.shadersee.Assets;
 import it.aretesoftware.shadersee.Data;
@@ -12,31 +13,29 @@ import it.aretesoftware.shadersee.Shaders;
 
 public class PreviewDraw {
 
-    private final Preview preview;
+    PreviewDraw() {
 
-    PreviewDraw(Preview preview) {
-        this.preview = preview;
     }
 
     //
 
-    public void draw(Batch batch, Main main) {
+    public void draw(Batch batch, Viewport viewport, Main main) {
         Data data = main.getData();
         Assets assets = main.getAssets();
         Shaders shaders = main.getShaders();
         batch.begin();
-        drawCheckers(batch, assets);
+        drawCheckers(batch, viewport, assets);
         drawSolidColor(batch, assets, data);
         drawSprite(batch, shaders);
         batch.end();
     }
 
-    private void drawCheckers(Batch batch, Assets assets) {
+    private void drawCheckers(Batch batch, Viewport viewport, Assets assets) {
         float width = 5000;
         float height = 5000;
         float x = -2500;
         float y = -2500;
-        float scale = ((OrthographicCamera)preview.getViewport().getCamera()).zoom * 2;
+        float scale = ((OrthographicCamera)viewport.getCamera()).zoom * 2;
         batch.setColor(Color.WHITE);
         batch.draw(assets.getCheckeredBackgroundTexture(),
                 x, y,

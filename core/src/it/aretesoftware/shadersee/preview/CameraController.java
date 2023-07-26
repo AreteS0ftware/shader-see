@@ -3,24 +3,15 @@ package it.aretesoftware.shadersee.preview;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import it.aretesoftware.shadersee.Main;
-import it.aretesoftware.shadersee.event.Event;
-import it.aretesoftware.shadersee.event.EventListener;
-import it.aretesoftware.shadersee.event.preview.AddCameraZoomEvent;
-import it.aretesoftware.shadersee.event.preview.CameraResetEvent;
-import it.aretesoftware.shadersee.event.preview.CameraZoomChangeEvent;
-import it.aretesoftware.shadersee.preview.Preview;
 
-public class CameraController extends InputListener {
+public abstract class CameraController extends InputListener {
 
     private final Main main;
     private final Preview preview;
@@ -29,19 +20,6 @@ public class CameraController extends InputListener {
     public CameraController(Main main, Preview preview) {
         this.main = main;
         this.preview = preview;
-
-        main.addListener(new EventListener<AddCameraZoomEvent>(AddCameraZoomEvent.class, this) {
-            @Override
-            protected void fire(AddCameraZoomEvent event) {
-                addCameraZoom(event.zoomOffset);
-            }
-        });
-        main.addListener(new EventListener<CameraResetEvent>(CameraResetEvent.class, this) {
-            @Override
-            protected void fire(CameraResetEvent event) {
-                resetCamera();
-            }
-        });
     }
 
 
@@ -85,18 +63,24 @@ public class CameraController extends InputListener {
 
     //
 
-    private void addCameraZoom(float zoomIncrease) {
+    protected void addCameraZoom(float zoomIncrease) {
         OrthographicCamera camera = (OrthographicCamera) preview.getViewport().getCamera();
         camera.zoom += zoomIncrease;
         camera.zoom = MathUtils.clamp(camera.zoom, 0.5f, 7.5f);
-        main.fire(new CameraZoomChangeEvent(camera.zoom));
     }
 
-    private void resetCamera() {
+    protected void resetCamera() {
         OrthographicCamera camera = (OrthographicCamera) preview.getViewport().getCamera();
         camera.position.setZero();
         camera.zoom = 1f;
-        main.fire(new CameraZoomChangeEvent(camera.zoom));
+    }
+
+    protected OrthographicCamera getCamera() {
+        return (OrthographicCamera) preview.getViewport().getCamera();
+    }
+
+    protected Main getMain() {
+        return main;
     }
 
 }

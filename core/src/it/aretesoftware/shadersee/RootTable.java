@@ -2,7 +2,6 @@ package it.aretesoftware.shadersee;
 
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.kotcrab.vis.ui.widget.Menu;
 import com.kotcrab.vis.ui.widget.MenuBar;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisSplitPane;
@@ -11,9 +10,7 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import it.aretesoftware.shadersee.menu.TopMenuBar;
 import it.aretesoftware.shadersee.preview.Preview;
 import it.aretesoftware.shadersee.previewproperties.PreviewProperties;
-import it.aretesoftware.shadersee.shaderproperties.FragmentProperties;
 import it.aretesoftware.shadersee.shaderproperties.ShaderProperties;
-import it.aretesoftware.shadersee.shaderproperties.VertexProperties;
 
 public class RootTable extends VisTable {
 

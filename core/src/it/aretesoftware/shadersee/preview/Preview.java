@@ -2,6 +2,7 @@ package it.aretesoftware.shadersee.preview;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -10,7 +11,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import it.aretesoftware.shadersee.Main;
-import it.aretesoftware.shadersee.Shaders;
 
 public class Preview extends WidgetGroup {
 
@@ -22,8 +22,12 @@ public class Preview extends WidgetGroup {
     public Preview(Main main) {
         this.temp = new Vector2();
         this.viewport = new ScreenViewport();
-        previewDraw = new PreviewDraw(this);
-        addListener(new CameraController(main, this));
+        previewDraw = new PreviewDraw();
+        addListener(createCameraController(main));
+    }
+
+    protected CameraController createCameraController(Main main) {
+        return new PreviewCameraController(main, this);
     }
 
     @Override
@@ -50,7 +54,7 @@ public class Preview extends WidgetGroup {
         camera.update();
         viewport.apply(false);
         batch.setProjectionMatrix(camera.combined);
-        previewDraw.draw(batch, main);
+        previewDraw.draw(batch, viewport, main);
     }
 
     public Viewport getViewport() {
