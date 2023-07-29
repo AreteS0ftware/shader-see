@@ -4,10 +4,18 @@ import com.badlogic.gdx.math.Vector2;
 
 public class SetVec2UniformEvent extends SetUniformEvent {
 
-    public final float uniformVec2X, uniformVec2Y;
+    public final Float uniformVec2X, uniformVec2Y;
 
     public SetVec2UniformEvent(String uniformName, Vector2 uniformValue) {
-        this(uniformName, uniformValue.x, uniformValue.y);
+        super(uniformName);
+        if (uniformValue == null) {
+            uniformVec2X = 0f;
+            uniformVec2Y = 0f;
+        }
+        else {
+            uniformVec2X = uniformValue.x;
+            uniformVec2Y = uniformValue.y;
+        }
     }
 
     public SetVec2UniformEvent(String uniformName, float uniformVec2X, float uniformVec2Y) {

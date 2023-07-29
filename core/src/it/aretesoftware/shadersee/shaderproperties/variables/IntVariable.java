@@ -8,7 +8,7 @@ import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.SetIntUniformEvent;
 import it.aretesoftware.shadersee.utils.UnsignedDigitsOnlyFilter;
 
-public class IntVariable extends Variable {
+public class IntVariable extends Variable<Integer> {
 
     IntVariable(VariableBuilder builder) {
         super(builder);
@@ -23,7 +23,7 @@ public class IntVariable extends Variable {
             public void keyTyped(VisTextField textField, char c) {
                 if (c != '\n' || Strings.isNullOrEmpty(textField.getText())) return;
                 int value = Integer.parseInt(textField.getText());
-                getMain().fire(new SetIntUniformEvent(getVariableName(), value));
+                setUniform(value);
             }
         });
 
@@ -37,6 +37,11 @@ public class IntVariable extends Variable {
         defaults().space(10);
         add(new VisLabel(getVariableName()));
         add(uniformTextField).width(100).maxWidth(1000).growX();
+    }
+
+    @Override
+    protected void setUniform(Integer value) {
+        getMain().fire(new SetIntUniformEvent(getVariableName(), value));
     }
 
 }

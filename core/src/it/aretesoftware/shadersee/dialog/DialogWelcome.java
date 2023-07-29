@@ -2,6 +2,7 @@ package it.aretesoftware.shadersee.dialog;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kotcrab.vis.ui.widget.VisDialog;
@@ -30,6 +31,7 @@ public class DialogWelcome extends VisDialog {
         VisTextButton testScalars = createLoadShaderTextButton("Scalars", "shaders/example_scalars.vert", "shaders/example_scalars.frag");
         VisTextButton testVectors = createLoadShaderTextButton("Vectors", "shaders/default.vert", "shaders/example_vectors.frag");
         VisTextButton testSamples = createLoadShaderTextButton("Samples", "shaders/default.vert", "shaders/example_samples.frag");
+        VisTextButton testMatrices = createLoadShaderTextButton("Matrices", "shaders/example_matrices.vert", "shaders/default.frag");
         VisTextButton exampleGrayscale = createLoadShaderTextButton("Grayscale", "shaders/default.vert", "shaders/grayscale.frag");
         VisTextButton exampleCrt = createLoadShaderTextButton("CRT", "shaders/default.vert", "shaders/crt.frag");
 
@@ -42,6 +44,8 @@ public class DialogWelcome extends VisDialog {
         table.add(testVectors);
         table.row();
         table.add(testSamples);
+        table.row();
+        table.add(testMatrices);
         table.row();
         table.addSeparator().space(25);
         table.add(new VisLabel("Example Shaders"));

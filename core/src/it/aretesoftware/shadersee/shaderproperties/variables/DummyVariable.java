@@ -4,7 +4,7 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 
 import it.aretesoftware.shadersee.utils.ShaderVariableType;
 
-public class DummyVariable extends Variable {
+public class DummyVariable extends Variable<Object> {
 
     protected DummyVariable(VariableBuilder builder) {
         super(builder);
@@ -14,6 +14,11 @@ public class DummyVariable extends Variable {
     protected void populate() {
         defaults().space(10);
         add(new VisLabel(ShaderVariableType.toString(getVariableType()) + " " + getVariableName() + ";"));
+    }
+
+    @Override
+    protected void setUniform(Object value) {
+
     }
 
 }

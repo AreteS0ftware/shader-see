@@ -17,7 +17,7 @@ import it.aretesoftware.shadersee.event.shader.SetSampler2DUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetUTextureEvent;
 import it.aretesoftware.shadersee.utils.Utils;
 
-public class Sampler2DVariable extends Variable {
+public class Sampler2DVariable extends Variable<Texture> {
 
     private VisLabel variableNameLabel;
     private VisTextField textureFilePathTextField;
@@ -42,6 +42,11 @@ public class Sampler2DVariable extends Variable {
             textureFileHandle = Gdx.files.absolute(getMain().getShaders().getUTextureFilePath());
         }
         rebuild();
+    }
+
+    @Override
+    protected void setUniform(Texture value) {
+
     }
 
     private void rebuild() {

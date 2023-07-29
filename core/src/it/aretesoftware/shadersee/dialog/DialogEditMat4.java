@@ -39,10 +39,10 @@ public class DialogEditMat4 extends VisDialog {
     @Override
     public boolean remove() {
         boolean removed = super.remove();
-        dialogPreview.remove();
-        dialogPreview.resetCameraToDefault();
         main.fire(new CameraZoomChangeEvent(((OrthographicCamera)camera).zoom));
         main.fire(new SetMat4UniformEvent(uniformName, camera.combined));
+        dialogPreview.remove();
+        dialogPreview.resetCameraToDefault();
         return removed;
     }
 

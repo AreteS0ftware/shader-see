@@ -15,7 +15,7 @@ import it.aretesoftware.shadersee.event.shader.SetVec2UniformEvent;
 import it.aretesoftware.shadersee.preview.Preview;
 import it.aretesoftware.shadersee.utils.DecimalsOnlyFilter;
 
-public class BVec2Variable extends Variable {
+public class BVec2Variable extends Variable<Vector2> {
 
     private final Vector2 vec2 = new Vector2();
     private VisTextField xTextField, yTextField;
@@ -52,6 +52,11 @@ public class BVec2Variable extends Variable {
         add(pointerRadioButton);
     }
 
+    @Override
+    protected void setUniform(Vector2 value) {
+        getMain().fire(new SetVec2UniformEvent(getVariableName(), value));
+    }
+
     //
 
     @Override
@@ -61,12 +66,12 @@ public class BVec2Variable extends Variable {
         if (pointerRadioButton.isChecked()) {
             preview.screenToLocalCoordinates(vec2.set(Gdx.input.getX(), Gdx.input.getY()));
             updateVec2TextFields();
-            getMain().fire(new SetVec2UniformEvent(getVariableName(), vec2));
+            setUniform(vec2);
         }
         if (resolutionRadioButton.isChecked()) {
             vec2.set(preview.getWidth(), preview.getHeight());
             updateVec2TextFields();
-            getMain().fire(new SetVec2UniformEvent(getVariableName(), vec2));
+            setUniform(vec2);
         }
     }
 
@@ -98,7 +103,7 @@ public class BVec2Variable extends Variable {
             if (c != '\n' || Strings.isNullOrEmpty(textField.getText())) return;
             float x = Float.parseFloat(xTextField.getText());
             float y = Float.parseFloat(yTextField.getText());
-            getMain().fire(new SetVec2UniformEvent(getVariableName(), vec2.set(x, y)));
+            setUniform(vec2.set(x, y));
         }
     }
 
@@ -115,7 +120,7 @@ public class BVec2Variable extends Variable {
             }
             vec2.setZero();
             updateVec2TextFields();
-            getMain().fire(new SetVec2UniformEvent(getVariableName(), vec2));
+            setUniform(vec2);
         }
     }
 }

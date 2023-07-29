@@ -2,11 +2,11 @@ package it.aretesoftware.shadersee.event.shader;
 
 public class SetIntUniformEvent extends SetUniformEvent {
 
-    public final int uniformValue;
+    public final Integer uniformValue;
 
-    public SetIntUniformEvent(String uniformName, int uniformValue) {
+    public SetIntUniformEvent(String uniformName, Integer uniformValue) {
         super(uniformName);
-        this.uniformValue = uniformValue;
+        this.uniformValue = uniformValue == null ? 0 : uniformValue;
     }
 
 }

@@ -7,7 +7,7 @@ import com.kotcrab.vis.ui.widget.VisTextField;
 import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 
-public class Vec4Variable extends Variable {
+public class Vec4Variable extends Variable<Object> {
 
     Vec4Variable(VariableBuilder builder) {
         super(builder);
@@ -22,6 +22,11 @@ public class Vec4Variable extends Variable {
         add(new VisTextField());
         add(new VisTextField());
         add(new VisTextField());
+    }
+
+    @Override
+    protected void setUniform(Object value) {
+
     }
 
 }

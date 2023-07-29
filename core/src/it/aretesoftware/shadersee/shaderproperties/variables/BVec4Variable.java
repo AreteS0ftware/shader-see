@@ -9,7 +9,7 @@ import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.shadersee.event.shader.SetBVec4UniformEvent;
 
-public class BVec4Variable extends Variable {
+public class BVec4Variable extends Variable<Boolean[]> {
 
     private VisCheckBox xCheckBox, yCheckBox, zCheckBox, wCheckBox;
 
@@ -33,6 +33,11 @@ public class BVec4Variable extends Variable {
         add(wCheckBox);
     }
 
+    @Override
+    protected void setUniform(Boolean[] value) {
+        getMain().fire(new SetBVec4UniformEvent(getVariableName(), value));
+    }
+
     private VisCheckBox createBVec4CheckBox() {
         VisCheckBox checkBox = new VisCheckBox("");
         checkBox.addListener(new BVec4CheckBoxListener());
@@ -46,7 +51,7 @@ public class BVec4Variable extends Variable {
             boolean y = yCheckBox.isChecked();
             boolean z = zCheckBox.isChecked();
             boolean w = wCheckBox.isChecked();
-            getMain().fire(new SetBVec4UniformEvent(getVariableName(), x, y, z, w));
+            setUniform(new Boolean[] {x, y, z, w});
         }
     }
 

@@ -14,7 +14,7 @@ import it.aretesoftware.shadersee.event.shader.SetFloatUniformTimeEvent;
 import it.aretesoftware.shadersee.event.shader.SetUniformEvent;
 import it.aretesoftware.shadersee.utils.DecimalsOnlyFilter;
 
-public class FloatVariable extends Variable {
+public class FloatVariable extends Variable<Float> {
 
     private VisTextField uniformTextField;
     private VisCheckBox elapsedTimeCheckbox;
@@ -33,7 +33,7 @@ public class FloatVariable extends Variable {
             public void keyTyped(VisTextField textField, char c) {
                 if (c != '\n' || Strings.isNullOrEmpty(textField.getText())) return;
                 float value = Float.parseFloat(textField.getText());
-                getMain().fire(new SetFloatUniformEvent(getVariableName(), value));
+                setUniform(value);
             }
         });
         elapsedTimeCheckbox = new VisCheckBox("Time");
@@ -42,7 +42,7 @@ public class FloatVariable extends Variable {
             public void changed(ChangeEvent event, Actor actor) {
                 elapsedTime = 0;
                 uniformTextField.setDisabled(elapsedTimeCheckbox.isChecked());
-                getMain().fire(new SetFloatUniformEvent(getVariableName(), 0));
+                setUniform(0f);
                 getMain().fire(new SetFloatUniformTimeEvent(getVariableName(), elapsedTimeCheckbox.isChecked()));
             }
         });
@@ -73,7 +73,12 @@ public class FloatVariable extends Variable {
         super.act(delta);
         if (elapsedTimeCheckbox.isChecked()) {
             elapsedTime += delta;
-            getMain().fire(new SetFloatUniformEvent(getVariableName(), elapsedTime));
+            setUniform(elapsedTime);
         }
+    }
+
+    @Override
+    protected void setUniform(Float value) {
+        getMain().fire(new SetFloatUniformEvent(getVariableName(), value));
     }
 }

@@ -28,7 +28,7 @@ public class ShaderUniforms {
     private final ObjectMap<String, Float> floatUniformsMap;
     private final ObjectMap<String, Double> doubleUniformsMap;
     private final ObjectMap<String, Vector2> vec2UniformsMap;
-    private final ObjectMap<String, boolean[]> bvec4UniformsMap;
+    private final ObjectMap<String, Boolean[]> bvec4UniformsMap;
     private final ObjectMap<String, Texture> sampler2DUniformsMap;
     private final ObjectMap<String, Matrix4> mat4UniformsMap;
 
@@ -146,8 +146,8 @@ public class ShaderUniforms {
             }
         }
         if (!bvec4UniformsMap.isEmpty()) {
-            for (ObjectMap.Entry<String, boolean[]> entry : bvec4UniformsMap.entries()) {
-                boolean[] values = entry.value;
+            for (ObjectMap.Entry<String, Boolean[]> entry : bvec4UniformsMap.entries()) {
+                Boolean[] values = entry.value;
                 shader.setUniformi(entry.key, values[0] ? 1 : 0, values[1] ? 1 : 0, values[2] ? 1 : 0, values[3] ? 1 : 0);
             }
         }

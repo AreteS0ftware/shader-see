@@ -7,7 +7,7 @@ import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 import it.aretesoftware.shadersee.utils.ShaderVariableType;
 
-public abstract class Variable extends Table implements Disposable {
+public abstract class Variable<T> extends Table implements Disposable {
 
     private final Main main;
     private final ShaderVariableQualifier qualifier;
@@ -72,6 +72,7 @@ public abstract class Variable extends Table implements Disposable {
             }
         }
         variable.populate();
+        variable.setUniform(null);
         return variable;
     }
 
@@ -95,5 +96,7 @@ public abstract class Variable extends Table implements Disposable {
     public void dispose () {
         main.removeListenersOfBind(this);
     }
+
+    protected abstract void setUniform(T value);
 
 }

@@ -4,7 +4,7 @@ package it.aretesoftware.shadersee.shaderproperties.variables;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
-public class BVec3Variable extends Variable {
+public class BVec3Variable extends Variable<Object> {
 
     BVec3Variable(VariableBuilder builder) {
         super(builder);
@@ -19,6 +19,11 @@ public class BVec3Variable extends Variable {
         add(new VisTextField());
         add(new VisTextField());
         add(new VisTextField());
+    }
+
+    @Override
+    protected void setUniform(Object value) {
+
     }
 
 }

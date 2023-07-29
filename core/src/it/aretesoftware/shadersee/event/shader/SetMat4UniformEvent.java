@@ -8,6 +8,6 @@ public class SetMat4UniformEvent extends SetUniformEvent {
 
     public SetMat4UniformEvent(String uniformName, Matrix4 uniformValue) {
         super(uniformName);
-        this.uniformValue = uniformValue;
+        this.uniformValue = uniformValue == null ? new Matrix4() : uniformValue;
     }
 }
