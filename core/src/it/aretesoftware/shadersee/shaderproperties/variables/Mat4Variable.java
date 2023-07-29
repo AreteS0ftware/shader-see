@@ -9,7 +9,6 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 
 import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.dialog.DialogEditMat4;
-import it.aretesoftware.shadersee.preview.previewfordialog.PreviewForDialog;
 
 public class Mat4Variable extends Variable {
 

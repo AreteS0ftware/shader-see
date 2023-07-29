@@ -1,12 +1,15 @@
 package it.aretesoftware.shadersee.dialog;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.kotcrab.vis.ui.widget.VisDialog;
 
 import it.aretesoftware.shadersee.Main;
+import it.aretesoftware.shadersee.event.preview.CameraZoomChangeEvent;
 import it.aretesoftware.shadersee.event.shader.SetMat4UniformEvent;
-import it.aretesoftware.shadersee.preview.previewfordialog.PreviewForDialog;
+import it.aretesoftware.shadersee.preview.CameraController;
+import it.aretesoftware.shadersee.preview.PreviewForDialog;
 
 public class DialogEditMat4 extends VisDialog {
 
@@ -22,9 +25,6 @@ public class DialogEditMat4 extends VisDialog {
         this.camera = camera;
         dialogPreview = main.getPreviewForDialog();
         dialogPreview.setCamera(camera);
-        if (uniformName.equals("u_projTrans")) {
-            dialogPreview.enableCameraEvents();
-        }
 
         setKeepWithinStage(false);
         setCenterOnAdd(true);
@@ -41,7 +41,7 @@ public class DialogEditMat4 extends VisDialog {
         boolean removed = super.remove();
         dialogPreview.remove();
         dialogPreview.resetCameraToDefault();
-        dialogPreview.disableCameraEvents();
+        main.fire(new CameraZoomChangeEvent(((OrthographicCamera)camera).zoom));
         main.fire(new SetMat4UniformEvent(uniformName, camera.combined));
         return removed;
     }

@@ -2,17 +2,23 @@ package it.aretesoftware.shadersee;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.awt.Desktop;
+import java.io.IOException;
+
+import it.aretesoftware.shadersee.dialog.DialogWelcome;
 import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventCallback;
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.EventManager;
 import it.aretesoftware.shadersee.preview.Preview;
-import it.aretesoftware.shadersee.preview.previewfordialog.PreviewForDialog;
+import it.aretesoftware.shadersee.preview.PreviewForDialog;
 
 public class Main extends Game {
 
@@ -47,6 +53,15 @@ public class Main extends Game {
 		stage.addActor(rootTable);
 
 		previewForDialog = new PreviewForDialog(this);
+
+
+		Timer timer = new Timer();
+		timer.scheduleTask(new Timer.Task() {
+			@Override
+			public void run() {
+				stage.addActor(new DialogWelcome(Main.this).fadeIn());
+			}
+		}, 0.01f);
 	}
 
 	@Override

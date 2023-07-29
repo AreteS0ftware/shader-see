@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
+import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.LoadFragmentShaderEvent;
+import it.aretesoftware.shadersee.event.shader.LoadShaderEvent;
 import it.aretesoftware.shadersee.event.shader.LoadVertexShaderEvent;
 import it.aretesoftware.shadersee.event.shader.SetUTextureEvent;
 import it.aretesoftware.shadersee.event.shader.ShaderProgramUpdateEvent;
@@ -32,6 +34,12 @@ public class Shaders {
 
     private void addListeners() {
         // Load Shader
+        main.addPreListener(new EventListener<LoadShaderEvent>(LoadShaderEvent.class, this) {
+            @Override
+            protected void fire(LoadShaderEvent event) {
+                loadShader(event.vert, event.frag);
+            }
+        });
         main.addPreListener(new EventListener<LoadVertexShaderEvent>(LoadVertexShaderEvent.class, this) {
             @Override
             protected void fire(LoadVertexShaderEvent event) {

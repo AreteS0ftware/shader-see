@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import it.aretesoftware.shadersee.Main;
 
-public abstract class CameraController extends InputListener {
+public class CameraController extends InputListener {
 
     private final Main main;
     private final Preview preview;
