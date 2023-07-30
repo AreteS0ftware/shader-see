@@ -25,8 +25,8 @@ public class BVec4Variable extends Variable<Boolean[]> {
         wCheckBox = createBVec4CheckBox();
 
         defaults().space(5);
-        add(new VisLabel(getVariableName() + ": ")).width(100);
-        defaults().expandX().width(50).maxWidth(1000).fill();
+        add(new VisLabel(getVariableName()));
+        defaults().expandX();
         add(xCheckBox);
         add(yCheckBox);
         add(zCheckBox);
