@@ -25,7 +25,7 @@ void main()
     uv = curve(uv, curvature);
     vec3 oricol = texture2D(u_texture, vec2(v_texCoords.x, v_texCoords.y)).xyz;
     vec3 col;
-	float x =  sin(0.3 * time + uv.y * 21.0) * sin(0.7 * time + uv.y * 29.0) * sin(0.3 + 0.33 * time + uv.y * 31.0) * 0.0017;
+	float x = sin(0.3 * time + uv.y * 21.0) * sin(0.7 * time + uv.y * 29.0) * sin(0.3 + 0.33 * time + uv.y * 31.0) * 0.0017;
 
     col.r = texture2D(u_texture, vec2(x + uv.x + 0.001, uv.y + 0.001)).x + 0.05;
     col.g = texture2D(u_texture, vec2(x + uv.x + 0.000, uv.y - 0.002)).y + 0.05;
@@ -61,7 +61,7 @@ void main()
 	
 	col *= 1.0 - 0.65 * vec3(clamp((mod(v_texCoords.x, 2.0) -1.0) * 2.0, 0.0, 1.0));
 
-	 // Remove the next line to stop cross-fade between original and postprocess
+	// Remove the next line to stop cross-fade between original and postprocess
 	if (crossfade) {
         float comp = smoothstep(0.1, 0.9, sin(time));
         col = mix(col, oricol, comp);
@@ -76,7 +76,7 @@ vec2 curve(vec2 uv, vec2 curvature)
 	uv *= 1.1;	
 	uv.x *= 1.0 + pow((abs(uv.y * curvature.x) / 5.0), 2.0);
 	uv.y *= 1.0 + pow((abs(uv.x * curvature.y) / 4.0), 2.0);
-	uv  = (uv / 2.0) + 0.5;
-	uv =  uv *0.92 + 0.04;
+	uv = (uv / 2.0) + 0.5;
+	uv = uv * 0.92 + 0.04;
 	return uv;
 }

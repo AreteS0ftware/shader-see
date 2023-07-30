@@ -13,12 +13,12 @@ public class DialogShowSampler2D extends VisDialog {
         setCenterOnAdd(true);
         setResizable(true);
         setSize(Math.min(600, texture.getWidth() + 60), Math.min(600, texture.getHeight() + 60));
+        addCloseButton();
 
         Table contentTable = getContentTable();
         VisScrollPane scrollPane = new VisScrollPane(new VisImage(texture));
         contentTable.add(scrollPane);
 
-        addCloseButton();
     }
 
 }

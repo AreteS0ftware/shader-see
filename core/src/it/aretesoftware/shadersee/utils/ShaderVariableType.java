@@ -1,5 +1,6 @@
 package it.aretesoftware.shadersee.utils;
 
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
 public class ShaderVariableType {
@@ -56,6 +57,10 @@ public class ShaderVariableType {
 
     public static String toString(int value) {
         return types.findKey(value, true);
+    }
+
+    public static Array<String> getTypesAsStrings() {
+        return types.keys().toArray();
     }
 
 }

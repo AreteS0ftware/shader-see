@@ -28,10 +28,14 @@ public class ViewMenu extends Menu {
 
         hideMenuItem = new MenuItem("Hide...");
         hideMenuItem.setSubMenu(hideSubMenu = new HideSubMenu(main));
-        updateMenus();
+        updateShowAndHideMenus();
+
+        MenuItem sourceMenuItem = new MenuItem("Source...");
+        sourceMenuItem.setSubMenu(new SourceSubMenu(main));
 
         addItem(showMenuItem);
         addItem(hideMenuItem);
+        addItem(sourceMenuItem);
         addListeners();
     }
 
@@ -42,7 +46,7 @@ public class ViewMenu extends Menu {
             protected void fire(ShowUniformsEvent event) {
                 showSubMenu.removeUniformsMenuItem();
                 hideSubMenu.addUniformsMenuItem();
-                updateMenus();
+                updateShowAndHideMenus();
             }
         });
         main.addListener(new EventListener<ShowAttributesEvent>(ShowAttributesEvent.class, this) {
@@ -50,7 +54,7 @@ public class ViewMenu extends Menu {
             protected void fire(ShowAttributesEvent event) {
                 showSubMenu.removeAttributesMenuItem();
                 hideSubMenu.addAttributesMenuItem();
-                updateMenus();
+                updateShowAndHideMenus();
             }
         });
         main.addListener(new EventListener<ShowVaryingEvent>(ShowVaryingEvent.class, this) {
@@ -58,7 +62,7 @@ public class ViewMenu extends Menu {
             protected void fire(ShowVaryingEvent event) {
                 showSubMenu.removeVaryingMenuItem();
                 hideSubMenu.addVaryingMenuItem();
-                updateMenus();
+                updateShowAndHideMenus();
             }
         });
 
@@ -68,7 +72,7 @@ public class ViewMenu extends Menu {
             protected void fire(HideUniformsEvent event) {
                 showSubMenu.addUniformsMenuItem();
                 hideSubMenu.removeUniformsMenuItem();
-                updateMenus();
+                updateShowAndHideMenus();
             }
         });
         main.addListener(new EventListener<HideAttributesEvent>(HideAttributesEvent.class, this) {
@@ -76,7 +80,7 @@ public class ViewMenu extends Menu {
             protected void fire(HideAttributesEvent event) {
                 showSubMenu.addAttributesMenuItem();
                 hideSubMenu.removeAttributesMenuItem();
-                updateMenus();
+                updateShowAndHideMenus();
             }
         });
         main.addListener(new EventListener<HideVaryingEvent>(HideVaryingEvent.class, this) {
@@ -84,12 +88,12 @@ public class ViewMenu extends Menu {
             protected void fire(HideVaryingEvent event) {
                 showSubMenu.addVaryingMenuItem();
                 hideSubMenu.removeVaryingMenuItem();
-                updateMenus();
+                updateShowAndHideMenus();
             }
         });
     }
 
-    private void updateMenus() {
+    private void updateShowAndHideMenus() {
         showSubMenu.rebuild();
         hideSubMenu.rebuild();
         if (showSubMenu.isEmpty()) {
