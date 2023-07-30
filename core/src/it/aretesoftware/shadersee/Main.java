@@ -61,7 +61,7 @@ public class Main extends Game {
 			public void run() {
 				stage.addActor(new DialogWelcome(Main.this).fadeIn());
 			}
-		}, 0.01f);
+		}, 0.1f);
 	}
 
 	@Override

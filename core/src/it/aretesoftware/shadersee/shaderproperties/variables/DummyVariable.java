@@ -13,7 +13,16 @@ public class DummyVariable extends Variable<Object> {
     @Override
     protected void populate() {
         defaults().space(10);
-        add(new VisLabel(ShaderVariableType.toString(getVariableType()) + " " + getVariableName() + ";"));
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(ShaderVariableType.toString(getVariableType()));
+        builder.append(" ");
+        builder.append(getVariablePrecision() == null ? "" : getVariablePrecision().toString());
+        builder.append(" ");
+        builder.append(getVariableName());
+        builder.append(";");
+
+        add(new VisLabel(builder.toString()));
     }
 
     @Override

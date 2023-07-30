@@ -35,6 +35,7 @@ public class Mat4Variable extends Variable<Matrix4> {
         camera.far = originalCamera.far;
         camera.near = originalCamera.near;
         camera.update();
+        setUniform(camera.combined);
 
         VisTextButton editButton = new VisTextButton("Edit");
         editButton.addListener(new ClickListener() {
@@ -48,14 +49,13 @@ public class Mat4Variable extends Variable<Matrix4> {
         defaults().space(7);
         add(new VisLabel(getVariableName()));
         add(editButton).growX();
-
-        setUniform(camera.combined);
     }
 
     @Override
     protected void setUniform(Matrix4 value) {
-        if (value == null) return;
-        getMain().fire(new SetMat4UniformEvent(getVariableName(), value));
+        if (value != null) {
+            getMain().fire(new SetMat4UniformEvent(getVariableName(), value));
+        }
     }
 
     private boolean isUProjTrans() {

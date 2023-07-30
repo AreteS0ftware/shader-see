@@ -13,13 +13,14 @@ import de.damios.guacamole.tuple.Pair;
 import it.aretesoftware.couscous.ArrayObjectMap;
 import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.shaderproperties.variables.Variable;
+import it.aretesoftware.shadersee.shaderproperties.variables.VariableBuilder;
 import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 
 public abstract class Properties extends Table {
 
     private final Main main;
     private final FileLocation fileLocation;
-    private ArrayObjectMap<ShaderVariableQualifier, Variable> variables;
+    private ArrayObjectMap<ShaderVariableQualifier, Variable<?>> variables;
     private Array<Pair<ShaderVariableQualifier, Table>> tables;
     private boolean showUniforms, showAttributes, showVarying;
 
@@ -73,11 +74,11 @@ public abstract class Properties extends Table {
         add(scrollPane).expand().fillX().top();
     }
 
-    private Array<Pair<ShaderVariableQualifier, Table>> createTables(ArrayObjectMap<ShaderVariableQualifier, Variable> map) {
+    private Array<Pair<ShaderVariableQualifier, Table>> createTables(ArrayObjectMap<ShaderVariableQualifier, Variable<?>> map) {
         Array<Pair<ShaderVariableQualifier, Table>> tables = new Array<>(3);
-        for (ObjectMap.Entry<ShaderVariableQualifier, Array<Variable>> entry : map.entries()) {
+        for (ObjectMap.Entry<ShaderVariableQualifier, Array<Variable<?>>> entry : map.entries()) {
             ShaderVariableQualifier qualifier = entry.key;
-            Array<Variable> variables = entry.value;
+            Array<Variable<?>> variables = entry.value;
             String title = null;
             switch (qualifier) {
                 case uniform:
@@ -94,7 +95,7 @@ public abstract class Properties extends Table {
             table.add(new VisLabel(title));
             table.row();
             table.defaults().growX().padTop(25);
-            for (Variable variable : variables) {
+            for (Variable<?> variable : variables) {
                 table.add(variable);
                 table.row();
             }
@@ -103,15 +104,17 @@ public abstract class Properties extends Table {
         return tables;
     }
 
-    private ArrayObjectMap<ShaderVariableQualifier, Variable> createVariables(String shaderSource) {
-        ArrayObjectMap<ShaderVariableQualifier, Variable> map = new ArrayObjectMap<>();
-        Pattern pattern = Pattern.compile("(uniform|attribute|varying) +([A-Za-z0-9]+) +([A-Za-z0-9_]+);");
+    private ArrayObjectMap<ShaderVariableQualifier, Variable<?>> createVariables(String shaderSource) {
+        ArrayObjectMap<ShaderVariableQualifier, Variable<?>> map = new ArrayObjectMap<>();
+        Pattern pattern = Pattern.compile("(uniform|attribute|varying) +(?i)(lowp|mediump|highp +)? *([A-Za-z0-9]+) +([A-Za-z0-9_]+);");
         Matcher matcher = pattern.matcher(shaderSource);
         while (matcher.find()) {
             String qualifier = matcher.group(1);
-            String type = matcher.group(2);
-            String name = matcher.group(3);
-            Variable variable = Variable.create(getMain(), qualifier, type, name);
+            String precision = matcher.group(2);
+            String type = matcher.group(3);
+            String name = matcher.group(4);
+            VariableBuilder builder = new VariableBuilder(main, qualifier, precision, type, name);
+            Variable<?> variable = Variable.create(builder);
             map.add(variable.getVariableQualifier(), variable);
         }
         return map;

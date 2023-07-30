@@ -31,10 +31,11 @@ public class PreviewDraw {
     }
 
     private void drawCheckers(Batch batch, Viewport viewport, Assets assets) {
-        float width = 5000;
-        float height = 5000;
-        float x = -2500;
-        float y = -2500;
+        final float VALUE = 500000;
+        float width = VALUE;
+        float height = VALUE;
+        float x = -(VALUE / 2f);
+        float y = -(VALUE / 2f);
         float scale = ((OrthographicCamera)viewport.getCamera()).zoom * 2;
         batch.setColor(Color.WHITE);
         batch.draw(assets.getCheckeredBackgroundTexture(),
@@ -49,10 +50,11 @@ public class PreviewDraw {
     }
 
     private void drawSolidColor(Batch batch, Assets assets, Data data) {
-        float width = 5000;
-        float height = 5000;
-        float x = -2500;
-        float y = -2500;
+        final float VALUE = 500000;
+        float width = VALUE;
+        float height = VALUE;
+        float x = -(VALUE / 2f);
+        float y = -(VALUE / 2f);
         float scale = 1f;
         batch.setColor(data.getBackgroundColor());
         batch.draw(assets.getWhitePixelTexture(),

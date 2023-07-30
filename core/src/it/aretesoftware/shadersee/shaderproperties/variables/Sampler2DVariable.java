@@ -13,6 +13,7 @@ import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.shadersee.dialog.DialogCannotClearUTexture;
 import it.aretesoftware.shadersee.dialog.DialogShowSampler2D;
+import it.aretesoftware.shadersee.event.shader.SetMat4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetSampler2DUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetUTextureEvent;
 import it.aretesoftware.shadersee.utils.Utils;
@@ -46,7 +47,17 @@ public class Sampler2DVariable extends Variable<Texture> {
 
     @Override
     protected void setUniform(Texture value) {
+        setUniform(value, null);
+    }
 
+    private void setUniform(Texture value, FileHandle fileHandle) {
+        if (value == null) return;
+        if (isUTexture()) {
+            getMain().fire(new SetUTextureEvent(value, fileHandle));
+        }
+        else {
+            getMain().fire(new SetSampler2DUniformEvent(getVariableName(), value, fileHandle));
+        }
     }
 
     private void rebuild() {
@@ -80,7 +91,7 @@ public class Sampler2DVariable extends Variable<Texture> {
                 }
                 else {
                     texture.dispose();
-                    getMain().fire(new SetSampler2DUniformEvent(getVariableName(), texture, null));
+                    setUniform(texture, null);
                     texture = null;
                     textureFileHandle = null;
                     rebuild();
@@ -140,12 +151,7 @@ public class Sampler2DVariable extends Variable<Texture> {
                 }
                 textureFileHandle = fileHandle;
                 texture = new Texture(fileHandle);
-                if (isUTexture()) {
-                    getMain().fire(new SetUTextureEvent(texture, fileHandle));
-                }
-                else {
-                    getMain().fire(new SetSampler2DUniformEvent(getVariableName(), texture, fileHandle));
-                }
+                setUniform(texture, fileHandle);
                 rebuild();
             }
         });

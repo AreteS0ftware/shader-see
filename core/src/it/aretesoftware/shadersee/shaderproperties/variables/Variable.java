@@ -2,8 +2,10 @@ package it.aretesoftware.shadersee.shaderproperties.variables;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import it.aretesoftware.shadersee.Main;
+import it.aretesoftware.shadersee.utils.ShaderVariablePrecision;
 import it.aretesoftware.shadersee.utils.ShaderVariableQualifier;
 import it.aretesoftware.shadersee.utils.ShaderVariableType;
 
@@ -11,22 +13,23 @@ public abstract class Variable<T> extends Table implements Disposable {
 
     private final Main main;
     private final ShaderVariableQualifier qualifier;
+    private final ShaderVariablePrecision precision;
     private final int type;
     private final String name;
 
     protected Variable(VariableBuilder builder) {
         this.main = builder.main;
         this.qualifier = builder.qualifier;
+        this.precision = builder.precision;
         this.type = builder.type;
         this.name = builder.name;
     }
 
     protected abstract void populate();
 
-    public static Variable create(Main main, String qualifier, String type, String name) {
-        VariableBuilder builder = new VariableBuilder(main, ShaderVariableQualifier.valueOf(qualifier), ShaderVariableType.toInt(type), name);
-        Variable variable;
-        if (ShaderVariableQualifier.valueOf(qualifier) != ShaderVariableQualifier.uniform) {
+    public static Variable<?> create(VariableBuilder builder) {
+        Variable<?> variable;
+        if (builder.qualifier != ShaderVariableQualifier.uniform) {
             variable = new DummyVariable(builder);
         }
         else {
@@ -71,17 +74,24 @@ public abstract class Variable<T> extends Table implements Disposable {
                     break;
             }
         }
+        if (variable == null) {
+            throw new GdxRuntimeException("Variable cannot be null.");
+        }
         variable.populate();
         variable.setUniform(null);
         return variable;
     }
 
-    public Main getMain() {
+    protected Main getMain() {
         return main;
     }
 
     public ShaderVariableQualifier getVariableQualifier() {
         return qualifier;
+    }
+
+    public ShaderVariablePrecision getVariablePrecision() {
+        return precision;
     }
 
     public int getVariableType() {

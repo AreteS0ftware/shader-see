@@ -2,11 +2,13 @@ package it.aretesoftware.shadersee.menu;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kotcrab.vis.ui.widget.Menu;
 import com.kotcrab.vis.ui.widget.MenuItem;
 
 import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.dialog.DialogAbout;
+import it.aretesoftware.shadersee.dialog.DialogWelcome;
 
 public class HelpMenu extends Menu {
 
@@ -21,6 +23,7 @@ public class HelpMenu extends Menu {
                 main.getStage().addActor(dialog.fadeIn());
             }
         });
+
         addItem(aboutMenuItem);
     }
 }
