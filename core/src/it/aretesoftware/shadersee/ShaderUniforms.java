@@ -23,26 +23,10 @@ import it.aretesoftware.shadersee.event.shader.ShaderProgramUpdateEvent;
 
 public class ShaderUniforms {
 
-    private final ObjectMap<String, Boolean> boolUniformsMap;
-    private final ObjectMap<String, Integer> intUniformsMap;
-    private final ObjectMap<String, Float> floatUniformsMap;
-    private final ObjectMap<String, Double> doubleUniformsMap;
-    private final ObjectMap<String, Vector2> vec2UniformsMap;
-    private final ObjectMap<String, Boolean[]> bvec4UniformsMap;
-    private final ObjectMap<String, Texture> sampler2DUniformsMap;
-    private final ObjectMap<String, Matrix4> mat4UniformsMap;
-    private final ObjectMap<String, Color> vec4UniformsMap;
+    private final ObjectMap<String, Object> uniforms;
 
     ShaderUniforms(Main main) {
-        boolUniformsMap = new ObjectMap<>();
-        intUniformsMap = new ObjectMap<>();
-        floatUniformsMap = new ObjectMap<>();
-        doubleUniformsMap = new ObjectMap<>();
-        vec2UniformsMap = new ObjectMap<>();
-        bvec4UniformsMap = new ObjectMap<>();
-        sampler2DUniformsMap = new ObjectMap<>();
-        mat4UniformsMap = new ObjectMap<>();
-        vec4UniformsMap = new ObjectMap<>();
+        uniforms = new ObjectMap<>();
         addListeners(main);
     }
 
@@ -51,47 +35,41 @@ public class ShaderUniforms {
         main.addPreListener(new EventListener<ShaderProgramUpdateEvent>(ShaderProgramUpdateEvent.class, this) {
             @Override
             protected void fire(ShaderProgramUpdateEvent event) {
-                boolUniformsMap.clear();
-                intUniformsMap.clear();
-                floatUniformsMap.clear();
-                doubleUniformsMap.clear();
-                vec2UniformsMap.clear();
-                bvec4UniformsMap.clear();
-                sampler2DUniformsMap.clear();
+                uniforms.clear();
             }
         });
         // Set Uniforms
         main.addPreListener(new EventListener<SetBoolUniformEvent>(SetBoolUniformEvent.class, this) {
             @Override
             protected void fire(SetBoolUniformEvent event) {
-                boolUniformsMap.put(event.uniformName, event.uniformValue);
+                uniforms.put(event.uniformName, event.uniformValue);
             }
         });
         main.addPreListener(new EventListener<SetIntUniformEvent>(SetIntUniformEvent.class, this) {
             @Override
             protected void fire(SetIntUniformEvent event) {
-                intUniformsMap.put(event.uniformName, event.uniformValue);
+                uniforms.put(event.uniformName, event.uniformValue);
             }
         });
         main.addPreListener(new EventListener<SetFloatUniformEvent>(SetFloatUniformEvent.class, this) {
             @Override
             protected void fire(SetFloatUniformEvent event) {
-                floatUniformsMap.put(event.uniformName, event.uniformValue);
+                uniforms.put(event.uniformName, event.uniformValue);
             }
         });
         main.addPreListener(new EventListener<SetDoubleUniformEvent>(SetDoubleUniformEvent.class, this) {
             @Override
             protected void fire(SetDoubleUniformEvent event) {
-                doubleUniformsMap.put(event.uniformName, event.uniformValue);
+                uniforms.put(event.uniformName, event.uniformValue);
             }
         });
         main.addPreListener(new EventListener<SetVec2UniformEvent>(SetVec2UniformEvent.class, this) {
             @Override
             protected void fire(SetVec2UniformEvent event) {
-                Vector2 vec2 = vec2UniformsMap.get(event.uniformName);
+                Vector2 vec2 = (Vector2) uniforms.get(event.uniformName);
                 if (vec2 == null) {
                     vec2 = new Vector2();
-                    vec2UniformsMap.put(event.uniformName, vec2);
+                    uniforms.put(event.uniformName, vec2);
                 }
                 vec2.set(event.uniformVec2X, event.uniformVec2Y);
             }
@@ -99,7 +77,7 @@ public class ShaderUniforms {
         main.addPreListener(new EventListener<SetBVec4UniformEvent>(SetBVec4UniformEvent.class, this) {
             @Override
             protected void fire(SetBVec4UniformEvent event) {
-                bvec4UniformsMap.put(event.uniformName, event.uniformValue);
+                uniforms.put(event.uniformName, event.uniformValue);
             }
         });
         main.addPreListener(new EventListener<SetSampler2DUniformEvent>(SetSampler2DUniformEvent.class, this) {
@@ -107,20 +85,20 @@ public class ShaderUniforms {
             protected void fire(SetSampler2DUniformEvent event) {
                 String uniformName = event.uniformName;
                 Texture uniformValue = event.uniformValue;
-                sampler2DUniformsMap.put(uniformName, uniformValue);
+                uniforms.put(uniformName, uniformValue);
                 //TODO: disposed textures stay in the map until replaced
             }
         });
         main.addPreListener(new EventListener<SetMat4UniformEvent>(SetMat4UniformEvent.class, this) {
             @Override
             protected void fire(SetMat4UniformEvent event) {
-                mat4UniformsMap.put(event.uniformName, event.uniformValue);
+                uniforms.put(event.uniformName, event.uniformValue);
             }
         });
         main.addPreListener(new EventListener<SetVec4UniformEvent>(SetVec4UniformEvent.class, this) {
             @Override
             protected void fire(SetVec4UniformEvent event) {
-                vec4UniformsMap.put(event.uniformName, event.uniformValue);
+                uniforms.put(event.uniformName, event.uniformValue);
             }
         });
 
@@ -129,53 +107,40 @@ public class ShaderUniforms {
     //
 
     void setUniforms(ShaderProgram shader) {
-        if (!boolUniformsMap.isEmpty()) {
-            for (ObjectMap.Entry<String, Boolean> entry : boolUniformsMap.entries()) {
-                shader.setUniformi(entry.key, entry.value ? 1 : 0);
-            }
+        if (uniforms.isEmpty()) {
+            return;
         }
-        if (!intUniformsMap.isEmpty()) {
-            for (ObjectMap.Entry<String, Integer> entry : intUniformsMap.entries()) {
-                shader.setUniformi(entry.key, entry.value);
+        for (ObjectMap.Entry<String, Object> entry : uniforms.entries()) {
+            String uniformName = entry.key;
+            Object uniformValue = entry.value;
+            Class<?> valueType = uniformValue.getClass();
+            if (valueType == Boolean.class) {
+                shader.setUniformi(uniformName, (Boolean)uniformValue ? 1 : 0);
             }
-        }
-        if (!floatUniformsMap.isEmpty()) {
-            for (ObjectMap.Entry<String, Float> entry : floatUniformsMap.entries()) {
-                shader.setUniformf(entry.key, entry.value);
+            else if (valueType == Integer.class) {
+                shader.setUniformf(uniformName, (Integer) uniformValue);
             }
-        }
-        if (!doubleUniformsMap.isEmpty()) {
-            for (ObjectMap.Entry<String, Double> entry : doubleUniformsMap.entries()) {
-                shader.setUniformf(entry.key, Float.parseFloat(entry.value.toString()));
+            else if (valueType == Double.class) {
+                shader.setUniformf(uniformName, Float.parseFloat(uniformValue.toString()));
             }
-        }
-        if (!vec2UniformsMap.isEmpty()) {
-            for (ObjectMap.Entry<String, Vector2> entry : vec2UniformsMap.entries()) {
-                shader.setUniformf(entry.key, entry.value);
+            else if (valueType == Vector2.class) {
+                shader.setUniformf(uniformName, (Vector2) uniformValue);
             }
-        }
-        if (!bvec4UniformsMap.isEmpty()) {
-            for (ObjectMap.Entry<String, Boolean[]> entry : bvec4UniformsMap.entries()) {
-                Boolean[] values = entry.value;
-                shader.setUniformi(entry.key, values[0] ? 1 : 0, values[1] ? 1 : 0, values[2] ? 1 : 0, values[3] ? 1 : 0);
+            else if (valueType == Boolean[].class) {
+                Boolean[] values = (Boolean[]) uniformValue;
+                shader.setUniformi(uniformName, values[0] ? 1 : 0, values[1] ? 1 : 0, values[2] ? 1 : 0, values[3] ? 1 : 0);
             }
-        }
-        if (!sampler2DUniformsMap.isEmpty()) {
-            for (ObjectMap.Entry<String, Texture> entry : sampler2DUniformsMap.entries()) {
-                Texture texture = entry.value;
+            else if (valueType == Texture.class) {
+                Texture texture = (Texture) uniformValue;
                 texture.bind(texture.getTextureObjectHandle());
-                shader.setUniformi(entry.key, texture.getTextureObjectHandle());
+                shader.setUniformi(uniformName, texture.getTextureObjectHandle());
                 Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
             }
-        }
-        if (!mat4UniformsMap.isEmpty()) {
-            for (ObjectMap.Entry<String, Matrix4> entry : mat4UniformsMap.entries()) {
-                shader.setUniformMatrix(entry.key, entry.value);
+            else if (valueType == Matrix4.class) {
+                shader.setUniformMatrix(uniformName, (Matrix4) uniformValue);
             }
-        }
-        if (!vec4UniformsMap.isEmpty()) {
-            for (ObjectMap.Entry<String, Color> entry : vec4UniformsMap.entries()) {
-                shader.setUniformf(entry.key, entry.value);
+            else if (valueType == Color.class) {
+                shader.setUniformf(uniformName, (Color) uniformValue);
             }
         }
     }
