@@ -4,9 +4,8 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.couscous.Strings;
-import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.SetIntUniformEvent;
-import it.aretesoftware.shadersee.utils.UnsignedDigitsOnlyFilter;
+import it.aretesoftware.shadersee.utils.SignedDigitsOnlyFilter;
 
 public class IntVariable extends Variable<Integer> {
 
@@ -17,7 +16,7 @@ public class IntVariable extends Variable<Integer> {
     @Override
     protected void populate() {
         VisTextField uniformTextField = new VisTextField("0");
-        uniformTextField.setTextFieldFilter(new UnsignedDigitsOnlyFilter());
+        uniformTextField.setTextFieldFilter(new SignedDigitsOnlyFilter());
         uniformTextField.setTextFieldListener(new VisTextField.TextFieldListener() {
             @Override
             public void keyTyped(VisTextField textField, char c) {
@@ -26,7 +25,6 @@ public class IntVariable extends Variable<Integer> {
                 setUniform(value);
             }
         });
-
         getMain().addListener(new VariableEventListener<SetIntUniformEvent>(SetIntUniformEvent.class, this) {
             @Override
             protected void fire(SetIntUniformEvent event) {

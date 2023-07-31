@@ -12,6 +12,7 @@ uniform sampler2D u_texture;
 uniform mat4 u_projTrans;
 
 uniform bvec4 bvec4Uniform;
+uniform ivec4 ivec4Uniform;     //uvec4 doesn't work
 uniform vec4 vec4Uniform;
 
 void main()
@@ -23,16 +24,16 @@ void main()
     }
 
     if (bvec4Uniform.x) {
-        color.x = 0.0;
+        color.x = float(ivec4Uniform.x) / 2.0;
     }
     if (bvec4Uniform.y) {
-        color.y = 0.0;
+        color.y = float(ivec4Uniform.y) / 2.0;
     }
     if (bvec4Uniform.z) {
-        color.z = 0.0;
+        color.z = float(ivec4Uniform.z) / 2.0;
     }
     if (bvec4Uniform.w) {
-        color.w = 0.5;
+        color.w = float(ivec4Uniform.w) / 2.0;
     }
 
     gl_FragColor = color;

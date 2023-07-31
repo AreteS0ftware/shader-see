@@ -18,15 +18,18 @@ public class ShaderVariableType {
     public static final int IVEC2 = 8;
     public static final int IVEC3 = 9;
     public static final int IVEC4 = 10;
-    public static final int VEC2 = 11;
-    public static final int VEC3 = 12;
-    public static final int VEC4 = 13;
-    public static final int MAT2 = 14;
-    public static final int MAT3 = 15;
-    public static final int MAT4 = 16;
-    public static final int SAMPLER2D = 17;
-    public static final int SAMPLERCUBE = 18;
-    public static final int VOID = 19;
+    public static final int UVEC2 = 11;
+    public static final int UVEC3 = 12;
+    public static final int UVEC4 = 13;
+    public static final int VEC2 = 14;
+    public static final int VEC3 = 15;
+    public static final int VEC4 = 16;
+    public static final int MAT2 = 17;
+    public static final int MAT3 = 18;
+    public static final int MAT4 = 19;
+    public static final int SAMPLER2D = 20;
+    public static final int SAMPLERCUBE = 21;
+    public static final int VOID = 22;
 
     static {
         types.put("bool", BOOL);

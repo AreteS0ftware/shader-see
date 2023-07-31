@@ -14,6 +14,7 @@ import it.aretesoftware.shadersee.event.shader.SetBVec4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetBoolUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetDoubleUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
+import it.aretesoftware.shadersee.event.shader.SetIVec4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIntUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetMat4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetSampler2DUniformEvent;
@@ -101,6 +102,12 @@ public class ShaderUniforms {
                 uniforms.put(event.uniformName, event.uniformValue);
             }
         });
+        main.addPreListener(new EventListener<SetIVec4UniformEvent>(SetIVec4UniformEvent.class, this) {
+            @Override
+            protected void fire(SetIVec4UniformEvent event) {
+                uniforms.put(event.uniformName, event.uniformValue);
+            }
+        });
 
     }
 
@@ -118,7 +125,7 @@ public class ShaderUniforms {
                 shader.setUniformi(uniformName, (Boolean)uniformValue ? 1 : 0);
             }
             else if (valueType == Integer.class) {
-                shader.setUniformf(uniformName, (Integer) uniformValue);
+                shader.setUniformi(uniformName, (Integer) uniformValue);
             }
             else if (valueType == Double.class) {
                 shader.setUniformf(uniformName, Float.parseFloat(uniformValue.toString()));
@@ -129,6 +136,10 @@ public class ShaderUniforms {
             else if (valueType == Boolean[].class) {
                 Boolean[] values = (Boolean[]) uniformValue;
                 shader.setUniformi(uniformName, values[0] ? 1 : 0, values[1] ? 1 : 0, values[2] ? 1 : 0, values[3] ? 1 : 0);
+            }
+            else if (valueType == Integer[].class) {
+                Integer[] values = (Integer[]) uniformValue;
+                shader.setUniformi(uniformName, values[0], values[1], values[2], values[3]);
             }
             else if (valueType == Texture.class) {
                 Texture texture = (Texture) uniformValue;

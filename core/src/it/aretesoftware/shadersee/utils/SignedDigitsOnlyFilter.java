@@ -9,11 +9,12 @@ public class SignedDigitsOnlyFilter implements VisTextField.TextFieldFilter {
         String text = textField.getText();
 
         final char PLUS = '+';
-        if ((c == PLUS) && !text.isEmpty()) {
+        final char MINUS = '-';
+        if ((c == PLUS || c == MINUS) && !text.isEmpty()) {
             return false;
         }
 
-        return Character.isDigit(c) || c == PLUS || c == '\n'; // 10 = Enter key
+        return Character.isDigit(c) || c == PLUS || c == MINUS || c == '\n'; // 10 = Enter key
     }
 
 }
