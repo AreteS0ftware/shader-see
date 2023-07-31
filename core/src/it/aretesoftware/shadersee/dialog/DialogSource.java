@@ -259,7 +259,7 @@ public class DialogSource extends VisDialog {
     }
 
     private String markupNumbers(String shaderSource) {
-        Pattern pattern = Pattern.compile("[0-9]*\\.?[0-9]+");
+        Pattern pattern = Pattern.compile("([0-9]*\\.?[0-9]+)|(false|true)");
         Matcher matcher = pattern.matcher(shaderSource);
         int indexOffset = 0;
         while (matcher.find()) {
@@ -267,20 +267,30 @@ public class DialogSource extends VisDialog {
             int valueIndex = matcher.start() + indexOffset;
 
             String before = shaderSource.substring(0, valueIndex);
-            boolean variableName = false;
-            for (int charIndex = before.length() - 3; charIndex < before.length(); charIndex++) {
-                char character = before.charAt(charIndex);
-                if (Character.isAlphabetic(character)) {
-                    variableName = true;
-                    break;
-                }
-            }
-            if (variableName) {
-                continue;
-            }
-
             String middle = "[PURPLE]" + value + "[WHITE]";
             String after = shaderSource.substring(valueIndex + value.length());
+
+            if (!value.equals("true") && !value.equals("false")) {
+                boolean variableName = false;
+                for (int charIndex = before.length() - 3; charIndex < before.length(); charIndex++) {
+                    char character = before.charAt(charIndex);
+                    if (Character.isAlphabetic(character)) {
+                        variableName = true;
+                        break;
+                    }
+                }
+                if (variableName) {
+                    continue;
+                }
+            }
+            else {
+                if (Character.isAlphabetic(before.charAt(before.length() - 1))) {
+                    continue;
+                }
+                if (Character.isAlphabetic(after.charAt(0))) {
+                    continue;
+                }
+            }
 
             StringBuilder builder = new StringBuilder();
             builder.append(before);

@@ -68,16 +68,6 @@ void main()
 	}
 
     gl_FragColor = vec4(col, 1.0);
-
-    for (int i = 0; i < 10; i++) {
-
-    }
-    do {
-    
-    }
-    while (false);
-    bool testfalse = true;
-    testfalse = false;
 }
 
 vec2 curve(vec2 uv, vec2 curvature)
