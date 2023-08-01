@@ -11,11 +11,13 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ObjectMap;
 
 import it.aretesoftware.shadersee.event.EventListener;
+import it.aretesoftware.shadersee.event.shader.SetBVec2UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetBVec3UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetBVec4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetBoolUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetDoubleUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
+import it.aretesoftware.shadersee.event.shader.SetIVec2UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIVec3UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIVec4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIntUniformEvent;
@@ -96,6 +98,13 @@ public class ShaderUniforms {
                 uniforms.put(event.uniformName, event.uniformValue);
             }
         });
+        main.addPreListener(new EventListener<SetBVec2UniformEvent>(SetBVec2UniformEvent.class, this) {
+            @Override
+            protected void fire(SetBVec2UniformEvent event) {
+                Boolean[] uniformValue = new Boolean[] {event.value1, event.value2};
+                uniforms.put(event.uniformName, uniformValue);
+            }
+        });
         main.addPreListener(new EventListener<SetBVec3UniformEvent>(SetBVec3UniformEvent.class, this) {
             @Override
             protected void fire(SetBVec3UniformEvent event) {
@@ -123,6 +132,13 @@ public class ShaderUniforms {
             @Override
             protected void fire(SetMat4UniformEvent event) {
                 uniforms.put(event.uniformName, event.uniformValue);
+            }
+        });
+        main.addPreListener(new EventListener<SetIVec2UniformEvent>(SetIVec2UniformEvent.class, this) {
+            @Override
+            protected void fire(SetIVec2UniformEvent event) {
+                Integer[] uniformValue = new Integer[] {event.value1, event.value2};
+                uniforms.put(event.uniformName, uniformValue);
             }
         });
         main.addPreListener(new EventListener<SetIVec3UniformEvent>(SetIVec3UniformEvent.class, this) {

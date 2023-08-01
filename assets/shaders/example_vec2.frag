@@ -11,8 +11,8 @@ varying vec2 v_texCoords;
 uniform sampler2D u_texture;
 uniform mat4 u_projTrans;
 
-uniform bvec3 bvec3Uniform;
-uniform ivec3 ivec3Uniform;     //uvec3 doesn't work
+uniform bvec2 bvec2Uniform;
+uniform ivec2 ivec2Uniform;     //uvec2 doesn't work
 uniform vec2 vec2Uniform;
 
 void main()
@@ -23,14 +23,11 @@ void main()
         color = vec4(vec2Uniform, 1.0, 1.0) * color;
     }
 
-    if (bvec3Uniform.x) {
-        color.x = float(ivec3Uniform.x) * 0.1;
+    if (bvec2Uniform.x) {
+        color.x = float(ivec2Uniform.x) * 0.1;
     }
-    if (bvec3Uniform.y) {
-        color.y = float(ivec3Uniform.y) * 0.1;
-    }
-    if (bvec3Uniform.z) {
-        color.z = float(ivec3Uniform.z) * 0.1;
+    if (bvec2Uniform.y) {
+        color.y = float(ivec2Uniform.y) * 0.1;
     }
 
     gl_FragColor = color;

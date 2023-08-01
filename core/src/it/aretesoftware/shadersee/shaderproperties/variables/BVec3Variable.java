@@ -5,10 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.widget.VisCheckBox;
 import com.kotcrab.vis.ui.widget.VisLabel;
-import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.shadersee.event.shader.SetBVec3UniformEvent;
-import it.aretesoftware.shadersee.event.shader.SetBVec4UniformEvent;
 
 public class BVec3Variable extends Variable<Boolean[]> {
 
@@ -20,9 +18,9 @@ public class BVec3Variable extends Variable<Boolean[]> {
 
     @Override
     protected void populate() {
-        xCheckBox = createBVec4CheckBox();
-        yCheckBox = createBVec4CheckBox();
-        zCheckBox = createBVec4CheckBox();
+        xCheckBox = createBVec3CheckBox();
+        yCheckBox = createBVec3CheckBox();
+        zCheckBox = createBVec3CheckBox();
 
         defaults().space(5);
         add(new VisLabel(getVariableName()));
@@ -37,9 +35,9 @@ public class BVec3Variable extends Variable<Boolean[]> {
         getMain().fire(new SetBVec3UniformEvent(getVariableName(), value));
     }
 
-    private VisCheckBox createBVec4CheckBox() {
+    private VisCheckBox createBVec3CheckBox() {
         VisCheckBox checkBox = new VisCheckBox("");
-        checkBox.addListener(new BVec3Variable.BVec3CheckBoxListener());
+        checkBox.addListener(new BVec3CheckBoxListener());
         return checkBox;
     }
 
