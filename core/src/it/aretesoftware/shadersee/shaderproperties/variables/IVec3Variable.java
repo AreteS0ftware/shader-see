@@ -6,7 +6,6 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.shadersee.event.shader.SetIVec3UniformEvent;
-import it.aretesoftware.shadersee.event.shader.SetIVec4UniformEvent;
 import it.aretesoftware.shadersee.utils.SignedDigitsOnlyFilter;
 
 public class IVec3Variable extends Variable<Integer[]> {

@@ -86,9 +86,8 @@ public class DialogSource extends VisDialog {
     }
 
     private String markupTypes(String shaderSource) {
-        final String FOREST = "[FOREST]";
         for (String type : ShaderVariableType.getTypesAsStrings()) {
-            shaderSource = markup(shaderSource, type, FOREST);
+            shaderSource = markup(shaderSource, type, "[FOREST]");
         }
         return shaderSource;
     }
@@ -259,7 +258,15 @@ public class DialogSource extends VisDialog {
     }
 
     private String markupNumbers(String shaderSource) {
-        Pattern pattern = Pattern.compile("([0-9]*\\.?[0-9]+)|(false|true)");
+        return markup(shaderSource, "([0-9]*\\.?[0-9]+)|(false|true)", "[PURPLE]");
+    }
+
+    private String markupComments(String shaderSource) {
+        return markup(shaderSource, "(\\/\\/ *.*\\n+)", "[ROYAL]");
+    }
+
+    private String markup(String shaderSource, String regex, String color) {
+        Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(shaderSource);
         int indexOffset = 0;
         while (matcher.find()) {
@@ -267,29 +274,14 @@ public class DialogSource extends VisDialog {
             int valueIndex = matcher.start() + indexOffset;
 
             String before = shaderSource.substring(0, valueIndex);
-            String middle = "[PURPLE]" + value + "[WHITE]";
+            String middle = color + value + "[WHITE]";
             String after = shaderSource.substring(valueIndex + value.length());
 
-            if (!value.equals("true") && !value.equals("false")) {
-                boolean variableName = false;
-                for (int charIndex = before.length() - 3; charIndex < before.length(); charIndex++) {
-                    char character = before.charAt(charIndex);
-                    if (Character.isAlphabetic(character)) {
-                        variableName = true;
-                        break;
-                    }
-                }
-                if (variableName) {
-                    continue;
-                }
+            if (before.length() > 0 && Character.isAlphabetic(before.charAt(before.length() - 1))) {
+                continue;
             }
-            else {
-                if (Character.isAlphabetic(before.charAt(before.length() - 1))) {
-                    continue;
-                }
-                if (Character.isAlphabetic(after.charAt(0))) {
-                    continue;
-                }
+            if (after.length() > 0 && Character.isAlphabetic(after.charAt(0))) {
+                continue;
             }
 
             StringBuilder builder = new StringBuilder();
@@ -300,19 +292,8 @@ public class DialogSource extends VisDialog {
 
             indexOffset += (middle.length() - value.length());
         }
+
         return shaderSource;
     }
 
-    private String markupComments(String shaderSource) {
-        Pattern pattern = Pattern.compile("(\\/\\/ *.*\\n+)");
-        Matcher matcher = pattern.matcher(shaderSource);
-        while (matcher.find()) {
-            shaderSource = markup(shaderSource, matcher.group(), "[ROYAL]");
-        }
-        return shaderSource;
-    }
-
-    private String markup(String shaderSource, String value, String color) {
-        return shaderSource.replaceAll(value, color + value + "[WHITE]");
-    }
 }
