@@ -29,23 +29,29 @@ public class DialogWelcome extends VisDialog {
         addCloseButton();
 
         VisTextButton testScalars = createLoadShaderTextButton("Scalars", "shaders/example_scalars.vert", "shaders/example_scalars.frag");
-        VisTextButton testVectors = createLoadShaderTextButton("Vectors", "shaders/default.vert", "shaders/example_vectors.frag");
-        VisTextButton testSamples = createLoadShaderTextButton("Samples", "shaders/default.vert", "shaders/example_samples.frag");
+        VisTextButton testVec2 = createLoadShaderTextButton("vec2", "shaders/default.vert", "shaders/example_vec2.frag");
+        VisTextButton testVec3 = createLoadShaderTextButton("vec3", "shaders/default.vert", "shaders/example_vec3.frag");
+        VisTextButton testVec4 = createLoadShaderTextButton("vec4", "shaders/default.vert", "shaders/example_vec4.frag");
         VisTextButton testMatrices = createLoadShaderTextButton("Matrices", "shaders/example_matrices.vert", "shaders/default.frag");
+        VisTextButton testSamples = createLoadShaderTextButton("Samples", "shaders/default.vert", "shaders/example_samples.frag");
         VisTextButton exampleGrayscale = createLoadShaderTextButton("Grayscale", "shaders/default.vert", "shaders/grayscale.frag");
         VisTextButton exampleCrt = createLoadShaderTextButton("CRT", "shaders/default.vert", "shaders/crt.frag");
 
         VisTable table = new VisTable();
-        table.defaults().space(10);
+        table.defaults().space(10).colspan(3);
         table.add(new VisLabel("Test Shaders"));
         table.row();
         table.add(testScalars);
         table.row();
-        table.add(testVectors);
+        table.defaults().colspan(1);
+        table.add(testVec2);
+        table.add(testVec3);
+        table.add(testVec4);
+        table.row();
+        table.defaults().colspan(3);
+        table.add(testMatrices);
         table.row();
         table.add(testSamples);
-        table.row();
-        table.add(testMatrices);
         table.row();
         table.addSeparator().space(25);
         table.add(new VisLabel("Example Shaders"));

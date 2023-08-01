@@ -24,16 +24,16 @@ void main()
     }
 
     if (bvec4Uniform.x) {
-        color.x = float(ivec4Uniform.x) / 2.0;
+        color.x = float(ivec4Uniform.x) * 0.1;
     }
     if (bvec4Uniform.y) {
-        color.y = float(ivec4Uniform.y) / 2.0;
+        color.y = float(ivec4Uniform.y) * 0.1;
     }
     if (bvec4Uniform.z) {
-        color.z = float(ivec4Uniform.z) / 2.0;
+        color.z = float(ivec4Uniform.z) * 0.1;
     }
     if (bvec4Uniform.w) {
-        color.w = float(ivec4Uniform.w) / 2.0;
+        color.w = float(ivec4Uniform.w) * 0.1;
     }
 
     gl_FragColor = color;

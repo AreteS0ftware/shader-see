@@ -7,18 +7,22 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ObjectMap;
 
 import it.aretesoftware.shadersee.event.EventListener;
+import it.aretesoftware.shadersee.event.shader.SetBVec3UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetBVec4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetBoolUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetDoubleUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetFloatUniformEvent;
+import it.aretesoftware.shadersee.event.shader.SetIVec3UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIVec4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIntUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetMat4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetSampler2DUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetVec2UniformEvent;
+import it.aretesoftware.shadersee.event.shader.SetVec3UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetVec4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.ShaderProgramUpdateEvent;
 
@@ -75,10 +79,35 @@ public class ShaderUniforms {
                 vec2.set(event.uniformVec2X, event.uniformVec2Y);
             }
         });
+        main.addPreListener(new EventListener<SetVec3UniformEvent>(SetVec3UniformEvent.class, this) {
+            @Override
+            protected void fire(SetVec3UniformEvent event) {
+                Vector3 vec3 = (Vector3) uniforms.get(event.uniformName);
+                if (vec3 == null) {
+                    vec3 = new Vector3();
+                    uniforms.put(event.uniformName, vec3);
+                }
+                vec3.set(event.uniformVec3X, event.uniformVec3Y, event.uniformVec3Z);
+            }
+        });
+        main.addPreListener(new EventListener<SetVec4UniformEvent>(SetVec4UniformEvent.class, this) {
+            @Override
+            protected void fire(SetVec4UniformEvent event) {
+                uniforms.put(event.uniformName, event.uniformValue);
+            }
+        });
+        main.addPreListener(new EventListener<SetBVec3UniformEvent>(SetBVec3UniformEvent.class, this) {
+            @Override
+            protected void fire(SetBVec3UniformEvent event) {
+                Boolean[] uniformValue = new Boolean[] {event.value1, event.value2, event.value3};
+                uniforms.put(event.uniformName, uniformValue);
+            }
+        });
         main.addPreListener(new EventListener<SetBVec4UniformEvent>(SetBVec4UniformEvent.class, this) {
             @Override
             protected void fire(SetBVec4UniformEvent event) {
-                uniforms.put(event.uniformName, event.uniformValue);
+                Boolean[] uniformValue = new Boolean[] {event.value1, event.value2, event.value3, event.value4};
+                uniforms.put(event.uniformName, uniformValue);
             }
         });
         main.addPreListener(new EventListener<SetSampler2DUniformEvent>(SetSampler2DUniformEvent.class, this) {
@@ -96,16 +125,18 @@ public class ShaderUniforms {
                 uniforms.put(event.uniformName, event.uniformValue);
             }
         });
-        main.addPreListener(new EventListener<SetVec4UniformEvent>(SetVec4UniformEvent.class, this) {
+        main.addPreListener(new EventListener<SetIVec3UniformEvent>(SetIVec3UniformEvent.class, this) {
             @Override
-            protected void fire(SetVec4UniformEvent event) {
-                uniforms.put(event.uniformName, event.uniformValue);
+            protected void fire(SetIVec3UniformEvent event) {
+                Integer[] uniformValue = new Integer[] {event.value1, event.value2, event.value3};
+                uniforms.put(event.uniformName, uniformValue);
             }
         });
         main.addPreListener(new EventListener<SetIVec4UniformEvent>(SetIVec4UniformEvent.class, this) {
             @Override
             protected void fire(SetIVec4UniformEvent event) {
-                uniforms.put(event.uniformName, event.uniformValue);
+                Integer[] uniformValue = new Integer[] {event.value1, event.value2, event.value3, event.value4};
+                uniforms.put(event.uniformName, uniformValue);
             }
         });
 
@@ -121,37 +152,60 @@ public class ShaderUniforms {
             String uniformName = entry.key;
             Object uniformValue = entry.value;
             Class<?> valueType = uniformValue.getClass();
-            if (valueType == Boolean.class) {
+            if (valueType == Boolean.class) {   //bool
                 shader.setUniformi(uniformName, (Boolean)uniformValue ? 1 : 0);
             }
-            else if (valueType == Integer.class) {
+            else if (valueType == Integer.class) {  //int
                 shader.setUniformi(uniformName, (Integer) uniformValue);
             }
-            else if (valueType == Double.class) {
+            else if (valueType == Double.class) {   //double
                 shader.setUniformf(uniformName, Float.parseFloat(uniformValue.toString()));
             }
-            else if (valueType == Vector2.class) {
+            else if (valueType == Vector2.class) {  //vec2
                 shader.setUniformf(uniformName, (Vector2) uniformValue);
             }
-            else if (valueType == Boolean[].class) {
+            else if (valueType == Vector3.class) {  //vec3
+                shader.setUniformf(uniformName, (Vector3) uniformValue);
+            }
+            else if (valueType == Color.class) {    //vec4
+                shader.setUniformf(uniformName, (Color) uniformValue);
+            }
+            else if (valueType == Boolean[].class) {    //bvecn
                 Boolean[] values = (Boolean[]) uniformValue;
-                shader.setUniformi(uniformName, values[0] ? 1 : 0, values[1] ? 1 : 0, values[2] ? 1 : 0, values[3] ? 1 : 0);
+                switch (values.length) {
+                    case 2: //bvec2
+                        shader.setUniformi(uniformName, values[0] ? 1 : 0, values[1] ? 1 : 0);
+                        break;
+                    case 3: //bvec3
+                        shader.setUniformi(uniformName, values[0] ? 1 : 0, values[1] ? 1 : 0, values[2] ? 1 : 0);
+                        break;
+                    case 4: //bvec4
+                        shader.setUniformi(uniformName, values[0] ? 1 : 0, values[1] ? 1 : 0, values[2] ? 1 : 0, values[3] ? 1 : 0);
+                        break;
+                }
             }
-            else if (valueType == Integer[].class) {
+            else if (valueType == Integer[].class) {    //ivecn
                 Integer[] values = (Integer[]) uniformValue;
-                shader.setUniformi(uniformName, values[0], values[1], values[2], values[3]);
+                switch (values.length) {
+                    case 2: //ivec2
+                        shader.setUniformi(uniformName, values[0], values[1]);
+                        break;
+                    case 3: //ivec3
+                        shader.setUniformi(uniformName, values[0], values[1], values[2]);
+                        break;
+                    case 4: //ivec4
+                        shader.setUniformi(uniformName, values[0], values[1], values[2], values[3]);
+                        break;
+                }
             }
-            else if (valueType == Texture.class) {
+            else if (valueType == Texture.class) {  //sampler2D
                 Texture texture = (Texture) uniformValue;
                 texture.bind(texture.getTextureObjectHandle());
                 shader.setUniformi(uniformName, texture.getTextureObjectHandle());
                 Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
             }
-            else if (valueType == Matrix4.class) {
+            else if (valueType == Matrix4.class) {  //mat4
                 shader.setUniformMatrix(uniformName, (Matrix4) uniformValue);
-            }
-            else if (valueType == Color.class) {
-                shader.setUniformf(uniformName, (Color) uniformValue);
             }
         }
     }

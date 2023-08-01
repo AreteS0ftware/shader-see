@@ -11,7 +11,6 @@ import com.kotcrab.vis.ui.widget.VisRadioButton;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
 import it.aretesoftware.couscous.Strings;
-import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.SetVec2UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetVec2UniformOptionEvent;
 import it.aretesoftware.shadersee.preview.Preview;
@@ -32,7 +31,6 @@ public class Vec2Variable extends Variable<Vector2> {
     protected void populate() {
         xTextField = createVec2TextField();
         yTextField = createVec2TextField();
-
         getMain().addListener(new VariableEventListener<SetVec2UniformEvent>(SetVec2UniformEvent.class, this) {
             @Override
             protected void fire(SetVec2UniformEvent event) {
@@ -46,8 +44,6 @@ public class Vec2Variable extends Variable<Vector2> {
         defaults().expandX().width(50).maxWidth(1000).fill();
         add(xTextField);
         add(yTextField);
-        row();
-        defaults().reset();
 
         radioButtonGroup = new ButtonGroup<>();
         customRadioButton = createVec2RadioButton("Custom", true);
@@ -56,6 +52,8 @@ public class Vec2Variable extends Variable<Vector2> {
         radioButtonGroup.add(customRadioButton);
         radioButtonGroup.add(resolutionRadioButton);
         radioButtonGroup.add(pointerRadioButton);
+        row();
+        defaults().reset();
 
         getMain().addListener(new VariableEventListener<SetVec2UniformOptionEvent>(SetVec2UniformOptionEvent.class, this) {
             @Override

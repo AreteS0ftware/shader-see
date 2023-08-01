@@ -5,51 +5,49 @@ import com.badlogic.gdx.scenes.scene2d.utils.FocusListener;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
+import it.aretesoftware.shadersee.event.shader.SetIVec3UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIVec4UniformEvent;
 import it.aretesoftware.shadersee.utils.SignedDigitsOnlyFilter;
 
-public class IVec4Variable extends Variable<Integer[]> {
+public class IVec3Variable extends Variable<Integer[]> {
 
-    private VisTextField xTextField, yTextField, zTextField, wTextField;
+    private VisTextField xTextField, yTextField, zTextField;
 
-    protected IVec4Variable(VariableBuilder builder) {
+    protected IVec3Variable(VariableBuilder builder) {
         super(builder);
     }
 
     @Override
     protected void populate() {
-        xTextField = createIVec4TextField();
-        yTextField = createIVec4TextField();
-        zTextField = createIVec4TextField();
-        wTextField = createIVec4TextField();
-        getMain().addListener(new VariableEventListener<SetIVec4UniformEvent>(SetIVec4UniformEvent.class, this) {
+        xTextField = createIVec3TextField();
+        yTextField = createIVec3TextField();
+        zTextField = createIVec3TextField();
+        getMain().addListener(new VariableEventListener<SetIVec3UniformEvent>(SetIVec3UniformEvent.class, this) {
             @Override
-            protected void fire(SetIVec4UniformEvent event) {
+            protected void fire(SetIVec3UniformEvent event) {
                 xTextField.setText(String.valueOf(event.value1));
                 yTextField.setText(String.valueOf(event.value2));
                 zTextField.setText(String.valueOf(event.value3));
-                wTextField.setText(String.valueOf(event.value4));
             }
         });
 
-        defaults().space(5);
+        defaults().space(10);
         add(new VisLabel(getVariableName()));
         defaults().expandX().width(30).maxWidth(1000).fill();
         add(xTextField);
         add(yTextField);
         add(zTextField);
-        add(wTextField);
     }
 
     @Override
     protected void setUniform(Integer[] value) {
-        getMain().fire(new SetIVec4UniformEvent(getVariableName(), value));
+        getMain().fire(new SetIVec3UniformEvent(getVariableName(), value));
     }
 
-    private VisTextField createIVec4TextField() {
+    private VisTextField createIVec3TextField() {
         VisTextField textField = new VisTextField("0");
         textField.setTextFieldFilter(new SignedDigitsOnlyFilter());
-        textField.setTextFieldListener(new IVec4TextFieldListener());
+        textField.setTextFieldListener(new IVec3TextFieldListener());
         textField.addListener(new FocusListener() {
             @Override
             public void keyboardFocusChanged(FocusEvent event, Actor actor, boolean focused) {
@@ -63,7 +61,7 @@ public class IVec4Variable extends Variable<Integer[]> {
         return textField;
     }
 
-    private class IVec4TextFieldListener implements VisTextField.TextFieldListener {
+    private class IVec3TextFieldListener implements VisTextField.TextFieldListener {
         @Override
         public void keyTyped(VisTextField textField, char c) {
             if (c != '\n') return;
@@ -75,8 +73,7 @@ public class IVec4Variable extends Variable<Integer[]> {
         int x = getDigit(xTextField);
         int y = getDigit(yTextField);
         int z = getDigit(zTextField);
-        int w = getDigit(wTextField);
-        setUniform(new Integer[] {x, y, z, w});
+        setUniform(new Integer[] {x, y, z});
     }
 
     private int getDigit(VisTextField textField) {
