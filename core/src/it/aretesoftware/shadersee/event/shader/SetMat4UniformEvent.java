@@ -10,4 +10,5 @@ public class SetMat4UniformEvent extends SetUniformEvent {
         super(uniformName);
         this.uniformValue = uniformValue == null ? new Matrix4() : uniformValue;
     }
+
 }

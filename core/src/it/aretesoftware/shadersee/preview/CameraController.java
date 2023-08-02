@@ -66,7 +66,7 @@ public class CameraController extends InputListener {
     protected void addCameraZoom(float zoomIncrease) {
         OrthographicCamera camera = (OrthographicCamera) preview.getViewport().getCamera();
         camera.zoom += zoomIncrease;
-        camera.zoom = MathUtils.clamp(camera.zoom, 0.5f, 5f);
+        camera.zoom = MathUtils.clamp(camera.zoom, 0.5f, 2.5f);
     }
 
     protected void resetCamera() {

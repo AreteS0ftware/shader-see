@@ -10,7 +10,6 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 
 import it.aretesoftware.shadersee.Main;
 import it.aretesoftware.shadersee.dialog.DialogEditMat4;
-import it.aretesoftware.shadersee.event.shader.SetMat4UniformEvent;
 
 public class Mat4Variable extends Variable<Matrix4> {
 
@@ -53,9 +52,7 @@ public class Mat4Variable extends Variable<Matrix4> {
 
     @Override
     protected void setUniform(Matrix4 value) {
-        if (value != null) {
-            getMain().fire(new SetMat4UniformEvent(getVariableName(), value));
-        }
+        // Event is sent in DialogEditMat4
     }
 
     private boolean isUProjTrans() {

@@ -72,6 +72,9 @@ public abstract class Variable<T> extends Table implements Disposable {
                 case ShaderVariableType.VEC4:
                     variable = new Vec4Variable(builder);
                     break;
+                case ShaderVariableType.MAT3:
+                    variable = new Mat3Variable(builder);
+                    break;
                 case ShaderVariableType.MAT4:
                     variable = new Mat4Variable(builder);
                     break;

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -21,6 +22,7 @@ import it.aretesoftware.shadersee.event.shader.SetIVec2UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIVec3UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIVec4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetIntUniformEvent;
+import it.aretesoftware.shadersee.event.shader.SetMat3UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetMat4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetSampler2DUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetVec2UniformEvent;
@@ -128,6 +130,12 @@ public class ShaderUniforms {
                 //TODO: disposed textures stay in the map until replaced
             }
         });
+        main.addPreListener(new EventListener<SetMat3UniformEvent>(SetMat3UniformEvent.class, this) {
+            @Override
+            protected void fire(SetMat3UniformEvent event) {
+                uniforms.put(event.uniformName, event.uniformValue);
+            }
+        });
         main.addPreListener(new EventListener<SetMat4UniformEvent>(SetMat4UniformEvent.class, this) {
             @Override
             protected void fire(SetMat4UniformEvent event) {
@@ -174,6 +182,9 @@ public class ShaderUniforms {
             else if (valueType == Integer.class) {  //int
                 shader.setUniformi(uniformName, (Integer) uniformValue);
             }
+            else if (valueType == Float.class) {   //double
+                shader.setUniformf(uniformName, (Float) uniformValue);
+            }
             else if (valueType == Double.class) {   //double
                 shader.setUniformf(uniformName, Float.parseFloat(uniformValue.toString()));
             }
@@ -219,6 +230,9 @@ public class ShaderUniforms {
                 texture.bind(texture.getTextureObjectHandle());
                 shader.setUniformi(uniformName, texture.getTextureObjectHandle());
                 Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
+            }
+            else if (valueType == Matrix3.class) {
+                shader.setUniformMatrix(uniformName, (Matrix3) uniformValue);
             }
             else if (valueType == Matrix4.class) {  //mat4
                 shader.setUniformMatrix(uniformName, (Matrix4) uniformValue);
