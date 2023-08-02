@@ -43,6 +43,9 @@ public class ShaderVariableType {
         types.put("ivec2", IVEC2);
         types.put("ivec3", IVEC3);
         types.put("ivec4", IVEC4);
+        types.put("uvec2", UVEC2);
+        types.put("uvec3", UVEC3);
+        types.put("uvec4", UVEC4);
         types.put("vec2", VEC2);
         types.put("vec3", VEC3);
         types.put("vec4", VEC4);

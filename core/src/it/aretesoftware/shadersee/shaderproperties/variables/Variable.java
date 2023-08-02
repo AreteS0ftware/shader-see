@@ -82,12 +82,9 @@ public abstract class Variable<T> extends Table implements Disposable {
                     variable = new Sampler2DVariable(builder);
                     break;
                 default:
-                    variable = null;
+                    variable = new DummyVariable(builder);
                     break;
             }
-        }
-        if (variable == null) {
-            throw new GdxRuntimeException("Variable cannot be null.");
         }
         variable.populate();
         variable.setUniform(null);

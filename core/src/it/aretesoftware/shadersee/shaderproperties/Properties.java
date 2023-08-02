@@ -27,6 +27,8 @@ public abstract class Properties extends Table {
     Properties(Main main) {
         this.main = main;
         this.fileLocation = createFileLocation();
+        variables = new ArrayObjectMap<>();
+        tables = new Array<>();
         showUniforms = showAttributes = showVarying = true;
         populate(getInitialShaderSource());
     }
@@ -34,6 +36,11 @@ public abstract class Properties extends Table {
     //
 
     protected void populate(String shaderSource) {
+        for (Array<Variable<?>> variables : variables.values()) {
+            for (Variable<?> variable : variables) {
+                variable.dispose(); // clear event manager references
+            }
+        }
         variables = createVariables(shaderSource);
         tables = createTables(variables);
         rebuild();
