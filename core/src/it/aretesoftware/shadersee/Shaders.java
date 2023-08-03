@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
+import it.aretesoftware.shadersee.dialog.DialogShaderLoadError;
 import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.LoadFragmentShaderEvent;
@@ -75,6 +76,8 @@ public class Shaders {
     void loadShader(FileHandle vert, FileHandle frag) {
         ShaderProgram newShader = new ShaderProgram(vert, frag);
         if (!newShader.isCompiled()) {
+            DialogShaderLoadError dialog = new DialogShaderLoadError(newShader.getLog(), vert, frag);
+            main.getStage().addActor(dialog.fadeIn());
             newShader.dispose();
             return;
         }
