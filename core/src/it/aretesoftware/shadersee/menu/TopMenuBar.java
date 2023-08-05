@@ -1,6 +1,5 @@
 package it.aretesoftware.shadersee.menu;
 
-import com.kotcrab.vis.ui.widget.Menu;
 import com.kotcrab.vis.ui.widget.MenuBar;
 
 import it.aretesoftware.shadersee.Main;
