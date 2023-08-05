@@ -9,7 +9,6 @@ public class TopMenuBar extends MenuBar {
 
     public TopMenuBar(Main main) {
         addMenu(new FileMenu(main));
-        addMenu(new Menu("Edit"));
         addMenu(new ViewMenu(main));
         addMenu(new HelpMenu(main));
     }

@@ -1,13 +1,16 @@
 package it.aretesoftware.shadersee.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.widget.Menu;
 import com.kotcrab.vis.ui.widget.MenuItem;
 
 import it.aretesoftware.shadersee.Main;
+import it.aretesoftware.shadersee.Shaders;
 import it.aretesoftware.shadersee.dialog.DialogWelcome;
+import it.aretesoftware.shadersee.event.shader.LoadShaderEvent;
 
 public class FileMenu extends Menu {
 
@@ -17,8 +20,16 @@ public class FileMenu extends Menu {
         MenuItem importMenuItem = new MenuItem("Import...");
         importMenuItem.setSubMenu(new ImportSubMenu(main));
 
-        MenuItem exportMenuItem = new MenuItem("Export...");
-        exportMenuItem.setSubMenu(new ExportSubMenu(main));
+        MenuItem refreshMenuItem = new MenuItem("Refresh");
+        refreshMenuItem.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Shaders shaders = main.getShaders();
+                FileHandle vert = Gdx.files.internal(shaders.getVertexShaderFilePath());
+                FileHandle frag = Gdx.files.internal(shaders.getFragmentShaderFilePath());
+                main.fire(new LoadShaderEvent(vert, frag));
+            }
+        });
 
         MenuItem welcomeScreenMenuItem = new MenuItem("Welcome Screen...");
         welcomeScreenMenuItem.addListener(new ChangeListener() {
@@ -38,7 +49,7 @@ public class FileMenu extends Menu {
         });
 
         addItem(importMenuItem);
-        addItem(exportMenuItem);
+        addItem(refreshMenuItem);
         addItem(welcomeScreenMenuItem);
         addItem(exitMenuItem);
     }

@@ -27,7 +27,7 @@ public class DialogShaderLoadError extends VisDialog {
 
         Table contentTable = getContentTable();
         contentTable.defaults().padTop(5);
-        contentTable.add("The following files could not be loaded").padTop(15);
+        contentTable.add("One or both of the following files could not be loaded").padTop(15);
         contentTable.row();
         contentTable.add(vertFilePathLabel);
         contentTable.row();

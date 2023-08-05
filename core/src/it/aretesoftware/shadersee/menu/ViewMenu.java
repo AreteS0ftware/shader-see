@@ -30,7 +30,7 @@ public class ViewMenu extends Menu {
         hideMenuItem.setSubMenu(hideSubMenu = new HideSubMenu(main));
         updateShowAndHideMenus();
 
-        MenuItem sourceMenuItem = new MenuItem("Source...");
+        MenuItem sourceMenuItem = new MenuItem("Source");
         sourceMenuItem.setSubMenu(new SourceSubMenu(main));
 
         addItem(showMenuItem);
