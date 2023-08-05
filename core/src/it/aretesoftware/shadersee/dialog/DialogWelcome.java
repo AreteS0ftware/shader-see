@@ -17,7 +17,7 @@ public class DialogWelcome extends VisDialog {
     private final Main main;
 
     public DialogWelcome(Main main) {
-        super("Welcome Dialog");
+        super("Welcome");
         this.main = main;
 
         setKeepWithinStage(true);

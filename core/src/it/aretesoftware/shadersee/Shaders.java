@@ -27,7 +27,7 @@ public class Shaders {
 
     Shaders(Main main) {
         this.main = main;
-        //ShaderProgram.pedantic = false;
+        ShaderProgram.pedantic = false;
         uTextureFileHandle = Gdx.files.internal("textures/badlogic.jpg");
         u_texture = new Texture(uTextureFileHandle);
         shaderUniforms = new ShaderUniforms(main);

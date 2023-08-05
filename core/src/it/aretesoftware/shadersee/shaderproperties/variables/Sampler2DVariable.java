@@ -11,9 +11,7 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.VisTextField;
 
-import it.aretesoftware.shadersee.dialog.DialogCannotClearUTexture;
 import it.aretesoftware.shadersee.dialog.DialogShowSampler2D;
-import it.aretesoftware.shadersee.event.shader.SetMat4UniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetSampler2DUniformEvent;
 import it.aretesoftware.shadersee.event.shader.SetUTextureEvent;
 import it.aretesoftware.shadersee.utils.Utils;
@@ -85,17 +83,11 @@ public class Sampler2DVariable extends Variable<Texture> {
         textButton.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                if (isUTexture()) {
-                    DialogCannotClearUTexture dialog = new DialogCannotClearUTexture();
-                    getMain().getStage().addActor(dialog.fadeIn());
-                }
-                else {
-                    texture.dispose();
-                    setUniform(texture, null);
-                    texture = null;
-                    textureFileHandle = null;
-                    rebuild();
-                }
+                texture.dispose();
+                setUniform(texture, null);
+                texture = null;
+                textureFileHandle = null;
+                rebuild();
             }
         });
         return textButton;

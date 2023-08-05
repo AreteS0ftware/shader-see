@@ -57,6 +57,7 @@ public class RootTable extends VisTable {
         VisSplitPane splitPane = new VisSplitPane(createLeftSideOfPane(), createRightSideOfPane(preview), false);
         splitPane.setMinSplitAmount(0.45f);
         splitPane.setMaxSplitAmount(0.55f);
+        splitPane.setSplitAmount(0.55f);
         table.add(splitPane).grow();
     }
 
@@ -69,7 +70,7 @@ public class RootTable extends VisTable {
         VisSplitPane splitPane = new VisSplitPane(preview, previewProperties, true);
         splitPane.setMinSplitAmount(0.6f);
         splitPane.setMaxSplitAmount(0.695f);
-        splitPane.setSplitAmount(0.695f);
+        splitPane.setSplitAmount(0.6f);
 
         VisLabel previewLabel = new VisLabel("Preview", "title");
         Table table = new Table();

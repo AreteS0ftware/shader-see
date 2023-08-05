@@ -8,7 +8,7 @@ import it.aretesoftware.shadersee.Main;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setTitle("shader-see");
+		config.setTitle("Shader See");
 		config.setForegroundFPS(60);
 		config.setWindowSizeLimits(800, 800, 1920, 1080);
 		config.setBackBufferConfig(8, 8, 8, 8, 16, 0, 8);
