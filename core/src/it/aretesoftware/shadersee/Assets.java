@@ -13,7 +13,6 @@ public class Assets {
 
     private final Skin skin;
     private final Texture whitePixelTexture, checkeredBackgroundTexture;
-    private final BitmapFont size100Font;
 
     Assets() {
         VisUI.load(skin = new Skin(Gdx.files.internal("skins/neutralizer/neutralizer-ui.json")));
@@ -26,14 +25,6 @@ public class Assets {
 
         checkeredBackgroundTexture = new Texture(Gdx.files.internal("textures/checkered_background.png"));
         checkeredBackgroundTexture.setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
-
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Roboto-Regular.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        params.size = 100;
-        params.borderWidth = 5f;
-        params.borderColor = Color.BLACK;
-        size100Font = generator.generateFont(params);
-        generator.dispose();
     }
 
     public Skin getSkin() {
@@ -46,10 +37,6 @@ public class Assets {
 
     public Texture getWhitePixelTexture() {
         return whitePixelTexture;
-    }
-
-    public BitmapFont getSize100Font() {
-        return size100Font;
     }
 
 }
