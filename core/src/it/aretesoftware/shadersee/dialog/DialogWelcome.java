@@ -28,12 +28,12 @@ public class DialogWelcome extends VisDialog {
         setSize(300, 450);
         addCloseButton();
 
-        VisTextButton testSamples = createLoadShaderTextButton("Samples", "shaders/default.vert", "shaders/example_samples.frag");
-        VisTextButton testScalars = createLoadShaderTextButton("Scalars", "shaders/example_scalars.vert", "shaders/example_scalars.frag");
-        VisTextButton testMatrices = createLoadShaderTextButton("Matrices", "shaders/example_matrices.vert", "shaders/example_matrices.frag");
-        VisTextButton testVec2 = createLoadShaderTextButton("vec2", "shaders/default.vert", "shaders/example_vec2.frag");
-        VisTextButton testVec3 = createLoadShaderTextButton("vec3", "shaders/default.vert", "shaders/example_vec3.frag");
-        VisTextButton testVec4 = createLoadShaderTextButton("vec4", "shaders/default.vert", "shaders/example_vec4.frag");
+        VisTextButton testSamples = createLoadShaderTextButton("Samples", "shaders/default.vert", "shaders/test_samples.frag");
+        VisTextButton testScalars = createLoadShaderTextButton("Scalars", "shaders/test_scalars.vert", "shaders/test_scalars.frag");
+        VisTextButton testMatrices = createLoadShaderTextButton("Matrices", "shaders/test_matrices.vert", "shaders/test_matrices.frag");
+        VisTextButton testVec2 = createLoadShaderTextButton("vec2", "shaders/default.vert", "shaders/test_vec2.frag");
+        VisTextButton testVec3 = createLoadShaderTextButton("vec3", "shaders/default.vert", "shaders/test_vec3.frag");
+        VisTextButton testVec4 = createLoadShaderTextButton("vec4", "shaders/default.vert", "shaders/test_vec4.frag");
         VisTextButton exampleGrayscale = createLoadShaderTextButton("Grayscale", "shaders/default.vert", "shaders/grayscale.frag");
         VisTextButton exampleCrt = createLoadShaderTextButton("CRT", "shaders/default.vert", "shaders/crt.frag");
 

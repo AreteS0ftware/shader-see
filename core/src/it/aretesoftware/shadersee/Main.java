@@ -2,15 +2,11 @@ package it.aretesoftware.shadersee;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-
-import java.awt.Desktop;
-import java.io.IOException;
 
 import it.aretesoftware.shadersee.dialog.DialogWelcome;
 import it.aretesoftware.shadersee.event.Event;
