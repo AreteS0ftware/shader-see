@@ -24,7 +24,7 @@ public class SourceSubMenu extends PopupMenu  {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Shaders shaders = main.getShaders();
-                DialogSource dialog = new DialogSource(shaders.getVertexShaderFilePath(), shaders.getShader().getVertexShaderSource());
+                DialogSource dialog = new DialogSource(shaders.getVertexShaderFileHandle().file().getAbsolutePath(), shaders.getShader().getVertexShaderSource());
                 main.getStage().addActor(dialog.fadeIn());
             }
         });
@@ -37,7 +37,7 @@ public class SourceSubMenu extends PopupMenu  {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Shaders shaders = main.getShaders();
-                DialogSource dialog = new DialogSource(shaders.getFragmentShaderFilePath(), shaders.getShader().getFragmentShaderSource());
+                DialogSource dialog = new DialogSource(shaders.getFragmentShaderFileHandle().file().getAbsolutePath(), shaders.getShader().getFragmentShaderSource());
                 main.getStage().addActor(dialog.fadeIn());
             }
         });

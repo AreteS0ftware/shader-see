@@ -1,5 +1,6 @@
 package it.aretesoftware.shadersee.menu;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -25,9 +26,13 @@ public class FileMenu extends Menu {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Shaders shaders = main.getShaders();
-                FileHandle vert = Gdx.files.internal(shaders.getVertexShaderFilePath());
-                FileHandle frag = Gdx.files.internal(shaders.getFragmentShaderFilePath());
+                FileHandle vert = getFile(shaders.getVertexShaderFileHandle());
+                FileHandle frag = getFile(shaders.getFragmentShaderFileHandle());
                 main.fire(new LoadShaderEvent(vert, frag));
+            }
+
+            private FileHandle getFile(FileHandle fileHandle) {
+                return fileHandle.type() == Files.FileType.Internal ? fileHandle : Gdx.files.absolute(fileHandle.file().getAbsolutePath());
             }
         });
 

@@ -37,8 +37,8 @@ public class ShaderProperties extends VisSplitPane {
         main.addListener(new EventListener<ShaderProgramUpdateEvent>(ShaderProgramUpdateEvent.class, this) {
             @Override
             protected void fire(ShaderProgramUpdateEvent event) {
-                vertexProperties.getFileLocation().setFilePath(event.vert.path());
-                fragmentProperties.getFileLocation().setFilePath(event.frag.path());
+                vertexProperties.getFileLocation().setFilePath(event.vert.file().getAbsolutePath());
+                fragmentProperties.getFileLocation().setFilePath(event.frag.file().getAbsolutePath());
                 vertexProperties.populate(event.shader.getVertexShaderSource());
                 fragmentProperties.populate(event.shader.getFragmentShaderSource());
             }

@@ -109,12 +109,12 @@ public class Shaders {
         return shader;
     }
 
-    public String getVertexShaderFilePath() {
-        return vert.file().getAbsolutePath();
+    public FileHandle getVertexShaderFileHandle() {
+        return vert;
     }
 
-    public String getFragmentShaderFilePath() {
-        return frag.file().getAbsolutePath();
+    public FileHandle getFragmentShaderFileHandle() {
+        return frag;
     }
 
 }
