@@ -70,11 +70,11 @@ runtime {
         //jpackageHome = '/usr/lib/jvm/open-jdk'
         mainJar = dist.archiveFileName.get()
         if (osName.contains('windows')) {
-            imageOptions = ["--icon", file("../icons/icon.ico")]
+            imageOptions = ["--icon", file("../assets/icons/icon.ico")]
         } else if (osName.contains('linux')) {
-            imageOptions = ["--icon", file("../icons/icon.png")]
+            imageOptions = ["--icon", file("../assets/icons/icon.png")]
         } else if (osName.contains('mac')) {
-            imageOptions = ["--icon", file("../icons/icon.icns")]
+            imageOptions = ["--icon", file("../assets/icons/icon.icns")]
         }
     }
 }
