@@ -3,6 +3,7 @@ package it.aretesoftware.shadersee;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
@@ -41,6 +42,7 @@ public class Main extends Game {
 
 		data = new Data(this);
 
+		ShaderProgram.pedantic = false;
 		shaders = new Shaders(this);
 		shaders.loadDefaultShader();
 

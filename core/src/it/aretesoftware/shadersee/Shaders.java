@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 import it.aretesoftware.shadersee.dialog.DialogShaderLoadError;
-import it.aretesoftware.shadersee.event.Event;
 import it.aretesoftware.shadersee.event.EventListener;
 import it.aretesoftware.shadersee.event.shader.LoadFragmentShaderEvent;
 import it.aretesoftware.shadersee.event.shader.LoadShaderEvent;
@@ -27,7 +26,6 @@ public class Shaders {
 
     Shaders(Main main) {
         this.main = main;
-        ShaderProgram.pedantic = false;
         uTextureFileHandle = Gdx.files.internal("textures/badlogic.jpg");
         u_texture = new Texture(uTextureFileHandle);
         shaderUniforms = new ShaderUniforms(main);
