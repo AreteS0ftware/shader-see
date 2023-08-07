@@ -13,7 +13,7 @@ public class FragmentProperties extends Properties {
 
     protected FileLocation createFileLocation() {
         FragmentFileLocation fileLocation = new FragmentFileLocation(getMain());
-        fileLocation.setFilePath(getMain().getShaders().getFragmentShaderFileHandle().file().getAbsolutePath());
+        fileLocation.setFilePath(getMain().getShaders().getFragmentShaderAbsoluteFilePath());
         return fileLocation;
     }
 

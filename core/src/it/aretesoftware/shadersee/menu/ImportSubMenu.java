@@ -19,7 +19,7 @@ public class ImportSubMenu extends PopupMenu {
         this.main = main;
         addItem(createImportVertexShaderMenuItem());
         addItem(createImportFragmentShaderMenuItem());
-        addItem(createImportShaderProgramMenuItem());
+        //addItem(createImportShaderProgramMenuItem());
     }
 
     private MenuItem createImportVertexShaderMenuItem() {
